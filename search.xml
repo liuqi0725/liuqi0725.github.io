@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Test add auto-sync</title>
+    <url>/2020/01/15/Test/</url>
+    <content><![CDATA[<pre><code>TEST</code></pre>]]></content>
+      <categories>
+        <category>绊脚石</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacBook 卸载 node</title>
     <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node/</url>
     <content><![CDATA[<p>MacBook 卸载 node 比较麻烦，stackoverflow 上面找到一个方法还不错，特地记录下来，代码如下：</p>
