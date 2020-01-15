@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Test add auto-sync</title>
-    <url>/2020/01/15/Test/</url>
-    <content><![CDATA[<pre><code>TEST</code></pre>]]></content>
+    <title>Test1 add auto-sync</title>
+    <url>/2020/01/15/Test1/</url>
+    <content><![CDATA[<pre><code>TEST1</code></pre>]]></content>
       <categories>
         <category>绊脚石</category>
       </categories>
       <tags>
-        <tag>技巧</tag>
         <tag>Hexo</tag>
+        <tag>技巧</tag>
       </tags>
   </entry>
   <entry>
@@ -47,11 +47,11 @@
         <category>绊脚石</category>
       </categories>
       <tags>
+        <tag>技巧</tag>
         <tag>javascript</tag>
         <tag>macos</tag>
         <tag>npm</tag>
         <tag>node.js</tag>
-        <tag>技巧</tag>
         <tag>转载</tag>
       </tags>
   </entry>
@@ -104,8 +104,8 @@
         <category>绊脚石</category>
       </categories>
       <tags>
-        <tag>技巧</tag>
         <tag>Hexo</tag>
+        <tag>技巧</tag>
       </tags>
   </entry>
 </search>
