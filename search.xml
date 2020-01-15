@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>MacBook 卸载 node</title>
+    <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node/</url>
+    <content><![CDATA[<h1 id="MacBook-卸载-node"><a href="#MacBook-卸载-node" class="headerlink" title="MacBook 卸载 node"></a>MacBook 卸载 node</h1><p>MacBook 卸载 node 比较麻烦，stackoverflow 上面找到一个方法还不错，特地记录下来，代码如下：</p>
+<h2 id="brew-安装"><a href="#brew-安装" class="headerlink" title="brew 安装"></a>brew 安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew uninstall node</span><br></pre></td></tr></table></figure>
+
+<h2 id="pkg-安装"><a href="#pkg-安装" class="headerlink" title="pkg 安装"></a>pkg 安装</h2><ul>
+<li><p>首先运行脚本</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 1</span><br><span class="line">sudo lsbom -f -l -s -pf &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.node.pkg.bom | while read f; do sudo rm -rf $&#123;f:1&#125;; done</span><br><span class="line"></span><br><span class="line"># 2</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.*</span><br><span class="line"></span><br><span class="line"># 3</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;lib</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入<code>/usr/local/include</code>删除含有<code>node</code>和<code>node_modules</code>的目录</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;include</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>进入个人主文件夹，检查各种 <code>local</code>、<code>lib</code>、<code>include</code> 文件夹，删除名字含有<code>node</code>和<code>node_modules</code>的文件</p>
+</li>
+<li><p>进入 /usr/local/bin 删除 node 执行文件</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;bin</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;bin&#x2F;npm</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;bin&#x2F;node</span><br><span class="line">ls -las 仔细查看，全局安装的npm包一般会在这个目录下创建软连接，发现就删除</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他清理工作</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;share&#x2F;man&#x2F;man1&#x2F;node.1</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;dtrace&#x2F;node.d</span><br><span class="line">sudo rm -rf ~&#x2F;.npm</span><br></pre></td></tr></table></figure>
+<p>比较繁琐的操作是 <code>/usr/local/lib</code> 和 <code>/usr/local/bin</code> 这两个文件夹，全局安装的npm包会有很多软连接，需要仔细删除。</p>
+</li>
+</ul>
+<p><a href="http://lezhuyun.net/1.jpg" target="_blank" rel="noopener">http://lezhuyun.net/1.jpg</a><br><a href="http://pic.fangxutuwen.com/1111.jpg" target="_blank" rel="noopener">http://pic.fangxutuwen.com/1111.jpg</a></p>
+<blockquote>
+<p>原文地址:<a href="https://segmentfault.com/a/1190000007445643" target="_blank" rel="noopener">mac 卸载 node</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>绊脚石</category>
+      </categories>
+      <tags>
+        <tag>javascript</tag>
+        <tag>macos</tag>
+        <tag>npm</tag>
+        <tag>node.js</tag>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装Hexo常见问题</title>
+    <url>/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="安装Hexo常见问题"><a href="#安装Hexo常见问题" class="headerlink" title="安装Hexo常见问题"></a>安装Hexo常见问题</h1><h2 id="1-Git-clone-太慢，并出现错误"><a href="#1-Git-clone-太慢，并出现错误" class="headerlink" title="1. Git clone 太慢，并出现错误"></a>1. Git clone 太慢，并出现错误</h2><p><strong>错误如下</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RPC failed; curl 18 transfer closed with outstanding read data remaining</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>加大缓存区</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#约500M </span><br><span class="line">git config --global http.postBuffer 512000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>少clone一些，–depth 1</p>
+<blockquote>
+<p>–depth 1 复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本。 </p>
+</blockquote>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;flutter&#x2F;flutter.git --depth 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从码云上 clone 【推荐】</p>
+<ul>
+<li><p><strong>把你需要 clone 的目标在 Github 上复制地址</strong></p>
+<p><img src="http://pic.fangxutuwen.com/15790090279075.jpg" alt="">   </p>
+</li>
+<li><p><strong>打开码云<a href="https://gitee.com" target="_blank" rel="noopener">gitee.com</a></strong>, 新建仓库-&gt;从 GitHub 导入</p>
+<p><img src="http://pic.fangxutuwen.com/15790112635781.jpg" alt=""></p>
+</li>
+<li><p><strong>在本地用码云的仓库地址 进行 clone</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-NPM-安装出现-WARN-checkPermissions-Missing-write-access-to-usr-local-lib-node-modules"><a href="#2-NPM-安装出现-WARN-checkPermissions-Missing-write-access-to-usr-local-lib-node-modules" class="headerlink" title="2. NPM 安装出现 WARN checkPermissions Missing write access to /usr/local/lib/node_modules"></a>2. NPM 安装出现 WARN checkPermissions Missing write access to /usr/local/lib/node_modules</h2><p>npm install xxx 时，因为没有权限造成的该错误。网上普片的处理方式是在命令前加 <code>sudo</code>,但是这样做并没有解决实际问题。一劳永逸的方法如下：</p>
+<ul>
+<li>修改npm包所安装目录的权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo chown -R $USER &#x2F;usr&#x2F;local然后输入密码就可以了</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接下来可以进行npm全局包安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-发布时出现-ERROR-Deployer-not-found-git"><a href="#3-发布时出现-ERROR-Deployer-not-found-git" class="headerlink" title="3. 发布时出现 ERROR Deployer not found: git"></a>3. 发布时出现 <code>ERROR Deployer not found: git</code></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 发布静态网页时</span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"># 出现如下错误</span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>yourblog-path</code> 目录下<strong>执行如下命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>绊脚石</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>
