@@ -34,7 +34,7 @@
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -161,6 +161,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -234,10 +239,10 @@
       <div class="post-body">
           <div class="tag-cloud">
             <div class="tag-cloud-title">
-              目前共计 7 个标签
+              目前共计 8 个标签
             </div>
             <div class="tag-cloud-tags">
-              <a href="/tags/Hexo/" style="font-size: 21px; color: #6f6f6f">Hexo</a> <a href="/tags/javascript/" style="font-size: 12px; color: #ccc">javascript</a> <a href="/tags/macos/" style="font-size: 12px; color: #ccc">macos</a> <a href="/tags/node-js/" style="font-size: 12px; color: #ccc">node.js</a> <a href="/tags/npm/" style="font-size: 12px; color: #ccc">npm</a> <a href="/tags/%E6%8A%80%E5%B7%A7/" style="font-size: 30px; color: #111">技巧</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 12px; color: #ccc">转载</a>
+              <a href="/tags/Hexo/" style="font-size: 30px; color: #111">Hexo</a> <a href="/tags/javascript/" style="font-size: 12px; color: #ccc">javascript</a> <a href="/tags/macos/" style="font-size: 12px; color: #ccc">macos</a> <a href="/tags/node-js/" style="font-size: 12px; color: #ccc">node.js</a> <a href="/tags/npm/" style="font-size: 12px; color: #ccc">npm</a> <a href="/tags/%E6%8A%80%E5%B7%A7/" style="font-size: 30px; color: #111">技巧</a> <a href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/" style="font-size: 12px; color: #ccc">第三方服务</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 12px; color: #ccc">转载</a>
             </div>
           </div>
         
@@ -325,13 +330,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -458,7 +463,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta: guest,
       pageSize: '10' || 10,
       visitor: true,
-      lang: '' || 'zh-cn',
+      lang: 'zh-cn' || 'zh-cn',
       path: location.pathname,
       recordIP: false,
       serverURLs: ''

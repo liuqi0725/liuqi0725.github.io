@@ -34,7 +34,7 @@
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -161,6 +161,11 @@
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -353,8 +358,8 @@
       <i class="fa fa-chevron-left"></i> 安装Hexo常见问题
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/01/15/Test1/" rel="next" title="Test1 add auto-sync">
-      Test1 add auto-sync <i class="fa fa-chevron-right"></i>
+    <a href="/2020/01/16/NexT%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/" rel="next" title="NexT第三方服务">
+      NexT第三方服务 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -438,13 +443,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -571,7 +576,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       meta: guest,
       pageSize: '10' || 10,
       visitor: true,
-      lang: '' || 'zh-cn',
+      lang: 'zh-cn' || 'zh-cn',
       path: location.pathname,
       recordIP: false,
       serverURLs: ''
