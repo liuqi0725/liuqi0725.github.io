@@ -8,17 +8,19 @@
         <category>绊脚石</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>技巧</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
     <title>MacBook 卸载 node</title>
     <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node/</url>
-    <content><![CDATA[<p>MacBook 卸载 node 比较麻烦，stackoverflow 上面找到一个方法还不错，特地记录下来，代码如下：</p>
-<h1 id="brew-安装卸载"><a href="#brew-安装卸载" class="headerlink" title="brew 安装卸载"></a>brew 安装卸载</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew uninstall node</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>MacBook 下卸载 node 比较麻烦，这两天弄 Hexo，node 升级后导致 npm 版本不一致无法 install，就准备把 node、npm 删除了重新装。在Stackoverflow 上面找到一个手动删除的方法还不错，特地记录下来。</p>
+<a id="more"></a>
 
-<h1 id="pkg-安装卸载"><a href="#pkg-安装卸载" class="headerlink" title="pkg 安装卸载"></a>pkg 安装卸载</h1><ul>
+<h2 id="brew-安装卸载"><a href="#brew-安装卸载" class="headerlink" title="brew 安装卸载"></a>brew 安装卸载</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew uninstall node</span><br></pre></td></tr></table></figure>
+
+<h2 id="pkg-安装卸载"><a href="#pkg-安装卸载" class="headerlink" title="pkg 安装卸载"></a>pkg 安装卸载</h2><ul>
 <li><p>首先运行脚本</p>
   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 1</span><br><span class="line">sudo lsbom -f -l -s -pf &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.node.pkg.bom | while read f; do sudo rm -rf $&#123;f:1&#125;; done</span><br><span class="line"></span><br><span class="line"># 2</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.*</span><br><span class="line"></span><br><span class="line"># 3</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;lib</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
 </li>
@@ -47,28 +49,27 @@
         <category>绊脚石</category>
       </categories>
       <tags>
-        <tag>技巧</tag>
         <tag>javascript</tag>
         <tag>macos</tag>
         <tag>npm</tag>
         <tag>node.js</tag>
+        <tag>技巧</tag>
         <tag>转载</tag>
       </tags>
   </entry>
   <entry>
     <title>安装Hexo常见问题</title>
     <url>/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>近日由于 wp 的访问越来越慢，考虑迁移到 hexo。在安装过程中发现一些问题,记录下。</p>
-<blockquote>
+    <content><![CDATA[<p>随着WP安装的插件越来越多，自己的 VPS 又配置偏低，导致访问越来越慢。之前就知道 Hexo，但是因为当时忙于项目，懒得搞。最近实在无法忍受了，就考虑迁移到Hexo上。在安装过程中发现一些问题，特地记录下</p>
+<a id="more"></a>
+
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><blockquote>
 <p>node: v12.14.1<br>npm: 6.13.4<br>os: macOS Mojava 10.14.5</p>
 </blockquote>
-<h1 id="Git-clone-太慢，或者错误"><a href="#Git-clone-太慢，或者错误" class="headerlink" title="Git clone 太慢，或者错误"></a>Git clone 太慢，或者错误</h1><p>下载速度只有 几kib/s 或者直接就报错下不下来。 </p>
+<h2 id="Git-clone-太慢，或者错误"><a href="#Git-clone-太慢，或者错误" class="headerlink" title="Git clone 太慢，或者错误"></a>Git clone 太慢，或者错误</h2><p>其实问题网上搜一大堆，之前自己用的梯子速度很快，还没感觉。现在用的自己搭的梯子，速度一下就不爽了。下载速度有时候只有 几kib/s 或者直接就报错下不下来。 </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RPC failed; curl 18 transfer closed with outstanding read data remaining</span><br></pre></td></tr></table></figure>
 
-<p>网上找了一些方法，有用的有下面几个，自己根据自己的性能选择下即可。</p>
-<h2 id="加大缓存区"><a href="#加大缓存区" class="headerlink" title="加大缓存区"></a>加大缓存区</h2><pre><code><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#约500M </span><br><span class="line">git config --global http.postBuffer 512000000</span><br></pre></td></tr></table></figure></code></pre><h2 id="少clone一些，–depth-1"><a href="#少clone一些，–depth-1" class="headerlink" title="少clone一些，–depth 1"></a>少clone一些，–depth 1</h2><pre><code>&gt; –depth 1 复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本。 
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;flutter&#x2F;flutter.git --depth 1</span><br></pre></td></tr></table></figure></code></pre><h2 id="从码云上-clone-【推荐】"><a href="#从码云上-clone-【推荐】" class="headerlink" title="从码云上 clone 【推荐】"></a>从码云上 clone 【推荐】</h2><ul>
+<h3 id="从码云上-clone-【推荐】"><a href="#从码云上-clone-【推荐】" class="headerlink" title="从码云上 clone 【推荐】"></a>从码云上 clone 【推荐】</h3><ul>
 <li><strong>把你需要 clone 的目标在 Github 上复制地址</strong></li>
 </ul>
 <p><img src="http://pic.fangxutuwen.com/15790090279075.jpg" alt="">  </p>
@@ -79,22 +80,27 @@
 <ul>
 <li><strong>在本地用码云的仓库地址 进行 clone</strong></li>
 </ul>
-<h1 id="NPM-安装出现权限不足的问题"><a href="#NPM-安装出现权限不足的问题" class="headerlink" title="NPM 安装出现权限不足的问题"></a>NPM 安装出现权限不足的问题</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WARN checkPermissions Missing write access to &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules</span><br></pre></td></tr></table></figure>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><ul>
+<li><p>加大缓存区</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#约500M </span><br><span class="line">git config --global http.postBuffer 512000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加 <code>–depth 1</code> 控制复制深度</p>
+<blockquote>
+<p>–depth 1 复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本。 </p>
+</blockquote>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;liuqi0725&#x2F;image2PDF.git --depth 1</span><br></pre></td></tr></table></figure>
 
-<p>npm install xxx 时，因为没有权限造成的该错误。网上普片的处理方式是在命令前加 <code>sudo</code>,但是这样做并没有解决实际问题。一劳永逸的方法如下：</p>
-<ul>
-<li>修改npm包所安装目录的权限</li>
+
+</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo chown -R $USER &#x2F;usr&#x2F;local然后输入密码就可以了</span><br></pre></td></tr></table></figure>
+<h2 id="NPM-安装出现权限不足的问题"><a href="#NPM-安装出现权限不足的问题" class="headerlink" title="NPM 安装出现权限不足的问题"></a>NPM 安装出现权限不足的问题</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WARN checkPermissions Missing write access to &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>接下来可以进行npm全局包安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
+<p><code>npm install xxx</code> 时，因为没有权限造成的该错误。网上普片的处理方式是在命令前加 <code>sudo</code>,但是这样做并没有解决实际问题。一劳永逸的方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 修改npm包所安装目录的权限</span><br><span class="line">sudo chown -R $USER &#x2F;usr&#x2F;local然后输入密码就可以了</span><br><span class="line"></span><br><span class="line"># 接下来可以进行npm全局包安装</span><br><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="发布时出现-ERROR-Deployer-not-found-git"><a href="#发布时出现-ERROR-Deployer-not-found-git" class="headerlink" title="发布时出现 ERROR Deployer not found: git"></a>发布时出现 <code>ERROR Deployer not found: git</code></h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 发布静态网页时</span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"># 出现如下错误</span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
+<h2 id="发布找不到-git"><a href="#发布找不到-git" class="headerlink" title="发布找不到 git"></a>发布找不到 git</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 发布静态网页时</span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"># 出现如下错误</span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>yourblog-path</code> 目录下<strong>执行如下命令</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
@@ -104,8 +110,8 @@
         <category>绊脚石</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>技巧</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
