@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>test评论</title>
+    <url>/2020/01/16/test%E8%AF%84%E8%AE%BA/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>第三方服务</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NexT第三方服务</title>
     <url>/2020/01/16/NexT%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。</p>
@@ -20,14 +32,14 @@
 <li><p><a href="https://disqusjs.skk.moe" target="_blank" rel="noopener">Demo-1</a></p>
 </li>
 <li><p><a href="https://blog.skk.moe" target="_blank" rel="noopener">Demo-2</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">disqusjs:</span><br><span class="line">  enable: false</span><br><span class="line">  # API Endpoint of Disqus API (https:&#x2F;&#x2F;disqus.com&#x2F;api&#x2F;).</span><br><span class="line">  # Leave api empty if you are able to connect to Disqus API. Otherwise you need a reverse proxy for it.</span><br><span class="line">  # For example:</span><br><span class="line">  # api: https:&#x2F;&#x2F;disqus.skk.moe&#x2F;disqus&#x2F;</span><br><span class="line">  api:</span><br><span class="line">  apikey: # Register new application from https:&#x2F;&#x2F;disqus.com&#x2F;api&#x2F;applications&#x2F;</span><br><span class="line">  shortname: # See: https:&#x2F;&#x2F;disqus.com&#x2F;admin&#x2F;settings&#x2F;general&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">disqusjs:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  <span class="comment"># API Endpoint of Disqus API (https://disqus.com/api/).</span></span><br><span class="line">  <span class="comment"># Leave api empty if you are able to connect to Disqus API. Otherwise you need a reverse proxy for it.</span></span><br><span class="line">  <span class="comment"># For example:</span></span><br><span class="line">  <span class="comment"># api: https://disqus.skk.moe/disqus/</span></span><br><span class="line">  api:</span><br><span class="line">  apikey: <span class="comment"># Register new application from https://disqus.com/api/applications/</span></span><br><span class="line">  shortname: <span class="comment"># See: https://disqus.com/admin/settings/general/</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h3 id="Gitalk"><a href="#Gitalk" class="headerlink" title="Gitalk"></a>Gitalk</h3><p><a href="https://gitalk.github.io/" target="_blank" rel="noopener">Gitalk</a> 是一个基于 GitHub Issue 和 Preact 开发的评论插件。<a href="https://gitalk.github.io/" target="_blank" rel="noopener">Demo</a></p>
 <ul>
 <li><p>支持 <code>Markdown</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  enable: false</span><br><span class="line">  github_id: # GitHub repo owner</span><br><span class="line">  repo: # Repository name to store issues</span><br><span class="line">  client_id: # GitHub Application Client ID</span><br><span class="line">  client_secret: # GitHub Application Client Secret</span><br><span class="line">  admin_user: # GitHub repo owner and collaborators, only these guys can initialize   gitHub issues</span><br><span class="line">  distraction_free_mode: true # Facebook-like distraction free mode</span><br><span class="line">  # Gitalk&#39;s display language depends on user&#39;s browser or system environment</span><br><span class="line">  # If you want everyone visiting your site to see a uniform language, you can set a  force language value</span><br><span class="line">  # Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span><br><span class="line">  language:</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  github_id: <span class="comment"># GitHub repo owner</span></span><br><span class="line">  repo: <span class="comment"># Repository name to store issues</span></span><br><span class="line">  client_id: <span class="comment"># GitHub Application Client ID</span></span><br><span class="line">  client_secret: <span class="comment"># GitHub Application Client Secret</span></span><br><span class="line">  admin_user: <span class="comment"># GitHub repo owner and collaborators, only these guys can initialize   gitHub issues</span></span><br><span class="line">  distraction_free_mode: <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">  <span class="comment"># Gitalk's display language depends on user's browser or system environment</span></span><br><span class="line">  <span class="comment"># If you want everyone visiting your site to see a uniform language, you can set a  force language value</span></span><br><span class="line">  <span class="comment"># Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span></span><br><span class="line">  language:</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -37,22 +49,42 @@
 </li>
 <li><p>支持 文章阅读量统计</p>
 <p>在<a href="https://leancloud.cn" target="_blank" rel="noopener">leancloud</a>注册账号后，编辑 Next 的配置文件中的 valine即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  enable: true  #设置为 true 打开 valine</span><br><span class="line">  appid:  # Your leancloud application appid</span><br><span class="line">  appkey: # Your leancloud application appkey</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span>  <span class="comment">#设置为 true 打开 valine</span></span><br><span class="line">  appid:  <span class="comment"># Your leancloud application appid</span></span><br><span class="line">  appkey: <span class="comment"># Your leancloud application appkey</span></span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h3 id="livere-来必力"><a href="#livere-来必力" class="headerlink" title="livere|来必力"></a>livere|来必力</h3><p>棒子的东西，个人觉得速度太慢了。登陆 <a href="http://livere.com/" target="_blank" rel="noopener">livere</a> 获取你的 LiveRe UID 。编辑 Next 的配置文件中的 <code>livere_uid</code>。<a href="http://livere.com/city-demo" target="_blank" rel="noopener">Demo</a></p>
 <ul>
 <li><p>支持 <code>Markdown</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># LiveRe comments system</span><br><span class="line"># You can get your uid from https:&#x2F;&#x2F;livere.com&#x2F;insight&#x2F;myCode (General web site)</span><br><span class="line">livere_uid: # &lt;your_uid&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># LiveRe comments system</span></span><br><span class="line"><span class="comment"># You can get your uid from https://livere.com/insight/myCode (General web site)</span></span><br><span class="line">livere_uid: <span class="comment"># &lt;your_uid&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
+<h2 id="搜索服务"><a href="#搜索服务" class="headerlink" title="搜索服务"></a>搜索服务</h2><h3 id="Local-Search"><a href="#Local-Search" class="headerlink" title="Local Search"></a>Local Search</h3><p>本地自定义站点内容搜索，可以通过文字标题或文字内容关键字搜索出相应文章</p>
+<ol>
+<li><p>安装 hexo-generator-searchdb，在站点的根目录下执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑站点配置文件，新增以下内容到任意位置 <code>your-blog-path/_config.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑主题配置文件，启用本地搜索功能 <code>your-blog-path/themes/next/_config.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line">local_search:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Algolia-Search"><a href="#Algolia-Search" class="headerlink" title="Algolia Search"></a>Algolia Search</h3><p>现在比较有名的云搜索的服务，直接到<a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a>注册账号。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Algolia Search</span></span><br><span class="line"><span class="comment"># For more information: https://www.algolia.com</span></span><br><span class="line">algolia_search:</span><br><span class="line"> <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line"> hits:</span><br><span class="line">   per_page: 10</span><br><span class="line"> labels:</span><br><span class="line">   input_placeholder: Search <span class="keyword">for</span> Posts</span><br><span class="line">   hits_empty: <span class="string">"We didn't find any results for the search: <span class="variable">$&#123;query&#125;</span>"</span></span><br><span class="line">   hits_stats: <span class="string">"<span class="variable">$&#123;hits&#125;</span> results found in <span class="variable">$&#123;time&#125;</span> ms"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Swiftype-Search"><a href="#Swiftype-Search" class="headerlink" title="Swiftype Search"></a>Swiftype Search</h3><p>据说只有 30 天试用，要收费。有兴趣可以了解下。到<a href="https://swiftype.com/" target="_blank" rel="noopener">Swiftype Search</a>注册账号获取 key 填入 NexT 配置即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Swiftype Search API Key</span></span><br><span class="line">swiftype_key:</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 ]]></content>
       <categories>
         <category>插件</category>
@@ -72,10 +104,10 @@
 
 <h2 id="pkg-安装卸载"><a href="#pkg-安装卸载" class="headerlink" title="pkg 安装卸载"></a>pkg 安装卸载</h2><ul>
 <li><p>首先运行脚本</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 1</span><br><span class="line">sudo lsbom -f -l -s -pf &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.node.pkg.bom | while read f; do sudo rm -rf $&#123;f:1&#125;; done</span><br><span class="line"></span><br><span class="line"># 2</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules &#x2F;var&#x2F;db&#x2F;receipts&#x2F;org.nodejs.*</span><br><span class="line"></span><br><span class="line"># 3</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;lib</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line">sudo lsbom -f -l -s -pf /var/db/receipts/org.nodejs.node.pkg.bom | <span class="keyword">while</span> <span class="built_in">read</span> f; <span class="keyword">do</span> sudo rm -rf <span class="variable">$&#123;f:1&#125;</span>; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">sudo rm -rf /usr/<span class="built_in">local</span>/lib/node /usr/<span class="built_in">local</span>/lib/node_modules /var/db/receipts/org.nodejs.*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/lib</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>进入<code>/usr/local/include</code>删除含有<code>node</code>和<code>node_modules</code>的目录</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;include</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/include</span><br><span class="line">sudo rm -rf node*</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -84,10 +116,10 @@
 <li><p>进入个人主文件夹，检查各种 <code>local</code>、<code>lib</code>、<code>include</code> 文件夹，删除名字含有<code>node</code>和<code>node_modules</code>的文件</p>
 </li>
 <li><p>进入 /usr/local/bin 删除 node 执行文件</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;bin</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;bin&#x2F;npm</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;bin&#x2F;node</span><br><span class="line">ls -las 仔细查看，全局安装的npm包一般会在这个目录下创建软连接，发现就删除</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/bin</span><br><span class="line">sudo rm -rf /usr/<span class="built_in">local</span>/bin/npm</span><br><span class="line">sudo rm -rf /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">ls -las 仔细查看，全局安装的npm包一般会在这个目录下创建软连接，发现就删除</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>其他清理工作</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;share&#x2F;man&#x2F;man1&#x2F;node.1</span><br><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;dtrace&#x2F;node.d</span><br><span class="line">sudo rm -rf ~&#x2F;.npm</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rm -rf /usr/<span class="built_in">local</span>/share/man/man1/node.1</span><br><span class="line">sudo rm -rf /usr/<span class="built_in">local</span>/lib/dtrace/node.d</span><br><span class="line">sudo rm -rf ~/.npm</span><br></pre></td></tr></table></figure>
 <p>比较繁琐的操作是 <code>/usr/local/lib</code> 和 <code>/usr/local/bin</code> 这两个文件夹，全局安装的npm包会有很多软连接，需要仔细删除。</p>
 </li>
 </ul>
@@ -117,43 +149,45 @@
 <p>node: v12.14.1<br>npm: 6.13.4<br>os: macOS Mojava 10.14.5</p>
 </blockquote>
 <h2 id="Git-clone-太慢，或者错误"><a href="#Git-clone-太慢，或者错误" class="headerlink" title="Git clone 太慢，或者错误"></a>Git clone 太慢，或者错误</h2><p>其实问题网上搜一大堆，之前自己用的梯子速度很快，还没感觉。现在用的自己搭的梯子，速度一下就不爽了。下载速度有时候只有 几kib/s 或者直接就报错下不下来。 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RPC failed; curl 18 transfer closed with outstanding read data remaining</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">RPC failed; curl 18 transfer closed with outstanding <span class="built_in">read</span> data remaining</span><br></pre></td></tr></table></figure>
 
 <h3 id="从码云上-clone-【推荐】"><a href="#从码云上-clone-【推荐】" class="headerlink" title="从码云上 clone 【推荐】"></a>从码云上 clone 【推荐】</h3><ul>
 <li><strong>把你需要 clone 的目标在 Github 上复制地址</strong></li>
 </ul>
-<p><img src="http://pic.fangxutuwen.com/15790090279075.jpg" alt="">  </p>
+<img src="http://pic.fangxutuwen.com/15790090279075.jpg" width="300" style="align:center">
+
 <ul>
 <li><strong>打开码云<a href="https://gitee.com" target="_blank" rel="noopener">gitee.com</a></strong>, 新建仓库-&gt;从 GitHub 导入</li>
 </ul>
-<p><img src="http://pic.fangxutuwen.com/15790112635781.jpg" alt=""></p>
+<img src="http://pic.fangxutuwen.com/15790112635781.jpg" width="300" style="align:center">
+
 <ul>
 <li><strong>在本地用码云的仓库地址 进行 clone</strong></li>
 </ul>
 <h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><ul>
 <li><p>加大缓存区</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#约500M </span><br><span class="line">git config --global http.postBuffer 512000000</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#约500M </span></span><br><span class="line">git config --global http.postBuffer 512000000</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>加 <code>–depth 1</code> 控制复制深度</p>
 <blockquote>
 <p>–depth 1 复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本。 </p>
 </blockquote>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;liuqi0725&#x2F;image2PDF.git --depth 1</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/liuqi0725/image2PDF.git --depth 1</span><br></pre></td></tr></table></figure>
 
 
 </li>
 </ul>
-<h2 id="NPM-安装出现权限不足的问题"><a href="#NPM-安装出现权限不足的问题" class="headerlink" title="NPM 安装出现权限不足的问题"></a>NPM 安装出现权限不足的问题</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WARN checkPermissions Missing write access to &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules</span><br></pre></td></tr></table></figure>
+<h2 id="NPM-安装出现权限不足的问题"><a href="#NPM-安装出现权限不足的问题" class="headerlink" title="NPM 安装出现权限不足的问题"></a>NPM 安装出现权限不足的问题</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">WARN checkPermissions Missing write access to /usr/<span class="built_in">local</span>/lib/node_modules</span><br></pre></td></tr></table></figure>
 
 <p><code>npm install xxx</code> 时，因为没有权限造成的该错误。网上普片的处理方式是在命令前加 <code>sudo</code>,但是这样做并没有解决实际问题。一劳永逸的方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 修改npm包所安装目录的权限</span><br><span class="line">sudo chown -R $USER &#x2F;usr&#x2F;local然后输入密码就可以了</span><br><span class="line"></span><br><span class="line"># 接下来可以进行npm全局包安装</span><br><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修改npm包所安装目录的权限</span></span><br><span class="line">sudo chown -R <span class="variable">$USER</span> /usr/<span class="built_in">local</span>然后输入密码就可以了</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来可以进行npm全局包安装</span></span><br><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="发布找不到-git"><a href="#发布找不到-git" class="headerlink" title="发布找不到 git"></a>发布找不到 git</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 发布静态网页时</span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"># 出现如下错误</span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
+<h2 id="发布找不到-git"><a href="#发布找不到-git" class="headerlink" title="发布找不到 git"></a>发布找不到 git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 发布静态网页时</span></span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现如下错误</span></span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>yourblog-path</code> 目录下<strong>执行如下命令</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
