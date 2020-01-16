@@ -34,7 +34,7 @@
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -390,9 +390,6 @@
   </span>
   <span class="author" itemprop="copyrightHolder">by Alexliu</span>
 </div>
-  <div class="addthis_inline_share_toolbox">
-    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e20583fc5e5a2ce" async="async"></script>
-  </div>
 
         
 
@@ -458,34 +455,6 @@
 
   
 
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el: '#valine-comments',
-      verify: true,
-      notify: false,
-      appId: 'SzorzaqSqUNYGFThrQ14Dko8-gzGzoHsz',
-      appKey: 'VtaVMCTScbzw0SrS4lH0nQSA',
-      placeholder: "Just go go",
-      avatar: 'mm',
-      meta: guest,
-      pageSize: '10' || 10,
-      visitor: true,
-      lang: 'zh-cn' || 'zh-cn',
-      path: location.pathname,
-      recordIP: false,
-      serverURLs: ''
-    });
-  }, window.Valine);
-});
-</script>
 
 </body>
 </html>
