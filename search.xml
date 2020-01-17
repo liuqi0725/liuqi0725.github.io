@@ -318,6 +318,104 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenCV 3.4 读懂 CvType ，类型构造说明 JAVA</title>
+    <url>/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/</url>
+    <content><![CDATA[<p>CvType 可以说是 OpenCV 图像处理的基础常量参数。但是面对 CV_8U1C 、CV_8U2C、CV_8U3C、CV_8U4C 在初学阶段可以说一脸懵，他们代表的是什么呢？关于这些参数名门的来历，个人觉得有点 <a href="https://baike.baidu.com/item/匈牙利命名法/7632397?fr=aladdin" target="_blank" rel="noopener">[匈牙利命名法]</a> 的影子。本文就主要说明这些字母的含义</p>
+<a id="more"></a>
+
+
+
+<h2 id="什么是图像的通道？"><a href="#什么是图像的通道？" class="headerlink" title="什么是图像的通道？"></a>什么是图像的通道？</h2><p>在了解 CvType 这个常量类之前，需要先知道图像的通道是什么。OpenCV 中，图像可以分别为1，2，3，4 通道。</p>
+<ul>
+<li>1 通道为灰度图；</li>
+<li>2 通道的图像是RGB555和RGB565。2通道图在程序处理中会用到，如傅里叶变换，可能会用到，一个通道为实数，一个通道为虚数，主要是编程方便。RGB555是16位的，2个字节，5+6+5，第一字节的前5位是R，后三位+第二字节是G，第二字节后5位是B，可见对原图像进行压缩了</li>
+<li>3 通道为彩色图（RGB）；</li>
+<li>4 通道为 RGBA ，是RGB加上一个A通道，也叫alpha通道，表示透明度，PNG图像是一种典型的4通道图像。alpha通道可以赋值0到1，或者0到255，表示透明到不透明</li>
+</ul>
+<p><strong>大部分使用场景下，常使用的是1，3，4通道； 2通道不常见</strong></p>
+<h2 id="CvType-类型常量组合规则"><a href="#CvType-类型常量组合规则" class="headerlink" title="CvType 类型常量组合规则"></a>CvType 类型常量组合规则</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CV_[bite](U|S|F)C[channels]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>bite</strong> : 比特数，位数。 有 8bite，16bite，32bite，64bite,对应在 Mat 中，每个像素的所占的空间大小，8位即 CV_8</p>
+</li>
+<li><p><strong>U|S|F</strong> ： </p>
+<ul>
+<li><p>U : unsigned int , 无符号整形</p>
+</li>
+<li><p>S : signed int , 有符号整形</p>
+</li>
+<li><p>F : float , 单精度浮点型,float类型本身即有符号</p>
+<blockquote>
+<p>这里的有符号、无符号是针对图像二进制编码来讲的。我在写的过程中大多数情况下都是使用的无符号，即 CV_8U ,CV_16U，当有计算时可能会介入有符号（存在负数），没学过 C++，对底层也一知半解，望高手解答。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>C[channels]</strong>：图像的通道数</p>
+</li>
+</ul>
+<p>通过上边的解释，我想您已经明白了个大概，比如 CV_8UC3 即 8位无符号的3通道（RGB 彩色）图像</p>
+<h2 id="CvType-各-Bite-下可用参数说明"><a href="#CvType-各-Bite-下可用参数说明" class="headerlink" title="CvType 各 Bite 下可用参数说明"></a>CvType 各 Bite 下可用参数说明</h2><ul>
+<li>8U  <ul>
+<li>说明：无符号的8位图</li>
+<li>值：CV_8UC1,CV_8UC2,CV_8UC3,CV_8UC4</li>
+<li>通道取值范围：0~255</li>
+</ul>
+</li>
+<li>8S<ul>
+<li>说明：有符号的8位图</li>
+<li>值：CV_8SC1,CV_8SC2,CV_8SC3,CV_8SC4</li>
+<li>通道取值范围：-128~127</li>
+</ul>
+</li>
+<li>16U<ul>
+<li>说明：无符号的16位图</li>
+<li>值：CV_16UC1,CV_16UC2,CV_16UC3,CV_16UC4</li>
+<li>通道取值范围：0~65535</li>
+</ul>
+</li>
+<li>16S<ul>
+<li>说明：有符号的16位图</li>
+<li>值：CV_16SC1,CV_16SC2,CV_16SC3,CV_16SC4</li>
+<li>通道取值范围：-32768~32767</li>
+</ul>
+</li>
+<li>32S<ul>
+<li>说明：无符号的32位图 </li>
+<li>值：CV_32SC1,CV_32SC2,CV_32SC3,CV_32SC4</li>
+<li>通道取值范围：2147483648~2147483647</li>
+</ul>
+</li>
+<li>32F<ul>
+<li>说明：浮点型32位图</li>
+<li>值：CV_32FC1,CV_32FC2,CV_32FC3,CV_32FC4</li>
+<li>通道取值范围：1.18<em>(10[-38次方])~3.40</em>(10[38次方])</li>
+</ul>
+</li>
+<li>64F<ul>
+<li>说明：浮点型64位图</li>
+<li>值：CV_64FC1,CV_64FC2,CV_64FC3,CV_64FC4</li>
+<li>通道取值范围：2.23<em>(10[-308次方])~1.79</em>(10[308次方]) </li>
+</ul>
+</li>
+<li>1U<ul>
+<li>说明：1位</li>
+<li>值：IPL_DEPTH_1U</li>
+<li>通道取值范围：0~1</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://blog.sina.com.cn/s/blog_662c7859010105za.html" target="_blank" rel="noopener">这篇文章对8,16,32,64位下大小取值范围说明很详细</a></p>
+]]></content>
+      <categories>
+        <category>OpenCV</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>OpenCV</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>macOS 安装 opencv3.4</title>
     <url>/2018/01/29/macOS%20%E5%AE%89%E8%A3%85%20opencv3.4/</url>
     <content><![CDATA[<p>介绍在 MacOs 下安装 OpenCV 3.x</p>
