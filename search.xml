@@ -177,12 +177,13 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修改npm包所安装目录的权限</span></span><br><span class="line">sudo chown -R <span class="variable">$USER</span> /usr/<span class="built_in">local</span>然后输入密码就可以了</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来可以进行npm全局包安装</span></span><br><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure>
 
 
-
 <h2 id="发布找不到-git"><a href="#发布找不到-git" class="headerlink" title="发布找不到 git"></a>发布找不到 git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 发布静态网页时</span></span><br><span class="line">$ hexo d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现如下错误</span></span><br><span class="line">ERROR Deployer not found: git</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>yourblog-path</code> 目录下<strong>执行如下命令</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 
+<h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p>Hexo 的安装，主题优化，部署个人服务器，自动发布可参考如下文章。</p>
+<p><a href="https://www.jianshu.com/p/77db3862595c" target="_blank" rel="noopener">Mac 系统下搭建hexo个人博客</a><br><a href="https://www.jianshu.com/p/4547c3d5f819" target="_blank" rel="noopener">Hexo部署到服务器并完成自动发布</a><br><a href="https://www.cnblogs.com/fly_dragon/p/8718614.html" target="_blank" rel="noopener">CentOS搭建Git服务器及权限管理</a><br><a href="https://www.jianshu.com/p/7debbf85f437" target="_blank" rel="noopener">Hexo搭建的Github博客之优化</a><br><a href="https://www.cnblogs.com/aoguai/p/11481253.html" target="_blank" rel="noopener">Hexo博客Next v7.X 主题升级,美化</a></p>
 ]]></content>
       <categories>
         <category>绊脚石</category>
