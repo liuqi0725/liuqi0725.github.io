@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Homebrew 下载加速</title>
+    <url>/2020/02/13/Homebrew%E4%B8%8B%E8%BD%BD%E5%8A%A0%E9%80%9F%E3%80%81%E6%9B%BF%E6%8D%A2%E4%B8%8B%E8%BD%BD%E6%BA%90%E3%80%81%E4%B8%8D%E4%BF%AE%E6%94%B9%E6%BA%90%E7%9A%84%E5%8A%A0%E9%80%9F%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew</a> 在国内的更新速度实在感人，几十 kb 的东西，盯着进度条能把人搞崩溃。虽然换国内的源不一定就能解决问题，但是换了还是比不换好。下面来介绍如何换换国内的源，不换国内源也能下载快的偏方。望能帮助到大家。</p>
+<a id="more"></a>
+
+<p>使用 <a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew</a> 安装软件时，跟如下 3 个仓库有关:</p>
+<ul>
+<li>brew.git</li>
+<li>homebrew-core.git</li>
+<li>homebrew-bottles</li>
+</ul>
+<p>如何更换|还原 <a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew</a>的源，开搞</p>
+<blockquote>
+<p>提示： 更换|还原 源操作后，需要执行 <code>brew update</code> 使配置生效</p>
+</blockquote>
+<h3 id="brew-git-仓库"><a href="#brew-git-仓库" class="headerlink" title="brew.git 仓库"></a>brew.git 仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 替换为清华源</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span> </span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 还原</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span> </span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://github.com/Homebrew/brew.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="homebrew-core-git-仓库"><a href="#homebrew-core-git-仓库" class="headerlink" title="homebrew-core.git 仓库"></a>homebrew-core.git 仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 替换为清华源</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span> </span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 还原</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span> </span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://github.com/Homebrew/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="homebrew-bottles-地址"><a href="#homebrew-bottles-地址" class="headerlink" title="homebrew-bottles 地址"></a>homebrew-bottles 地址</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 替换为清华源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles'</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="comment"># 查看添加与否</span></span><br><span class="line">cat ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 还原</span></span><br><span class="line"><span class="comment"># 然后，删除 HOMEBREW_BOTTLE_DOMAIN 这一行配置</span></span><br><span class="line">vi ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="国内源列表"><a href="#国内源列表" class="headerlink" title="国内源列表"></a>国内源列表</h3><p>以下是一些国内的源，还有一些可以自己搜索</p>
+<h4 id="brew-git"><a href="#brew-git" class="headerlink" title="brew.git"></a>brew.git</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span> </span><br><span class="line"><span class="comment"># 阿里</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.aliyun.com/homebrew/brew.git </span><br><span class="line"><span class="comment"># 中国科大</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"><span class="comment"># 清华大学</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br></pre></td></tr></table></figure>
+
+<h4 id="homebrew-core-git"><a href="#homebrew-core-git" class="headerlink" title="homebrew-core.git"></a>homebrew-core.git</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span> </span><br><span class="line"><span class="comment"># 阿里</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.aliyun.com/homebrew/homebrew-core.git </span><br><span class="line"><span class="comment"># 中国科大</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br><span class="line"><span class="comment"># 清华大学</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<h4 id="homebrew-bottles"><a href="#homebrew-bottles" class="headerlink" title="homebrew-bottles"></a>homebrew-bottles</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 阿里</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles'</span> &gt;&gt; ~/.bash_profile </span><br><span class="line"><span class="comment"># 中国科大</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles'</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="comment"># 清华大学</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles'</span> &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="通过-git-还原-homebrew"><a href="#通过-git-还原-homebrew" class="headerlink" title="通过 git 还原 homebrew"></a>通过 git 还原 homebrew</h3><p><strong>如果你把 homebrew 折腾坏了，可以尝试 git 还原</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 诊断Homebrew的问题:</span></span><br><span class="line">brew doctor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置brew.git设置:</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span></span><br><span class="line">git fetch</span><br><span class="line">git reset --hard origin/master</span><br><span class="line"></span><br><span class="line"><span class="comment"># homebrew-core.git同理:</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span></span><br><span class="line">git fetch</span><br><span class="line">git reset --hard origin/master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后，删除 HOMEBREW_BOTTLE_DOMAIN 这一行配置 </span></span><br><span class="line">vi ~/.bash_profile </span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用生效:</span></span><br><span class="line">brew update</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="偏方"><a href="#偏方" class="headerlink" title="偏方"></a>偏方</h3><p>偏方即一些不用更改源，也可让下载飞起的方法，以下方法我都亲测过。</p>
+<h4 id="手机热点"><a href="#手机热点" class="headerlink" title="手机热点"></a>手机热点</h4><p>用电脑连接手机热点，下载能达到 <code>50</code>~<code>100</code>kb以上。</p>
+<ul>
+<li>优点：最简单直接。就一点流量，无所谓</li>
+<li>缺点：有些资源还是不行，另外此方法貌似仅适用于 <strong>电信</strong>，移动、联通 试过感觉没变化。</li>
+</ul>
+<h4 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h4><p>不多说了，经常使用的可以买一个，不经常使用的可以找一个免费的。</p>
+<ul>
+<li>优点：付费的VPN绝对能解决问题</li>
+<li>缺点：免费的 VPN 不好找，付费的太贵</li>
+</ul>
+<h4 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h4><p>同 VPN 异曲同工，可以用自己搭建的，也可以是付费的。执行 brew 的时候改为<code>全局代理</code></p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>Homebrew</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo第三方服务</title>
     <url>/2020/01/17/Hexo%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。</p>
