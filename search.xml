@@ -62,6 +62,61 @@
       </tags>
   </entry>
   <entry>
+    <title>python3 处理 mp3 ID3 信息</title>
+    <url>/2020/02/10/python3,ID3/</url>
+    <content><![CDATA[<p>现在听个音乐太难了,各大播放器在版权争夺下搞得一个音乐市场乌烟瘴气。有些歌这个平台可以听有些歌那个平台可以听。想听全就都买 VIP。懒得折腾了,还是回到起点吧”==下载音乐==”。因为主要上下班开车听听歌,发现下载下来的音乐很多都没有 id3 信息，网上找一些编辑 ID3 信息的编辑后，还是乱码。原因是现在基本都是 ID3 V2 信息了，没有写入 ID3 V1 信息。那么一些老款车或者中控都不支持 ID3 V2(比如我的车时 2012 款)，就会显示乱码。就想用 python 随便写一个来用用</p>
+<a id="more"></a>
+
+<h3 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h3><p><a href="https://github.com/liuqi0725/VanasMetaID3" target="_blank" rel="noopener">VanasMetaID3</a></p>
+<h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><ul>
+<li>Python 3.8</li>
+<li>MacOS Catalina 10.15.3 </li>
+</ul>
+<h3 id="引入包"><a href="#引入包" class="headerlink" title="引入包"></a>引入包</h3><ul>
+<li>mutagen 1.44.0</li>
+<li>Pillow 7.0.0</li>
+<li>tkinter 8.6 </li>
+</ul>
+<h3 id="关于-tkinter-包的说明"><a href="#关于-tkinter-包的说明" class="headerlink" title="关于 tkinter 包的说明"></a>关于 tkinter 包的说明</h3><ul>
+<li><p>如果是<a href="https://www.python.org" target="_blank" rel="noopener">python</a>官网下载安装,python3.7.x 以上都默认安装的 tkinter 8.6。</p>
+</li>
+<li><p>如果是 brew 安装,当前最新版是 3.7.6 ,tkinter 是 8.5</p>
+</li>
+</ul>
+<p><strong>如果tkinter 是 8.5 ,会出现输入框无法输入中文的 bug。这个在 <a href="https://www.python.org/download/mac/tcltk/" target="_blank" rel="noopener">python官网上有说明</a></strong></p>
+<p>网上有很多解决办法,看你怎么选择,我懒得折腾,直接 brew 安装的卸载了。从官网下的 3.8 来安装</p>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><h4 id="V0-1"><a href="#V0-1" class="headerlink" title="V0.1"></a>V0.1</h4><ul>
+<li><p>读取 mp3 文件</p>
+</li>
+<li><p>从文件夹中读取 mp3 文件</p>
+</li>
+<li><p>读取 mp3 ID3 信息(图片、歌词、标题、专辑….)</p>
+</li>
+<li><p>修改 mp3 ID3 信息（V1 , V2）</p>
+<blockquote>
+<p>注意 图片、歌词等属于 V2 信息，V1 信息只有文件末尾的 128k 的数据，代码里有说明</p>
+</blockquote>
+<p><img src="http://pic.fangxutuwen.com/15827086640315.jpg" alt=""></p>
+<p><img src="http://pic.fangxutuwen.com/15827087089609.jpg" alt=""></p>
+</li>
+</ul>
+<h3 id="打包成可执行的-APP"><a href="#打包成可执行的-APP" class="headerlink" title="打包成可执行的 APP"></a>打包成可执行的 APP</h3><p><strong>先安装 <code>py2app</code> , 当前最新是 0.21</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install py2app</span><br></pre></td></tr></table></figure>
+
+<p><strong>打包成 APP</strong></p>
+<p>如需设置 app，请修改<code>setup.py</code>, 具体设置方法参考 <a href="https://py2app.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">py2app-0.21-Doc</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 项目目录下执行 </span></span><br><span class="line"><span class="comment"># 如果要拷贝到其他没有 python 环境的机器使用 去掉`-A` 打包所有包</span></span><br><span class="line">python3 setup.py py2app -A</span><br></pre></td></tr></table></figure>
+
+<p><strong>app 存放在项目目录 py2app 创建的 dist 目录下</strong></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo第三方服务</title>
     <url>/2020/01/17/Hexo%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。</p>
