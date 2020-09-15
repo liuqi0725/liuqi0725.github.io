@@ -396,7 +396,8 @@
   <entry>
     <title>Springboot+Nginx 做负载均衡</title>
     <url>/2018/06/19/Springboot+Nginx%20%E5%81%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。</p>
+<a id="more"></a>
 
 
 <h2 id="负载均衡介绍"><a href="#负载均衡介绍" class="headerlink" title="负载均衡介绍"></a>负载均衡介绍</h2><p><a href="https://zh.wikipedia.org/wiki/负载均衡" target="_blank" rel="noopener">wiki</a></p>
