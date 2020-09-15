@@ -394,6 +394,81 @@
       </tags>
   </entry>
   <entry>
+    <title>Springboot+Nginx 做负载均衡</title>
+    <url>/2018/06/19/Springboot+Nginx%20%E5%81%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</url>
+    <content><![CDATA[<a id="more"></a>
+
+
+<h2 id="负载均衡介绍"><a href="#负载均衡介绍" class="headerlink" title="负载均衡介绍"></a>负载均衡介绍</h2><p><a href="https://zh.wikipedia.org/wiki/负载均衡" target="_blank" rel="noopener">wiki</a></p>
+<p><a href="https://baike.baidu.com/item/负载均衡/932451?fr=aladdin" target="_blank" rel="noopener">百度百科</a></p>
+<p>简单来说就是提升吞吐量、避免服务器过载。分为<strong>硬</strong>（如 F5），<strong>软</strong>(如 apache、nginx 的反向代理，还有其他模式)</p>
+<h2 id="Nginx-负载均衡网络图"><a href="#Nginx-负载均衡网络图" class="headerlink" title="Nginx 负载均衡网络图"></a>Nginx 负载均衡网络图</h2><p><img src="http://pic.fangxutuwen.com/16001457299038.jpg" alt=""></p>
+<h2 id="Nginx-负载均衡策略"><a href="#Nginx-负载均衡策略" class="headerlink" title="Nginx 负载均衡策略"></a>Nginx 负载均衡策略</h2><p>nginx 负载均衡使用 <code>upstream</code> 配置. 包括内置策略，还有通过第三方插件方式的策略。有兴趣的可以深入学习。</p>
+<h4 id="轮循（默认）-Round-Robin"><a href="#轮循（默认）-Round-Robin" class="headerlink" title="轮循（默认）[Round Robin]"></a>轮循（默认）[Round Robin]</h4><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果服务器shutdown 了，将不在分发请求到该服务器。 </p>
+<ul>
+<li>servername 自定义名称</li>
+<li>server 配置支持 ip/域名 + 有端口/无端口(80) 。内容根据实际配置</li>
+<li>可配置 n 个 server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upstream servername &#123;</span><br><span class="line">    server 192.168.0.1:8080;</span><br><span class="line">    server 192.168.0.2:8080; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="指定权重-Least-Connections"><a href="#指定权重-Least-Connections" class="headerlink" title="指定权重 [Least Connections]"></a>指定权重 [Least Connections]</h4><p>通过权重，指定轮循的几率。weight和访问比率成正比，多用于服务器性能有差异的情况。</p>
+<ul>
+<li>servername 自定义名称</li>
+<li>server 配置支持 ip/域名 + 有端口/无端口(80) 。内容根据实际配置</li>
+<li>weight 与访问量成正比，数字越大轮循几率越大</li>
+<li>可配置 n 个 server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upstream servername &#123; </span><br><span class="line">    server 192.168.0.1:8080 weight&#x3D;8; </span><br><span class="line">    server 192.168.0.2:8080 weight&#x3D;10; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="IP-绑定-IP-Hash"><a href="#IP-绑定-IP-Hash" class="headerlink" title="IP 绑定[IP Hash]"></a>IP 绑定[IP Hash]</h4><p>每个请求按根据客户端ip的hash结果分配服务器。这样可以客户端在一定时间内可以固定访问一台服务器，可以保持 Session 。<br>默认执行 20（忘记了）hash 算法查找服务器，如果没有则进行轮循(算是一种高级的轮循)。</p>
+<ul>
+<li>servername 自定义名称</li>
+<li>server 配置支持 ip/域名 + 有端口/无端口(80) 。内容根据实际配置</li>
+<li>可配置 n 个 server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upstream servername &#123; </span><br><span class="line">    ip_hash; </span><br><span class="line">    server 192.168.0.1:8080; </span><br><span class="line">    server 192.168.0.2:8080; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Server-参数"><a href="#Server-参数" class="headerlink" title="Server 参数"></a>Server 参数</h4><ul>
+<li>down 表示当前server 不参与负载</li>
+<li>weight 默认为1 数字越大 负载权重越大</li>
+<li>max_fails 允许请求失败的次数 当超过最大次数 返回proxy_next_upstream模块定义的错误</li>
+<li>fail_timeout:max_fails次失败后，服务端暂停的时间</li>
+<li>backup: 其他所有的非backup机器down或者忙的时候 请求这台机器，这台机器的压力最小</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upstream servername &#123; </span><br><span class="line">    server 192.168.0.1:8080 down; </span><br><span class="line">    server 192.168.0.2:8080 weight&#x3D;10 max_fails&#x3D;30 fail_timeout&#x3D;12; </span><br><span class="line">    server 192.168.0.3:8080 weight&#x3D;8; </span><br><span class="line">    server 192.168.0.4:8080 backup; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Nginx-Springboot-实现负载均衡"><a href="#Nginx-Springboot-实现负载均衡" class="headerlink" title="Nginx+Springboot 实现负载均衡"></a>Nginx+Springboot 实现负载均衡</h2><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><ul>
+<li>JDK1.8 以以上</li>
+<li>Nginx 1.15 以上</li>
+</ul>
+<p>测试包: <a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx" target="_blank" rel="noopener">https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx</a></p>
+<h4 id="测试包使用"><a href="#测试包使用" class="headerlink" title="测试包使用"></a>测试包使用</h4><ul>
+<li>下载<a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx" target="_blank" rel="noopener">测试包</a> 建议使用<code>GitZip for github</code> 插件下载独立目录</li>
+<li>执行 <code>clean</code> 、<code>package</code> 操作，将打包的 jar 和 <code>application.yaml</code> 放在一起</li>
+<li>修改 <code>application.yaml</code> 端口地址.</li>
+<li>启动多个服务</li>
+<li>启动后在不同的客户端机器上访问 <a href="http://localhost/hello/username" target="_blank" rel="noopener">http://localhost/hello/username</a>  username 自定义 。测试负载均衡</li>
+</ul>
+<h4 id="nginx-Session-共享"><a href="#nginx-Session-共享" class="headerlink" title="nginx Session 共享"></a>nginx Session 共享</h4><p>使用反向代理负载均衡，不可避免会面对 Session 共享。一般的方式是 cookie、memcache、redis 来管理共享数据. 后面的 <code>Springboot-security</code> 专题，会专门讲解。</p>
+<h4 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h4><p>配置采用的 ip_hash 。可以替换成其他的策略测试。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application&#x2F;octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    upstream springbootnginx&#123;</span><br><span class="line">       ip_hash;</span><br><span class="line">       # 其实 2 个可以都在放本地，修改端口即可</span><br><span class="line">       # 本地放一个</span><br><span class="line">       server 192.168.1.130:8080;</span><br><span class="line">       # 其他机器放一个</span><br><span class="line">       server 192.168.1.120:8080;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  192.168.1.130;</span><br><span class="line"></span><br><span class="line">        location &#x2F; &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            # 指向反向代理</span><br><span class="line">            proxy_pass http:&#x2F;&#x2F;springbootnginx;</span><br><span class="line">            proxy_connect_timeout 3s;</span><br><span class="line">            proxy_read_timeout 5s;</span><br><span class="line">            proxy_send_timeout 3s;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Springboot</category>
+      </categories>
+      <tags>
+        <tag>Springboot</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenCV3 图像膨胀 dilate、腐蚀 erode、提取图像中的条形码 JAVA 实现</title>
     <url>/2018/04/19/OpenCV3%20%E5%9B%BE%E5%83%8F%E8%86%A8%E8%83%80%20dilate%E3%80%81%E8%85%90%E8%9A%80%20erode%E3%80%81%E6%8F%90%E5%8F%96%E5%9B%BE%E5%83%8F%E4%B8%AD%E7%9A%84%E6%9D%A1%E5%BD%A2%E7%A0%81%20JAVA%20%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>利用近期对 OpenCV 的学习，结合图像的 dilate、erode 用 JAVA 来实现提取图像中的条形码，这样就可以通过识别工具来识别图中的内容。</p>
