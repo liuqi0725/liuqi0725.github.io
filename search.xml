@@ -394,6 +394,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Springboot+Flyway 管理项目SQL脚本</title>
+    <url>/2018/06/21/Springboot+Flyway%20%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AESQL%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<p>Flyway 数据库的版本控制。</p>
+<p>用一种简单、干净的方案，帮助用户完成数据库迁移的工作。使用Flyway，用户可以从任意一个数据库版本迁移到最新版本，简单而且有效。</p>
+<p>支持多个平台：windows、ios、linux、docker、java、android 。本文介绍 Springboot 集成 Flyway，及Sql 脚本命名方式</p>
+<a id="more"></a>
+
+<h2 id="测试包放在前面"><a href="#测试包放在前面" class="headerlink" title="测试包放在前面"></a>测试包放在前面</h2><ul>
+<li>下载<a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-flyway" target="_blank" rel="noopener">测试包</a> 建议使用 <code>GitZip for github</code> 插件下载独立目录</li>
+<li>修改 <code>application.yaml</code> 数据库地址.</li>
+<li>启动后访问 <a href="http://localhost:8080/user/info/1" target="_blank" rel="noopener">http://localhost:8080/user/info/1</a></li>
+</ul>
+<h2 id="Flyway-的工作原理"><a href="#Flyway-的工作原理" class="headerlink" title="Flyway 的工作原理"></a>Flyway 的工作原理</h2><p>flyway 需要在 DB 中先创建一个 metdata 表 (缺省表名为 flyway_schema_history), 在该表中保存着每次 migration 的记录, 记录包含 migration 脚本的版本号和 SQL 脚本的 checksum 值. 当一个新的 SQL 脚本被扫描到后, Flyway 解析该 SQL 脚本的版本号, 并和 metadata 表已 apply 的的 migration 对比, 如果该 SQL 脚本版本更新的话, 将在指定的 DB 上执行该 SQL 文件, 否则跳过该 SQL 文件.</p>
+<h2 id="版本号大小说明"><a href="#版本号大小说明" class="headerlink" title="版本号大小说明"></a>版本号大小说明</h2><p>两个 flyway 版本号的比较, 采用左对齐原则, 缺位用 0 代替. 举例如下: </p>
+<ul>
+<li>1.2.9.4 比 1.2.9   版本高</li>
+<li>1.2.10  比 1.2.9.4 版本高</li>
+<li>1.2.10  和 1.2.010 版本号一样高, 每个版本号部分的前导 0 会被忽略</li>
+</ul>
+<h2 id="脚本分类"><a href="#脚本分类" class="headerlink" title="脚本分类"></a>脚本分类</h2><p>Flyway SQL 文件可以分为两类:</p>
+<ul>
+<li>Versioned </li>
+<li>Repeatable</li>
+</ul>
+<h3 id="Versioned"><a href="#Versioned" class="headerlink" title="Versioned"></a>Versioned</h3><p>Versioned migration 用于版本升级, 每个版本有唯一的版本号并只能 apply 一次</p>
+<h3 id="Repeatable"><a href="#Repeatable" class="headerlink" title="Repeatable"></a>Repeatable</h3><p>Repeatable migration 是指可重复加载的 migration. 一旦 SQL 脚本的 checksum 有变动, flyway 就会重新应用该脚本. 它并不用于版本更新, 这类的 migration 总是在 versioned migration 执行之后才被执行.</p>
+<h3 id="Migration-SQL的命名规则图"><a href="#Migration-SQL的命名规则图" class="headerlink" title="Migration SQL的命名规则图"></a>Migration SQL的命名规则图</h3><p><img src="https://img2018.cnblogs.com/blog/194640/201809/194640-20180917181704995-1479103124.png" alt=""></p>
+<p>其中的文件名由以下部分组成，除了使用默认配置外，某些部分还可自定义规则.</p>
+<ul>
+<li>prefix: 可配置，前缀标识，默认值 V 表示 Versioned, R 表示 Repeatable</li>
+<li>version: 标识版本号, 由一个或多个数字构成, 数字之间的分隔符可用点.或下划线_</li>
+<li>separator: 可配置, 用于分隔版本标识与描述信息, 默认为两个下划线 ‘__’</li>
+<li>description: 描述信息, 文字之间可以用下划线或空格分隔</li>
+<li>suffix: 可配置, 后续标识, 默认为.sql</li>
+</ul>
+<h3 id="关于开发-生产环境版本说明"><a href="#关于开发-生产环境版本说明" class="headerlink" title="关于开发|生产环境版本说明"></a>关于开发|生产环境版本说明</h3><ol>
+<li>开发环境 SQL 文件建议采用时间戳作为版本号. </li>
+</ol>
+<p>多人一起开发不会导致版本号争用, 同时再加上生产环境的版本号, 这样的话, 将来手工 merge 成生产环境 migration 脚本也比较方便, SQL 文件示例:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">V20200317.1059__V1.0_Unique_User_Names.sql</span><br><span class="line">V20180317.1459__V1.0_Add_SomeTables.sql</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>生产环境 SQL 文件, 应该是手动 merge 开发环境的 SQL 脚本, 版本号按照正常的版本, 比如 <code>V2.1.5_001__Release.sql</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Springboot</category>
+      </categories>
+      <tags>
+        <tag>Springboot</tag>
+        <tag>flyway</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Springboot+Nginx 做负载均衡</title>
     <url>/2018/06/19/Springboot+Nginx%20%E5%81%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</url>
     <content><![CDATA[<p>利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。</p>
