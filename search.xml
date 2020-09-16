@@ -653,6 +653,64 @@
       </tags>
   </entry>
   <entry>
+    <title>springboot+freemarker+pjax 实现单页局部刷新.md</title>
+    <url>/2018/04/17/springboot+freemarker+pjax%20%E5%AE%9E%E7%8E%B0%E5%8D%95%E9%A1%B5%E5%B1%80%E9%83%A8%E5%88%B7%E6%96%B0.md/</url>
+    <content><![CDATA[<p>使用 Springboot + freemarker + pjax 实现单页应用，局部刷新。提升用户体验，降低服务器压力。</p>
+<a id="more"></a>
+
+
+<h2 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h2><ul>
+<li>下载<a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-freemarker-pjax" target="_blank" rel="noopener">测试包</a> 建议使用 <code>GitZip for github</code> 插件下载独立目录</li>
+<li>修改 <code>application.yaml</code> 配置，不改保持默认也可以.</li>
+<li>启动后访问 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></li>
+</ul>
+<h2 id="为什么用-freemarker"><a href="#为什么用-freemarker" class="headerlink" title="为什么用 freemarker"></a>为什么用 freemarker</h2><p>虽然 <a href="https://www.thymeleaf.org" target="_blank" rel="noopener">thymeleaf</a> 是 springboot 官方推荐的模板，优点一大堆。<br>如果你是（研发、UI）一起使用，建议使用<a href="https://www.thymeleaf.org" target="_blank" rel="noopener">thymeleaf</a>,毕竟可以直接运行显示静态数据，UI、研发互补干扰。这一块就吊打了 freemaker。</p>
+<p>其他情况我会选择 freemarker。不为其他的，写起来方便，随便百度一篇文章，语法这一块就基本明白了。而且 freemarker 的语法跟我们平时的编码语法很接近，<br>你就不用在写的过程去考虑语法该怎么写。</p>
+<p>比如常用的 if、for：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">#assign</span> <span class="attr">a</span> = <span class="string">1</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">#assign</span> <span class="attr">b</span> = <span class="string">2</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">#if</span> <span class="attr">a</span> == <span class="string">b</span> &gt;</span></span><br><span class="line">    ...do something</span><br><span class="line"><span class="tag">&lt;<span class="name">#elseif</span> <span class="attr">a</span> == <span class="string">1</span> &gt;</span></span><br><span class="line">    ...do something</span><br><span class="line"><span class="tag">&lt;<span class="name">#else</span>&gt;</span></span><br><span class="line">    ...do something</span><br><span class="line"><span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">#list</span> <span class="attr">userlist</span> <span class="attr">as</span> <span class="attr">user</span>&gt;</span></span><br><span class="line">    ...do something</span><br><span class="line"><span class="tag">&lt;/<span class="name">#list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>总之还没入坑<a href="https://www.thymeleaf.org" target="_blank" rel="noopener">thymeleaf</a>的同学，有这个空闲时间学习<a href="https://www.thymeleaf.org" target="_blank" rel="noopener">thymeleaf</a>还不如学个前端框架来的实际。</p>
+<blockquote>
+<p>题外话:用<a href="https://www.thymeleaf.org" target="_blank" rel="noopener">thymeleaf</a>实现局部刷新，比 freemaker 简单</p>
+</blockquote>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><ul>
+<li><p>定义 2 套模板。 </p>
+<ul>
+<li>一套用于初始化、页面刷新</li>
+<li>一套 pjax 模板，普通请求</li>
+</ul>
+</li>
+<li><p>添加 Pjax 拦截器</p>
+<ul>
+<li>拦截器中判断是否 pjax，并根据结果返回指定模板</li>
+<li>由于 pjax 请求不能继承父页面，只能刷新局部，所以如果需要对父页面的一些动态内容进行指定，需要在拦截器中完成</li>
+</ul>
+</li>
+<li><p>页面渲染原理</p>
+<ul>
+<li><p>普通请求：利用 Freemarker 的 macro 在子页面进行替换操作</p>
+</li>
+<li><p>pjax 请求：利用 Freemarker 的 macro 在子页面进行替换操作，并动态添加到指定的 div 中，实现局部刷新</p>
+<blockquote>
+<p>我测试下，不能使用 freemarker 插件的 extend override等，如果能使用，请高手指教。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><h4 id="菜单选中"><a href="#菜单选中" class="headerlink" title="菜单选中"></a>菜单选中</h4><p>为了保证页面刷新后，菜单保持不变。建议菜单放在 <strong>cookie</strong> 中。也可以利用缓存保持。</p>
+<h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><p>头部添加<br>request.headers[‘X-PJAX-URL’] = “<a href="http://35liuqi.com/redirect&quot;">http://35liuqi.com/redirect&quot;</a></p>
+]]></content>
+      <categories>
+        <category>Springboot</category>
+      </categories>
+      <tags>
+        <tag>Springboot</tag>
+        <tag>freemarker</tag>
+        <tag>pjax</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenCV 3.4 Scalar 参数说明，与 CvType 结合使用</title>
     <url>/2018/04/12/OpenCV%203.4%20Scalar%20%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%8C%E4%B8%8E%20CvType%20%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<p>我们在学习OpenCV 时，发现在构造 Mat 时，会有2个关键参数，一个 CvType，一个 Scalar。很多人不明白这2个参数的意思，所以在把别人例子拿来使用或自己写的的时候发现这个参数不知道该怎么填。本文就将 Scalar 参数详细的说明下。</p>
