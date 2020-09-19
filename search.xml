@@ -844,6 +844,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Springboot 整合SpringSecurity实现账号密码+手机验证码登陆</title>
+    <url>/2018/04/11/Springboot%20%E6%95%B4%E5%90%88SpringSecurity%E5%AE%9E%E7%8E%B0%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81+%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E9%99%86/</url>
+    <content><![CDATA[<p>SpringSecurity 是 Spring 提供安全管理框架。核心内容包含<strong>认证</strong>、<strong>授权</strong>、<strong>攻击防护</strong>。实际上SpringSecurity 已经发展了多年了，但是在 SSM/SSH 中整合 SpringSecurity 相较于 Shiro 来说显得要麻烦很多，所以在安全管理框架这块一直都是 Shiro 的天下。</p>
+<p>自从有了 SpringBoot ，SpringSecurity 的完美兼容让其价值完整的体现了出来。在 SpringBoot 中基本零配置就可以使用 SpringSecurity了。</p>
+<a id="more"></a>
+
+<h2 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h2><p>网上教程一大堆，一知半解导致写的错误一大堆，出错了又要去搜索，知识点越来越多，陷入恶性循环。</p>
+<p>这里提供一个完整Demo ，虽然不一定说完全理解SpringSecurity，但是可以了解其运行方式。</p>
+<p>示例中提供了 2 种认证方式，<strong>账号密码</strong>、<strong>手机验证码</strong>，请根据需要自定义。</p>
+<ul>
+<li>下载 Demo<ul>
+<li>GitHub : <a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-security" target="_blank" rel="noopener">https://github.com/liuqi0725/springboot-useful/tree/master/springboot-security</a></li>
+<li>Gitee : <a href="https://gitee.com/alexliu0725/springboot-useful/tree/master/springboot-security" target="_blank" rel="noopener">https://gitee.com/alexliu0725/springboot-useful/tree/master/springboot-security</a></li>
+</ul>
+</li>
+<li>修改 <code>application.yaml</code> <strong>端口</strong>、<strong>数据库</strong> 等配置</li>
+<li>启动后在不同的客户端机器上访问 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> （根据自己配置的端口访问）</li>
+<li>测试用2 种登陆方式: 用户密码、手机验证码</li>
+<li>查看不同用户菜单是否不一样（测试授权）</li>
+<li>访问不存在的路由地址，查看返回值</li>
+</ul>
+<blockquote>
+<p>为避免迁移脚本冲突，如果不建多个数据库脚本的情况为，请先清空数据库里的内容</p>
+</blockquote>
+<h2 id="Spring-security-介绍"><a href="#Spring-security-介绍" class="headerlink" title="Spring-security 介绍"></a>Spring-security 介绍</h2><p><a href="https://spring.io/projects/spring-security" target="_blank" rel="noopener">Spring Security 官方说明</a></p>
+<p><a href="https://docs.spring.io/spring-security/site/docs/current/reference/html5/" target="_blank" rel="noopener">Spring Security 官方文档</a></p>
+<p><a href="https://www.springcloud.cc/spring-security-zhcn.html" target="_blank" rel="noopener">Spring Security 参考手册-中文</a></p>
+<h2 id="为什么不用-shiro"><a href="#为什么不用-shiro" class="headerlink" title="为什么不用 shiro"></a>为什么不用 shiro</h2><p>之前SSM/SSH 一直用 Shiro。后面慢慢过渡到 SpringBoot 后，改用了 SpringSecurity。然后就没有然后了。Spring 真的好用，教程也全。<br>再说中型项目后续会涉及集群或微服务，security、cloud 打包用一套不香么。</p>
+<h2 id="CSRF-跨站请求伪造防护"><a href="#CSRF-跨站请求伪造防护" class="headerlink" title="CSRF 跨站请求伪造防护"></a>CSRF 跨站请求伪造防护</h2><p>Demo 中没有开启 csrf。 如果需要可以自行开启。</p>
+<p>开启后，通过如下代码获取</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"$&#123;_csrf.parameterName&#125;"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"$&#123;_csrf.token&#125;"</span>&gt;</span></span><br><span class="line">或者放在head 中</span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf”</span> <span class="attr">content</span> = <span class="string">“$&#123;_csrf.token&#125;”</span> /&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf_header”</span>  <span class="attr">content</span> = <span class="string">“$&#123;_csrf.headerName&#125;”</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="iframe-嵌入"><a href="#iframe-嵌入" class="headerlink" title="iframe 嵌入"></a>iframe 嵌入</h2><p>SpringSecurity 默认是关闭了 frame 的嵌入的，可以开启。</p>
+<p>参考 Demo 代码 <code>SecurityWebConfig</code> 中 <code>setFrameAllow(http)</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setFrameAllow</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * iframe 允许显示的方式 &lt;br&gt;</span></span><br><span class="line"><span class="comment">         * SAMEORIGIN 仅允许 frame 页面当前域名下的显示 &lt;br&gt;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * FROMURI 允许 frame 页面在指定域名下显示 &lt;br&gt;</span></span><br><span class="line"><span class="comment">         *     例如：</span></span><br><span class="line"><span class="comment">         *     &lt;ul&gt;</span></span><br><span class="line"><span class="comment">         *          &lt;li&gt;http://www.baidu.com 允许该域名可以嵌套我的 frame&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *          &lt;li&gt;http://www.taobao.com 允许该域名可以嵌套我的 frame&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *     &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 正式环境请配置在配置文件中。方便管理</span></span><br><span class="line"></span><br><span class="line">        String xframe = <span class="string">"SAMEORIGIN"</span>;</span><br><span class="line">        <span class="comment">// 如果是 FROMURI 允许嵌套的外部域名白名单</span></span><br><span class="line">        String[] frameAllowWhiteDomain = <span class="keyword">new</span> String[]&#123;<span class="string">"https://example.cn"</span>,<span class="string">"https://example.com"</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(xframe.equals(<span class="string">"SAMEORIGIN"</span>))&#123;</span><br><span class="line">            <span class="comment">// 仅允许本域名</span></span><br><span class="line">            http.headers().frameOptions().sameOrigin();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(xframe.equals(<span class="string">"FROMURI"</span>))&#123;</span><br><span class="line">            <span class="comment">//disable 默认策略。 这一句不能省。</span></span><br><span class="line">            http.headers().frameOptions().disable();</span><br><span class="line">            <span class="comment">//新增新的策略。</span></span><br><span class="line">            http.headers().addHeaderWriter(<span class="keyword">new</span> XFrameOptionsHeaderWriter(</span><br><span class="line">                    <span class="keyword">new</span> WhiteListedAllowFromStrategy(Arrays.asList(frameAllowWhiteDomain))</span><br><span class="line">            ));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"未知的 XFrameOptions 。仅支持 SAMEORIGIN , FROMURI"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Spring-Security-做用户认证、授权"><a href="#Spring-Security-做用户认证、授权" class="headerlink" title="Spring-Security 做用户认证、授权"></a>Spring-Security 做用户认证、授权</h2><p>以下是我对这两点肤浅的认识。不包含 SSO、OAuth 等。后续会在其他文章中介绍。</p>
+<p>编码分为 2 大块 <strong>access(访问)</strong>、<strong>authenticaton(认证)</strong></p>
+<ul>
+<li>access 会放过白名单，对非白名单的请求进行认证，认证的依据来源（权限、角色…），没有则返回 403</li>
+<li>authenticaton 用户访问一个需要授权的 URL 时，会进行用户认证，认证通过后再通过 access 去判断是否可以访问<strong>（授权）</strong></li>
+</ul>
+<p><img src="http://pic.fangxutuwen.com/16003563830451.jpg" alt=""></p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>更多说明请参考代码中的注释。要点太多，Readme 写的话，又要写一次代码。</p>
+]]></content>
+      <categories>
+        <category>Springboot</category>
+      </categories>
+      <tags>
+        <tag>Springboot</tag>
+        <tag>SpringSecurity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>macOS 安装 opencv3.4</title>
     <url>/2018/01/29/macOS%20%E5%AE%89%E8%A3%85%20opencv3.4/</url>
     <content><![CDATA[<p>介绍在 MacOs 下安装 OpenCV 3.x</p>
