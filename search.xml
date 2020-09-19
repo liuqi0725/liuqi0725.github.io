@@ -872,6 +872,13 @@
 <p><a href="https://docs.spring.io/spring-security/site/docs/current/reference/html5/" target="_blank" rel="noopener">Spring Security 官方文档</a></p>
 <p><a href="https://www.springcloud.cc/spring-security-zhcn.html" target="_blank" rel="noopener">Spring Security 参考手册-中文</a></p>
 <h2 id="为什么不用-shiro"><a href="#为什么不用-shiro" class="headerlink" title="为什么不用 shiro"></a>为什么不用 shiro</h2><p>之前SSM/SSH 一直用 Shiro。后面慢慢过渡到 SpringBoot 后，改用了 SpringSecurity。然后就没有然后了。Spring 真的好用，教程也全。<br>再说中型项目后续会涉及集群或微服务，security、cloud 打包用一套不香么。</p>
+<h2 id="Spring-Security-做用户认证、授权"><a href="#Spring-Security-做用户认证、授权" class="headerlink" title="Spring-Security 做用户认证、授权"></a>Spring-Security 做用户认证、授权</h2><p>以下是我对这两点肤浅的认识。不包含 SSO、OAuth 等。后续会在其他文章中介绍。</p>
+<p>编码分为 2 大块 <strong>access(访问)</strong>、<strong>authenticaton(认证)</strong></p>
+<ul>
+<li>access 会放过白名单，对非白名单的请求进行认证，认证的依据来源（权限、角色…），没有则返回 403</li>
+<li>authenticaton 用户访问一个需要授权的 URL 时，会进行用户认证，认证通过后再通过 access 去判断是否可以访问<strong>（授权）</strong></li>
+</ul>
+<p><img src="http://pic.fangxutuwen.com/16003563830451.jpg" alt=""></p>
 <h2 id="CSRF-跨站请求伪造防护"><a href="#CSRF-跨站请求伪造防护" class="headerlink" title="CSRF 跨站请求伪造防护"></a>CSRF 跨站请求伪造防护</h2><p>Demo 中没有开启 csrf。 如果需要可以自行开启。</p>
 <p>开启后，通过如下代码获取</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"$&#123;_csrf.parameterName&#125;"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"$&#123;_csrf.token&#125;"</span>&gt;</span></span><br><span class="line">或者放在head 中</span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf”</span> <span class="attr">content</span> = <span class="string">“$&#123;_csrf.token&#125;”</span> /&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf_header”</span>  <span class="attr">content</span> = <span class="string">“$&#123;_csrf.headerName&#125;”</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -893,13 +900,6 @@
 <blockquote>
 <p>以上几点只是我的肤浅建议，相信大多数人都是这么做的，只是不提不爽啊，公司有些人老是硬编码，换个项目改一堆，有时候还找不到错在哪里。这种重复劳动实在是太费力了。</p>
 </blockquote>
-<h2 id="Spring-Security-做用户认证、授权"><a href="#Spring-Security-做用户认证、授权" class="headerlink" title="Spring-Security 做用户认证、授权"></a>Spring-Security 做用户认证、授权</h2><p>以下是我对这两点肤浅的认识。不包含 SSO、OAuth 等。后续会在其他文章中介绍。</p>
-<p>编码分为 2 大块 <strong>access(访问)</strong>、<strong>authenticaton(认证)</strong></p>
-<ul>
-<li>access 会放过白名单，对非白名单的请求进行认证，认证的依据来源（权限、角色…），没有则返回 403</li>
-<li>authenticaton 用户访问一个需要授权的 URL 时，会进行用户认证，认证通过后再通过 access 去判断是否可以访问<strong>（授权）</strong></li>
-</ul>
-<p><img src="http://pic.fangxutuwen.com/16003563830451.jpg" alt=""></p>
 <h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>更多说明请参考代码中的注释。要点太多，Readme 写的话，又要写一次代码。</p>
 ]]></content>
       <categories>
