@@ -874,6 +874,7 @@
 <blockquote>
 <p>为避免迁移脚本冲突，如果不建多个数据库脚本的情况为，请先清空数据库里的内容</p>
 </blockquote>
+<p><a href='https://gitee.com/alexliu0725/springboot-useful' target="_blank" rel="noopener"><img src='https://gitee.com/alexliu0725/springboot-useful/widgets/widget_6.svg' alt='Fork me on Gitee'></img></a></p>
 <h2 id="Spring-security-介绍"><a href="#Spring-security-介绍" class="headerlink" title="Spring-security 介绍"></a>Spring-security 介绍</h2><p><a href="https://spring.io/projects/spring-security" target="_blank" rel="noopener">Spring Security 官方说明</a></p>
 <p><a href="https://docs.spring.io/spring-security/site/docs/current/reference/html5/" target="_blank" rel="noopener">Spring Security 官方文档</a></p>
 <p><a href="https://www.springcloud.cc/spring-security-zhcn.html" target="_blank" rel="noopener">Spring Security 参考手册-中文</a></p>
