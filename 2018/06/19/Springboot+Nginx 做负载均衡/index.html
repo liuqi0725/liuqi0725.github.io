@@ -57,9 +57,8 @@
 <meta property="og:description" content="利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://pic.fangxutuwen.com/16001457299038.jpg">
-<meta property="og:image" content="https://gitee.com/alexliu0725/springboot-useful/widgets/widget_6.svg">
 <meta property="article:published_time" content="2018-06-19T02:07:41.000Z">
-<meta property="article:modified_time" content="2020-09-17T16:12:00.222Z">
+<meta property="article:modified_time" content="2020-10-30T03:39:50.651Z">
 <meta property="article:author" content="Alexliu">
 <meta property="article:tag" content="Springboot">
 <meta property="article:tag" content="nginx">
@@ -345,19 +344,19 @@
 
 
 
-<h2 id="Nginx-Springboot-实现负载均衡"><a href="#Nginx-Springboot-实现负载均衡" class="headerlink" title="Nginx+Springboot 实现负载均衡"></a>Nginx+Springboot 实现负载均衡</h2><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><ul>
+<h2 id="Nginx-Springboot-实现负载均衡"><a href="#Nginx-Springboot-实现负载均衡" class="headerlink" title="Nginx+Springboot 实现负载均衡"></a>Nginx+Springboot 实现负载均衡</h2><h2 id="Demo-说明"><a href="#Demo-说明" class="headerlink" title="Demo 说明"></a>Demo 说明</h2><p>提供完整 Demo 下载学习使用。</p>
+<h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><ul>
 <li>JDK1.8 以以上</li>
+<li>Springboot 2.3.3</li>
 <li>Nginx 1.15 以上</li>
 </ul>
-<p>测试包: <a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx" target="_blank" rel="noopener">https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx</a></p>
-<h4 id="测试包使用"><a href="#测试包使用" class="headerlink" title="测试包使用"></a>测试包使用</h4><ul>
-<li>下载<a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx" target="_blank" rel="noopener">测试包</a> 建议使用<code>GitZip for github</code> 插件下载独立目录</li>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ul>
+<li>下载<a href="https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx" target="_blank" rel="noopener">(https://github.com/liuqi0725/springboot-useful/tree/master/springboot-soft-balance-nginx)</a> 建议使用<code>GitZip for github</code> 插件下载独立目录</li>
 <li>执行 <code>clean</code> 、<code>package</code> 操作，将打包的 jar 和 <code>application.yaml</code> 放在一起</li>
 <li>修改 <code>application.yaml</code> 端口地址.</li>
 <li>启动多个服务</li>
 <li>启动后在不同的客户端机器上访问 <a href="http://localhost/hello/username" target="_blank" rel="noopener">http://localhost/hello/username</a>  username 自定义 。测试负载均衡</li>
 </ul>
-<p><a href='https://gitee.com/alexliu0725/springboot-useful' target="_blank" rel="noopener"><img src='https://gitee.com/alexliu0725/springboot-useful/widgets/widget_6.svg' alt='Fork me on Gitee'></img></a></p>
 <h4 id="nginx-Session-共享"><a href="#nginx-Session-共享" class="headerlink" title="nginx Session 共享"></a>nginx Session 共享</h4><p>使用反向代理负载均衡，不可避免会面对 Session 共享。一般的方式是 cookie、memcache、redis 来管理共享数据. 后面的 <code>Springboot-security</code> 专题，会专门讲解。</p>
 <h4 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h4><p>配置采用的 ip_hash 。可以替换成其他的策略测试。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application&#x2F;octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    upstream springbootnginx&#123;</span><br><span class="line">       ip_hash;</span><br><span class="line">       # 其实 2 个可以都在放本地，修改端口即可</span><br><span class="line">       # 本地放一个</span><br><span class="line">       server 192.168.1.130:8080;</span><br><span class="line">       # 其他机器放一个</span><br><span class="line">       server 192.168.1.120:8080;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  192.168.1.130;</span><br><span class="line"></span><br><span class="line">        location &#x2F; &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            # 指向反向代理</span><br><span class="line">            proxy_pass http:&#x2F;&#x2F;springbootnginx;</span><br><span class="line">            proxy_connect_timeout 3s;</span><br><span class="line">            proxy_read_timeout 5s;</span><br><span class="line">            proxy_send_timeout 3s;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -466,7 +465,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡介绍"><span class="nav-number">1.</span> <span class="nav-text">负载均衡介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡网络图"><span class="nav-number">2.</span> <span class="nav-text">Nginx 负载均衡网络图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡策略"><span class="nav-number">3.</span> <span class="nav-text">Nginx 负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#轮循（默认）-Round-Robin"><span class="nav-number">3.0.1.</span> <span class="nav-text">轮循（默认）[Round Robin]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指定权重-Least-Connections"><span class="nav-number">3.0.2.</span> <span class="nav-text">指定权重 [Least Connections]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP-绑定-IP-Hash"><span class="nav-number">3.0.3.</span> <span class="nav-text">IP 绑定[IP Hash]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Server-参数"><span class="nav-number">3.0.4.</span> <span class="nav-text">Server 参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-Springboot-实现负载均衡"><span class="nav-number">4.</span> <span class="nav-text">Nginx+Springboot 实现负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">4.0.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试包使用"><span class="nav-number">4.0.2.</span> <span class="nav-text">测试包使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-Session-共享"><span class="nav-number">4.0.3.</span> <span class="nav-text">nginx Session 共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-配置"><span class="nav-number">4.0.4.</span> <span class="nav-text">nginx 配置</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡介绍"><span class="nav-number">1.</span> <span class="nav-text">负载均衡介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡网络图"><span class="nav-number">2.</span> <span class="nav-text">Nginx 负载均衡网络图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡策略"><span class="nav-number">3.</span> <span class="nav-text">Nginx 负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#轮循（默认）-Round-Robin"><span class="nav-number">3.0.1.</span> <span class="nav-text">轮循（默认）[Round Robin]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指定权重-Least-Connections"><span class="nav-number">3.0.2.</span> <span class="nav-text">指定权重 [Least Connections]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP-绑定-IP-Hash"><span class="nav-number">3.0.3.</span> <span class="nav-text">IP 绑定[IP Hash]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Server-参数"><span class="nav-number">3.0.4.</span> <span class="nav-text">Server 参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-Springboot-实现负载均衡"><span class="nav-number">4.</span> <span class="nav-text">Nginx+Springboot 实现负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo-说明"><span class="nav-number">5.</span> <span class="nav-text">Demo 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">5.0.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">5.0.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-Session-共享"><span class="nav-number">5.0.3.</span> <span class="nav-text">nginx Session 共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-配置"><span class="nav-number">5.0.4.</span> <span class="nav-text">nginx 配置</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -482,20 +481,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
