@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://35liuqi.com/2020/11/19/centos7%E5%AE%89%E8%A3%85postgresql/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2020/08/19/Hexo%20%E5%88%9B%E5%BB%BA%20Sitemap/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/</loc>
     
     <lastmod>2020-11-02</lastmod>
@@ -47,13 +68,6 @@
     <loc>https://35liuqi.com/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2020-09-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/</loc>
-    
-    <lastmod>2020-03-22</lastmod>
     
   </url>
   
@@ -166,13 +180,6 @@
   
   <url>
     <loc>https://35liuqi.com/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2020-12-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/tags/MacOS/</loc>
     <lastmod>2020-12-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -325,6 +332,20 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://35liuqi.com/tags/CentOS7/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/postgresql/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -371,6 +392,13 @@
   
   <url>
     <loc>https://35liuqi.com/categories/Docker/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/categories/CentOS7/</loc>
     <lastmod>2020-12-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
