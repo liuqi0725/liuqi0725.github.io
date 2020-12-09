@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://35liuqi.com/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2018/05/13/CentOS7%20yum%20%E5%AE%89%E8%A3%85%20nginx/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2018/05/13/MacOS%20%E4%BD%BF%E7%94%A8%20SSH%20%E6%96%B9%E5%BC%8F%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2020/07/25/CentOS7%20Let%E2%80%99s%20encrypt%20certbot%20%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/2017/07/25/docker-compose%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2020-12-09</lastmod>
@@ -207,6 +242,13 @@
   </url>
   
   <url>
+    <loc>https://35liuqi.com/tags/MacOS/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/tags/v2Ray/</loc>
     <lastmod>2020-12-09</lastmod>
     <changefreq>daily</changefreq>
@@ -374,6 +416,41 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://35liuqi.com/tags/Nginx/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/Centos7/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/https/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/docker-compose/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/SSH/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -434,6 +511,13 @@
   
   <url>
     <loc>https://35liuqi.com/categories/Python/</loc>
+    <lastmod>2020-12-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/categories/Centos7/</loc>
     <lastmod>2020-12-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

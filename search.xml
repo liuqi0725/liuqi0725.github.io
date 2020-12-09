@@ -283,6 +283,71 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS7 Let’s encrypt certbot 证书管理</title>
+    <url>/2020/07/25/CentOS7%20Let%E2%80%99s%20encrypt%20certbot%20%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074977125480.jpg" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="安装-certbot"><a href="#安装-certbot" class="headerlink" title="安装 certbot"></a>安装 certbot</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y certbot</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装证书前"><a href="#安装证书前" class="headerlink" title="安装证书前"></a>安装证书前</h2><ul>
+<li>安装证书前先准备个临时目录，有个 index.html</li>
+<li>配置 nginx 增加你要添加证书的 server </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">server&#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name you_add_domain</span><br><span class="line">    root /your/<span class="built_in">test</span>/www/dir</span><br><span class="line">    location / &#123;</span><br><span class="line">        index  index.html</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="standalone-模式"><a href="#standalone-模式" class="headerlink" title="standalone 模式"></a>standalone 模式</h2><p>有些时候我们的一些服务并没有根目录，例如一些微服务，这时候使用 –webroot 就走不通了。certbot 还有另外一种模式 –standalone，这种模式不需要指定网站根目录，他会自动启用服务器的443端口，来验证域名的归属。我们有其他服务（例如nginx）占用了443端口，就必须先停止这些服务，在证书生成完毕后，再启用。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">certbot certonly --standalone -d sub.domain.com -m xxxxxx@xxx.com --agree-tos</span><br></pre></td></tr></table></figure>
+
+<p><strong>证书生成后文件：</strong></p>
+<ul>
+<li>cert.pem              服务端证书</li>
+<li>chain.pem                 浏览器需要的所有证书但不包括服务端证书，比如根证书和中间证书</li>
+<li>fullchain.pem         包括了cert.pem和chain.pem的内容</li>
+<li>privkey.pem           证书的私钥</li>
+</ul>
+<h2 id="nginx-ssl-配置"><a href="#nginx-ssl-配置" class="headerlink" title="nginx ssl 配置"></a>nginx ssl 配置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置一个 80 端口，并转发到 443 端口 </span></span><br><span class="line"><span class="comment"># 可以配置多个，也可以一个配置多个域名  用空格分割</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name example.your.domain;                    <span class="comment"># 修改域名</span></span><br><span class="line">    rewrite ^(.*) https://<span class="variable">$server_name</span><span class="variable">$1</span> permanent;     <span class="comment"># 转发 443</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 443 ,可以多个</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen      443 ssl;</span><br><span class="line">    server_name your.domain.com;      <span class="comment"># 修改域名</span></span><br><span class="line">    </span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line">    ssl_session_cache shared:SSL:10m;</span><br><span class="line">    ssl_session_timeout 1d;</span><br><span class="line">    ssl_session_tickets off;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 配置证书</span></span><br><span class="line">    ssl_certificate /etc/letsencrypt/live/your.domain.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /etc/letsencrypt/live/your.domain.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        <span class="comment"># 可以是转发，指向目录等</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    location /name &#123;<span class="comment"># name 代表在使用该 域名时 通过该目录访问执行的地址。该示例就是 https://your.domain.com/name</span></span><br><span class="line">        <span class="comment"># 可以是转发，指向目录等</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看已安装的证书"><a href="#查看已安装的证书" class="headerlink" title="查看已安装的证书"></a>查看已安装的证书</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">certbot certificates</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除证书"><a href="#删除证书" class="headerlink" title="删除证书"></a>删除证书</h2><p><strong>千万别删除文件夹的方式删除</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">certbot delete --cert-name example.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="手动续期"><a href="#手动续期" class="headerlink" title="手动续期"></a>手动续期</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/certbot renew</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定续期"><a href="#自定续期" class="headerlink" title="自定续期"></a>自定续期</h2><h3 id="安装-cron-服务"><a href="#安装-cron-服务" class="headerlink" title="安装 cron 服务"></a>安装 cron 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum -y install vixie-cron</span><br><span class="line">yum -y install crontabs</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-cron-服务"><a href="#启动-cron-服务" class="headerlink" title="启动 cron 服务"></a>启动 cron 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service crond start</span><br><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> crond</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看-corn-位置"><a href="#查看-corn-位置" class="headerlink" title="查看 corn 位置"></a>查看 corn 位置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -name <span class="string">"cron"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/etc/selinux/targeted/active/modules/100/cron</span><br><span class="line">/var/<span class="built_in">log</span>/cron   <span class="comment"># 这个是日志文件位置，不管它</span></span><br><span class="line">/var/lib/docker/overlay2/755f150def933bc7d28386aa9c28db653fcc466d4a5f43f42987a8f63e75e566/diff/var/spool/cron</span><br><span class="line">/var/lib/docker/overlay2/f7d173cd29f2405151201e67c6b403e03e41c632e42c53d04f6c66977eb31a67/merged/var/spool/cron</span><br><span class="line">/var/spool/cron <span class="comment"># 这里是所有的自动执行任务的 cron 文件存放位置</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建-cron-配置"><a href="#创建-cron-配置" class="headerlink" title="创建 cron 配置"></a>创建 cron 配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此命令会在 <code>/var/spool/cron</code> 下创建 ‘root’ 命名的 root 用户定时配置文件</p>
+</blockquote>
+<h3 id="添加定时任务"><a href="#添加定时任务" class="headerlink" title="添加定时任务"></a>添加定时任务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /var/spool/cron/root</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">15 3 * * * /usr/bin/certbot renew --quiet</span><br></pre></td></tr></table></figure>
+
+<p>添加完后需要重启</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service crond restart</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Centos7</category>
+      </categories>
+      <tags>
+        <tag>Centos7</tag>
+        <tag>https</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</title>
     <url>/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/</url>
     <content><![CDATA[<p>最近SS、SSR 老是被 ban，只有换工具了，一直听说 v2Ray 很好用。就尝试切换到 v2Ray 。网上看了下现有的教程，大多是 nginx 的，这里有几个问题。 </p>
@@ -855,6 +920,90 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS7 yum 安装 nginx</title>
+    <url>/2018/05/13/CentOS7%20yum%20%E5%AE%89%E8%A3%85%20nginx/</url>
+    <content><![CDATA[<p><a href="http://nginx.org/en/linux_packages.html#stable" target="_blank" rel="noopener">官方说明</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install yum-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 nginx  yum 源</span></span><br><span class="line"></span><br><span class="line">vi /etc/yum.repos.d/nginx.repo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加如下内容</span></span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/<span class="variable">$releasever</span>/<span class="variable">$basearch</span>/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[nginx-mainline]</span><br><span class="line">name=nginx mainline repo</span><br><span class="line">baseurl=http://nginx.org/packages/mainline/centos/<span class="variable">$releasever</span>/<span class="variable">$basearch</span>/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 默认安装最新的 ‘稳定版’。如果要自定义版本 【不安装特定版本，跳过】</span></span><br><span class="line">sudo yum-config-manager --<span class="built_in">enable</span> nginx-mainline</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装稳定版</span></span><br><span class="line">sudo yum install nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl start nginx       <span class="comment"># 启动</span></span><br><span class="line">systemctl status nginx      <span class="comment"># 查看状态</span></span><br><span class="line">systemctl stop nginx        <span class="comment"># 停止</span></span><br><span class="line">systemctl restart nginx     <span class="comment"># 重启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nginx      <span class="comment"># 设置开机启动</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nginx -s reload <span class="comment"># 修改配置后,使配置生效</span></span><br><span class="line">nginx -t        <span class="comment"># 验证 nginx 配置是否正确</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 注意，修改配置后，一定要用 nginx -s reload 使配置生效。 再重启服务器</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>CentOS7</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS 使用 SSH 方式连接服务器</title>
+    <url>/2018/05/13/MacOS%20%E4%BD%BF%E7%94%A8%20SSH%20%E6%96%B9%E5%BC%8F%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>服务器： centos7 64 位<br>客户端： Macos 10.13</p>
+<p>内容主要讲解本地证书创建，拷贝证书，本地别名等</p>
+<h2 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -t 秘钥类型 默认 rsa 可以省略</span></span><br><span class="line"><span class="comment"># -C 注释文字，一般是你的邮箱，可以省略</span></span><br><span class="line"><span class="comment"># -f 是存放文件及名称。不加的话，默认是 id_rsh</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"xxx@xx.com"</span> -f ~/.ssh/id_rsa_gitee</span><br></pre></td></tr></table></figure>
+
+<p>创建后 保存在 <code>~/.ssh</code>目录下</p>
+<blockquote>
+<p>如果之前创建过很多证书，在 ~/.ssh 目录下会有 <code>known_hosts</code> 文件。<br>如果创建失败。可以删除该文件。</p>
+</blockquote>
+<h2 id="拷贝公钥到服务器"><a href="#拷贝公钥到服务器" class="headerlink" title="拷贝公钥到服务器"></a>拷贝公钥到服务器</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># macos</span></span><br><span class="line"><span class="comment"># 如果没有修改过默认端口 22，不需要填端口</span></span><br><span class="line">scp -P &lt;端口&gt; ~/.ssh/your_id.pub &lt;用户名&gt;@&lt;服务器ip地址&gt;:/home/ssh_key/your_id.pub</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器设置客户端公钥"><a href="#服务器设置客户端公钥" class="headerlink" title="服务器设置客户端公钥"></a>服务器设置客户端公钥</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 登陆服务器</span></span><br><span class="line"><span class="comment"># `/home/ssh_key/your_id.pub` 为你执行 scp 时 复制到服务器的公钥</span></span><br><span class="line">cat /home/ssh_key/your_id.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此时链接就不需要密码了</span></span><br><span class="line"><span class="comment"># 如果没有修改过默认端口 22，不需要填端口</span></span><br><span class="line">ssh -P &lt;端口&gt; &lt;用户名&gt;@&lt;服务器ip地址&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="快捷登陆"><a href="#快捷登陆" class="headerlink" title="快捷登陆"></a>快捷登陆</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在 ~/.ssh 下新建 config</span></span><br><span class="line">vi ~/.ssh config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加配置</span></span><br><span class="line">Host            <span class="built_in">alias</span>           <span class="comment"># 自定义别名</span></span><br><span class="line">HostName        hostname        <span class="comment"># 替换为你的 ssh 服务 ip 或 domain</span></span><br><span class="line">Port            port            <span class="comment"># ssh 服务器端口</span></span><br><span class="line">User            user            <span class="comment"># ssh 服务器用户</span></span><br><span class="line">IdentityFile    ~/.ssh/your_id  <span class="comment"># 注意此时是秘钥，不需要加 `.pub`</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加后就可以通过别名 直接快捷链接</span></span><br><span class="line"></span><br><span class="line">ssh <span class="built_in">alias</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>MacOS</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 常用命令</title>
+    <url>/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
+<p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
+<ul>
+<li><strong>image_id</strong> : 镜像 id  可以通过 <code>docker ps -a</code> 查看，可以简写(取 id 前几位)</li>
+<li><strong>target_dir_path</strong> : docker 中目标文件夹路径</li>
+<li><strong>local_dir_path</strong> : 拷贝到本地的路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 示例 </span></span><br><span class="line"><span class="comment"># 查看镜像  `741c99bf26bb` 是镜像id  </span></span><br><span class="line">$ docker ps -a                                                                                </span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                            PORTS               NAMES</span><br><span class="line">741c99bf26bb        vanas/tokenmanager   <span class="string">"/bin/sh -c 'circusd…"</span>   3 minutes ago       Restarting (127) 14 seconds ago                       vanastokenmanager_web1_1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 docker 镜像下 /app  到本地的  /Users/alexliu/app 目录</span></span><br><span class="line">$ docker cp 74:/app /Users/alexliu/app</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenCV3 图像膨胀 dilate、腐蚀 erode、提取图像中的条形码 JAVA 实现</title>
     <url>/2018/04/19/OpenCV3%20%E5%9B%BE%E5%83%8F%E8%86%A8%E8%83%80%20dilate%E3%80%81%E8%85%90%E8%9A%80%20erode%E3%80%81%E6%8F%90%E5%8F%96%E5%9B%BE%E5%83%8F%E4%B8%AD%E7%9A%84%E6%9D%A1%E5%BD%A2%E7%A0%81%20JAVA%20%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>利用近期对 OpenCV 的学习，结合图像的 dilate、erode 用 JAVA 来实现提取图像中的条形码，这样就可以通过识别工具来识别图中的内容。</p>
@@ -1424,6 +1573,23 @@
         <tag>Java</tag>
         <tag>OpenCV</tag>
         <tag>OCR</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker-compose 命令详解</title>
+    <url>/2017/07/25/docker-compose%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="docker-compose-命令详解"><a href="#docker-compose-命令详解" class="headerlink" title="docker-compose 命令详解"></a>docker-compose 命令详解</h2><p>docker-compose的使用非常类似于docker命令的使用，但是需要注意的是大部分的compose命令都需要到docker-compose.yml文件所在的目录下才能执行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 命令聚合每个容器的输出，命令退出时，所有容器都将停止。</span></span><br><span class="line">docker-compose up </span><br><span class="line">		</span><br><span class="line"><span class="comment"># 在后台启动容器并使它们保持运行。</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看该容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker-compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker logs -f &lt;container_id&gt; 			</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(查看最后n条日志打印)。 例：`docker logs -f --tail 50 44b `</span></span><br><span class="line">docker logs -f --tail &lt;数量&gt; &lt;container_id&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止compose服务。</span></span><br><span class="line">docker-compose stop 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启compose服务。</span></span><br><span class="line">docker-compose restart 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># kill compose服务。</span></span><br><span class="line">docker-compose <span class="built_in">kill</span> 					</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看compose服务状态。</span></span><br><span class="line">docker-compose ps 						</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除compose服务。	</span></span><br><span class="line">docker-compose rm</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>docker-compose</tag>
       </tags>
   </entry>
 </search>
