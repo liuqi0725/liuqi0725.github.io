@@ -65,8 +65,8 @@
       </tags>
   </entry>
   <entry>
-    <title>centos7 安装 postgresql</title>
-    <url>/2020/12/09/centos7%E5%AE%89%E8%A3%85postgresql/</url>
+    <title>Centos7 端口与防火墙配置</title>
+    <url>/2020/12/09/Centos7%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h2><h3 id="开放-关闭端口"><a href="#开放-关闭端口" class="headerlink" title="开放/关闭端口"></a>开放/关闭端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent       <span class="comment"># 开放443端口</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=443/tcp --permanent    <span class="comment"># 关闭443端口</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="查看防火墙所有开放的端口"><a href="#查看防火墙所有开放的端口" class="headerlink" title="查看防火墙所有开放的端口"></a>查看防火墙所有开放的端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
