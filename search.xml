@@ -577,6 +577,107 @@
       </tags>
   </entry>
   <entry>
+    <title>基于 Docker 的 ngrok 内网穿透部署</title>
+    <url>/2019/11/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg" alt=""><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
+<a id="more"></a>
+
+
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok 官网</a> 目前已经切换为 ngrok2 。免费 8 小时<br><a href="https://github.com/tutumcloud/ngrok.git" target="_blank" rel="noopener">Ngrok Github</a>  升级为 ngrok2 后已闭源。</p>
+<blockquote>
+<p>写在前面，不建议在服务器上直接安装。 避免安装失败或者其他原因造成的服务器各类包安装冗余，甚至冲突。  使用 docker 安装，不好用删了即可。<br>最近痛下决心，把服务器重装系统了。一些软件，工具能用 docker 就用 docker。管理起来方便多了。</p>
+</blockquote>
+<h2 id="为什么要搭建自己的-ngrok"><a href="#为什么要搭建自己的-ngrok" class="headerlink" title="为什么要搭建自己的 ngrok"></a>为什么要搭建自己的 ngrok</h2><ul>
+<li>管理内网服务器，内网web进行演示</li>
+<li>快速开发微信程序和第三方支付平台调试</li>
+<li>本地WEB外网访问、本地开发微信、TCP端口转发</li>
+</ul>
+<p>国内内网穿透</p>
+<ul>
+<li><a href="https://www.oray.com/activity/190301/buy/?utm_source=baidu&utm_medium=cpc&utm_campaign=act_190301&i=45650&bd_vid=12322937661724432394" target="_blank" rel="noopener">花生壳</a></li>
+<li><a href="http://www.ngrok.cc" target="_blank" rel="noopener">Sunny-Ngrok</a></li>
+</ul>
+<p>至于搭建自己的 ngrok 服务的目的。 因为没有免费的…… </p>
+<h2 id="选-ngrok-还是-frp"><a href="#选-ngrok-还是-frp" class="headerlink" title="选 ngrok 还是 frp"></a>选 ngrok 还是 frp</h2><p>首先你自己要清楚你的使用范围。 因为他的速度跟你服务器以及供应商息息相关。比如我买的搬瓦工VPS，倒数第二便宜那种。 那内网穿透也就仅限个人项目测试，小范围人群测试这种。  所以在这种情况下无需考虑 ngrok 或 frp 那个更优。 都慢的抓脑壳。</p>
+<p>如果是公司使用，那还是建议在阿里云等服务器上搭建一个，速度也快，性能也好。  </p>
+<p>至于 ngrok，frp 我都试过。 最后选了 ngrok，方便点</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>公网 IP 的服务器 <ul>
+<li>国内: 腾讯云，阿里云……</li>
+<li>国外: 搬瓦工，Vultr, 亚马逊……</li>
+</ul>
+</li>
+<li>域名<ul>
+<li>可以找别人借你一个二级域名</li>
+<li>可以买一个域名  便宜的首年 10 来块。 注意：推荐 GoDaddy 或者国外买域名</li>
+</ul>
+</li>
+<li>Linux 系统。 本文不支持 windows</li>
+</ul>
+<h2 id="DNS-解析"><a href="#DNS-解析" class="headerlink" title="DNS 解析"></a>DNS 解析</h2><p>全文使用 <strong>example.com</strong> 代替你购买的域名。 二级域名同理</p>
+<p>添加 2 条 A 记录。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  host     Type        TTL     value</span><br><span class="line"></span><br><span class="line">ngrok         A         900     xxx.xxx.xxx.xxx</span><br><span class="line">*.ngrok       A         900     xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
+
+<p><code>xxx.xxx.xxx.xxx</code> 为你服务器的 IP 地址</p>
+<ul>
+<li>把 ngrok.example.com 解析到 xxx.xxx.xxx.xxx</li>
+<li>把 *.ngrok.example.com 解析到 xxx.xxx.xxx.xxx<ul>
+<li>ngrok 部署后，会反向代理到对应的子域名中</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>国内的服务器服务商，DNS 解析基本都支持泛域名(*.xxx.com)添加 。这里比国外强。<br>如果你的提供商不支持，要么你每增加一个子域名，在 DNS 中增加一个，要么切换到 DNSPod 去</p>
+</blockquote>
+<h2 id="docker-部署-ngrok"><a href="#docker-部署-ngrok" class="headerlink" title="docker 部署 ngrok"></a>docker 部署 ngrok</h2><p>本文使用 <a href="https://hub.docker.com/r/hteen/ngrok?utm_source=ld246.com" target="_blank" rel="noopener">hteen/ngrok</a> 镜像。<br>或者你自己选一个 <a href="https://hub.docker.com/search?q=ngrok&type=image" target="_blank" rel="noopener">docker 中 ngrok 镜像搜索</a></p>
+<blockquote>
+<p>docker 的安装不在本文讨论范围。 可以参考 <a href="https://35liuqi.com/2019/06/27/CentOS-7%20安装%20Docker/">CentOS-7 安装 Docker</a></p>
+</blockquote>
+<h3 id="拉镜像"><a href="#拉镜像" class="headerlink" title="拉镜像"></a>拉镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉镜像</span></span><br><span class="line">docker pull hteen/ngrok</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后检查 </span></span><br><span class="line">[root@104 ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hteen/ngrok          latest              9f29e9d374e9        4 years ago         260MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意替换域名</span></span><br><span class="line">docker run --rm -it -e DOMAIN=<span class="string">"ngrok.example.com"</span> -v /data/ngrok:/myfiles hteen/ngrok /bin/sh /build.sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果国内服务器，这一步时间很长。耐心等待！！！</p>
+</blockquote>
+<p><strong>ngrok 初始化后</strong>，会生成 <code>/data/ngrok</code> 目录</p>
+<h3 id="查看客户端"><a href="#查看客户端" class="headerlink" title="查看客户端"></a>查看客户端</h3><p>目录 <code>/data/ngrok/bin</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin/ngrokd                      <span class="comment"># 服务端。 不管。  注意不要和客户端 ngrok 看混了</span></span><br><span class="line">bin/ngrok                       <span class="comment"># linux 客户端    在本地的 centos7 上验证失败</span></span><br><span class="line">bin/darwin_amd64/ngrok          <span class="comment"># osx 客户端      在本地的 macbook 上验证成功</span></span><br><span class="line">bin/windows_amd64/ngrok.exe     <span class="comment"># windows 客户端  在本地的 windows 上验证成功</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用 ftp 或者 scp 等方式拷贝对应客户端到你本地</p>
+</blockquote>
+<h3 id="启动-ngrok-服务"><a href="#启动-ngrok-服务" class="headerlink" title="启动 ngrok 服务"></a>启动 ngrok 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意修改域名</span></span><br><span class="line"></span><br><span class="line">docker run -idt --name ngrok-server \</span><br><span class="line">-v /data/ngrok:/myfiles \</span><br><span class="line">-p 8081:80 \</span><br><span class="line">-p 8082:443 \</span><br><span class="line">-p 4443:4443 \</span><br><span class="line">-e DOMAIN=<span class="string">'ngrok.example.com'</span> hteen/ngrok /bin/sh /server.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>本地 8081 转发到 image 的 80 端口</li>
+<li>本地 8082 转发到 image 的 443 端口</li>
+<li>本地 4443 转发到 image 的 4443 端口</li>
+</ul>
+<h2 id="配置-nginx"><a href="#配置-nginx" class="headerlink" title="配置 nginx"></a>配置 nginx</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name ngrok.example.com *.ngrok.example.com; <span class="comment"># 监听域名</span></span><br><span class="line">  </span><br><span class="line">  underscores_in_headers on; <span class="comment"># 允许传递带_ 的参数 默认 off。 比如你研发 header 中带 access_token 。不开启将无法传递</span></span><br><span class="line">  </span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">    proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    proxy_pass http://127.0.0.1:8081;  <span class="comment"># 这里的端口号是开启容器时 ngrok 监听的端口号</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置完后，重启 nginx</p>
+</blockquote>
+<h2 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=4443/tcp --permanent       <span class="comment"># 开放4443端口</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h2><p>下载客户端到本地。并新建 ngrok.yml</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">server_addr:</span> <span class="string">"ngrok.example.com:4443"</span>       <span class="comment"># 服务器域名 + 端口 </span></span><br><span class="line"><span class="attr">trust_host_root_certs:</span> <span class="literal">false</span>                <span class="comment"># True 支持TLS加密协议的证书信任</span></span><br><span class="line"><span class="attr">tunnels:</span>                                    <span class="comment"># 通道,可以配置多个</span></span><br><span class="line">  <span class="attr">hello:</span>                                    <span class="comment"># 名称 ，自定义。 在启动时需要</span></span><br><span class="line">   <span class="attr">proto:</span>                                   <span class="comment"># 属性。固定</span></span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             <span class="comment"># http 监听本地端口</span></span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span>                            <span class="comment"># https 监听本地端口</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test1</span>                         <span class="comment"># 子域名 自定义，不能重复. 例子中访问域名为  http://hello.ngrok.example.com</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">world:</span>                                   </span><br><span class="line">   <span class="attr">proto:</span>                                   </span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             </span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启动客户端"><a href="#启动客户端" class="headerlink" title="启动客户端"></a>启动客户端</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在 ngrok 客户端目录</span></span><br><span class="line">./ngrok -config=ngrok.yml start all     <span class="comment"># 启动所有监听</span></span><br><span class="line">./ngrok -config=ngrok.yml start world   <span class="comment"># 仅启动 名称为 world 的监听</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="本地监控"><a href="#本地监控" class="headerlink" title="本地监控"></a>本地监控</h3><p><a href="http://127.0.0.1:4040" target="_blank" rel="noopener">http://127.0.0.1:4040</a></p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS-7 安装 Docker</title>
     <url>/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/</url>
     <content><![CDATA[<p>微服务现在已经是趋势，不管大型，中型，小型应用，都可以进行拆分，达到应用松耦合，可复用的目的。说到微服务，就要提到 Docker。介绍下 Docker 在 centos-7 上安装的步骤</p>
@@ -676,107 +777,6 @@
       <tags>
         <tag>Springboot</tag>
         <tag>flyway</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于 Docker 的 ngrok 内网穿透部署</title>
-    <url>/2018/06/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg" alt=""><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
-<a id="more"></a>
-
-
-<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok 官网</a> 目前已经切换为 ngrok2 。免费 8 小时<br><a href="https://github.com/tutumcloud/ngrok.git" target="_blank" rel="noopener">Ngrok Github</a>  升级为 ngrok2 后已闭源。</p>
-<blockquote>
-<p>写在前面，不建议在服务器上直接安装。 避免安装失败或者其他原因造成的服务器各类包安装冗余，甚至冲突。  使用 docker 安装，不好用删了即可。<br>最近痛下决心，把服务器重装系统了。一些软件，工具能用 docker 就用 docker。管理起来方便多了。</p>
-</blockquote>
-<h2 id="为什么要搭建自己的-ngrok"><a href="#为什么要搭建自己的-ngrok" class="headerlink" title="为什么要搭建自己的 ngrok"></a>为什么要搭建自己的 ngrok</h2><ul>
-<li>管理内网服务器，内网web进行演示</li>
-<li>快速开发微信程序和第三方支付平台调试</li>
-<li>本地WEB外网访问、本地开发微信、TCP端口转发</li>
-</ul>
-<p>国内内网穿透</p>
-<ul>
-<li><a href="https://www.oray.com/activity/190301/buy/?utm_source=baidu&utm_medium=cpc&utm_campaign=act_190301&i=45650&bd_vid=12322937661724432394" target="_blank" rel="noopener">花生壳</a></li>
-<li><a href="http://www.ngrok.cc" target="_blank" rel="noopener">Sunny-Ngrok</a></li>
-</ul>
-<p>至于搭建自己的 ngrok 服务的目的。 因为没有免费的…… </p>
-<h2 id="选-ngrok-还是-frp"><a href="#选-ngrok-还是-frp" class="headerlink" title="选 ngrok 还是 frp"></a>选 ngrok 还是 frp</h2><p>首先你自己要清楚你的使用范围。 因为他的速度跟你服务器以及供应商息息相关。比如我买的搬瓦工VPS，倒数第二便宜那种。 那内网穿透也就仅限个人项目测试，小范围人群测试这种。  所以在这种情况下无需考虑 ngrok 或 frp 那个更优。 都慢的抓脑壳。</p>
-<p>如果是公司使用，那还是建议在阿里云等服务器上搭建一个，速度也快，性能也好。  </p>
-<p>至于 ngrok，frp 我都试过。 最后选了 ngrok，方便点</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
-<li>公网 IP 的服务器 <ul>
-<li>国内: 腾讯云，阿里云……</li>
-<li>国外: 搬瓦工，Vultr, 亚马逊……</li>
-</ul>
-</li>
-<li>域名<ul>
-<li>可以找别人借你一个二级域名</li>
-<li>可以买一个域名  便宜的首年 10 来块。 注意：推荐 GoDaddy 或者国外买域名</li>
-</ul>
-</li>
-<li>Linux 系统。 本文不支持 windows</li>
-</ul>
-<h2 id="DNS-解析"><a href="#DNS-解析" class="headerlink" title="DNS 解析"></a>DNS 解析</h2><p>全文使用 <strong>example.com</strong> 代替你购买的域名。 二级域名同理</p>
-<p>添加 2 条 A 记录。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  host     Type        TTL     value</span><br><span class="line"></span><br><span class="line">ngrok         A         900     xxx.xxx.xxx.xxx</span><br><span class="line">*.ngrok       A         900     xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
-
-<p><code>xxx.xxx.xxx.xxx</code> 为你服务器的 IP 地址</p>
-<ul>
-<li>把 ngrok.example.com 解析到 xxx.xxx.xxx.xxx</li>
-<li>把 *.ngrok.example.com 解析到 xxx.xxx.xxx.xxx<ul>
-<li>ngrok 部署后，会反向代理到对应的子域名中</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>国内的服务器服务商，DNS 解析基本都支持泛域名(*.xxx.com)添加 。这里比国外强。<br>如果你的提供商不支持，要么你每增加一个子域名，在 DNS 中增加一个，要么切换到 DNSPod 去</p>
-</blockquote>
-<h2 id="docker-部署-ngrok"><a href="#docker-部署-ngrok" class="headerlink" title="docker 部署 ngrok"></a>docker 部署 ngrok</h2><p>本文使用 <a href="https://hub.docker.com/r/hteen/ngrok?utm_source=ld246.com" target="_blank" rel="noopener">hteen/ngrok</a> 镜像。<br>或者你自己选一个 <a href="https://hub.docker.com/search?q=ngrok&type=image" target="_blank" rel="noopener">docker 中 ngrok 镜像搜索</a></p>
-<blockquote>
-<p>docker 的安装不在本文讨论范围。 可以参考 <a href="https://35liuqi.com/2019/06/27/CentOS-7%20安装%20Docker/">CentOS-7 安装 Docker</a></p>
-</blockquote>
-<h3 id="拉镜像"><a href="#拉镜像" class="headerlink" title="拉镜像"></a>拉镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉镜像</span></span><br><span class="line">docker pull hteen/ngrok</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后检查 </span></span><br><span class="line">[root@104 ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hteen/ngrok          latest              9f29e9d374e9        4 years ago         260MB</span><br></pre></td></tr></table></figure>
-
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意替换域名</span></span><br><span class="line">docker run --rm -it -e DOMAIN=<span class="string">"ngrok.example.com"</span> -v /data/ngrok:/myfiles hteen/ngrok /bin/sh /build.sh</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果国内服务器，这一步时间很长。耐心等待！！！</p>
-</blockquote>
-<p><strong>ngrok 初始化后</strong>，会生成 <code>/data/ngrok</code> 目录</p>
-<h3 id="查看客户端"><a href="#查看客户端" class="headerlink" title="查看客户端"></a>查看客户端</h3><p>目录 <code>/data/ngrok/bin</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin/ngrokd                      <span class="comment"># 服务端。 不管。  注意不要和客户端 ngrok 看混了</span></span><br><span class="line">bin/ngrok                       <span class="comment"># linux 客户端    在本地的 centos7 上验证失败</span></span><br><span class="line">bin/darwin_amd64/ngrok          <span class="comment"># osx 客户端      在本地的 macbook 上验证成功</span></span><br><span class="line">bin/windows_amd64/ngrok.exe     <span class="comment"># windows 客户端  在本地的 windows 上验证成功</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用 ftp 或者 scp 等方式拷贝对应客户端到你本地</p>
-</blockquote>
-<h3 id="启动-ngrok-服务"><a href="#启动-ngrok-服务" class="headerlink" title="启动 ngrok 服务"></a>启动 ngrok 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意修改域名</span></span><br><span class="line"></span><br><span class="line">docker run -idt --name ngrok-server \</span><br><span class="line">-v /data/ngrok:/myfiles \</span><br><span class="line">-p 8081:80 \</span><br><span class="line">-p 8082:443 \</span><br><span class="line">-p 4443:4443 \</span><br><span class="line">-e DOMAIN=<span class="string">'ngrok.example.com'</span> hteen/ngrok /bin/sh /server.sh</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>本地 8081 转发到 image 的 80 端口</li>
-<li>本地 8082 转发到 image 的 443 端口</li>
-<li>本地 4443 转发到 image 的 4443 端口</li>
-</ul>
-<h2 id="配置-nginx"><a href="#配置-nginx" class="headerlink" title="配置 nginx"></a>配置 nginx</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name ngrok.example.com *.ngrok.example.com; <span class="comment"># 监听域名</span></span><br><span class="line">  </span><br><span class="line">  underscores_in_headers on; <span class="comment"># 允许传递带_ 的参数 默认 off。 比如你研发 header 中带 access_token 。不开启将无法传递</span></span><br><span class="line">  </span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">    proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    proxy_pass http://127.0.0.1:8081;  <span class="comment"># 这里的端口号是开启容器时 ngrok 监听的端口号</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>配置完后，重启 nginx</p>
-</blockquote>
-<h2 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=4443/tcp --permanent       <span class="comment"># 开放4443端口</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h2><p>下载客户端到本地。并新建 ngrok.yml</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">server_addr:</span> <span class="string">"ngrok.example.com:4443"</span>       <span class="comment"># 服务器域名 + 端口 </span></span><br><span class="line"><span class="attr">trust_host_root_certs:</span> <span class="literal">false</span>                <span class="comment"># True 支持TLS加密协议的证书信任</span></span><br><span class="line"><span class="attr">tunnels:</span>                                    <span class="comment"># 通道,可以配置多个</span></span><br><span class="line">  <span class="attr">hello:</span>                                    <span class="comment"># 名称 ，自定义。 在启动时需要</span></span><br><span class="line">   <span class="attr">proto:</span>                                   <span class="comment"># 属性。固定</span></span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             <span class="comment"># http 监听本地端口</span></span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span>                            <span class="comment"># https 监听本地端口</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test1</span>                         <span class="comment"># 子域名 自定义，不能重复. 例子中访问域名为  http://hello.ngrok.example.com</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">world:</span>                                   </span><br><span class="line">   <span class="attr">proto:</span>                                   </span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             </span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test2</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="启动客户端"><a href="#启动客户端" class="headerlink" title="启动客户端"></a>启动客户端</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在 ngrok 客户端目录</span></span><br><span class="line">./ngrok -config=ngrok.yml start all     <span class="comment"># 启动所有监听</span></span><br><span class="line">./ngrok -config=ngrok.yml start world   <span class="comment"># 仅启动 名称为 world 的监听</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="本地监控"><a href="#本地监控" class="headerlink" title="本地监控"></a>本地监控</h3><p><a href="http://127.0.0.1:4040" target="_blank" rel="noopener">http://127.0.0.1:4040</a></p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>技巧</tag>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
