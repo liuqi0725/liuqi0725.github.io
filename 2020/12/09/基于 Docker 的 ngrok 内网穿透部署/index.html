@@ -52,20 +52,20 @@
   <meta name="description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于 Docker 的 ngrok 内网穿透部署">
-<meta property="og:url" content="https://35liuqi.com/2019/11/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:url" content="https://35liuqi.com/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="35Niu Blog">
 <meta property="og:description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://pic.fangxutuwen.com/16074919463781.jpg">
-<meta property="article:published_time" content="2019-11-21T12:11:22.000Z">
-<meta property="article:modified_time" content="2020-12-09T06:48:44.064Z">
+<meta property="article:published_time" content="2020-12-09T06:11:22.000Z">
+<meta property="article:modified_time" content="2020-12-09T06:56:28.668Z">
 <meta property="article:author" content="Alexliu">
 <meta property="article:tag" content="技巧">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://pic.fangxutuwen.com/16074919463781.jpg">
 
-<link rel="canonical" href="https://35liuqi.com/2019/11/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/">
+<link rel="canonical" href="https://35liuqi.com/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/">
 
 
 <script id="page-configurations">
@@ -245,7 +245,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/2019/11/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -267,8 +267,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-11-21 20:11:22" itemprop="dateCreated datePublished" datetime="2019-11-21T20:11:22+08:00">2019-11-21</time>
+              <time title="创建时间：2020-12-09 14:11:22 / 修改时间：14:56:28" itemprop="dateCreated datePublished" datetime="2020-12-09T14:11:22+08:00">2020-12-09</time>
             </span>
 
       
@@ -307,9 +308,7 @@
 
 
 <h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok 官网</a> 目前已经切换为 ngrok2 。免费 8 小时<br><a href="https://github.com/tutumcloud/ngrok.git" target="_blank" rel="noopener">Ngrok Github</a>  升级为 ngrok2 后已闭源。</p>
-<blockquote>
-<p>写在前面，不建议在服务器上直接安装。 避免安装失败或者其他原因造成的服务器各类包安装冗余，甚至冲突。  使用 docker 安装，不好用删了即可。<br>最近痛下决心，把服务器重装系统了。一些软件，工具能用 docker 就用 docker。管理起来方便多了。</p>
-</blockquote>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>最近痛下决心，把服务器重装系统了。一些软件，工具能用 docker 就用 docker。管理起来方便多了。所以 ngrok 也是用 docker 方式。17 年第一次装ngrok 时，就是直接在服务器上装的，装的过程很痛苦，各种包编译的问题，或者缺胳膊少腿的，折腾了 2-3 天，7，8 篇教程的综合才安装好。所以不建议在服务器上直接安装。 特别是一些没什么基础的小白。避免安装失败或者其他原因造成的服务器各类包安装冗余，甚至冲突。使用 docker 安装，不好用删了即可。</p>
 <h2 id="为什么要搭建自己的-ngrok"><a href="#为什么要搭建自己的-ngrok" class="headerlink" title="为什么要搭建自己的 ngrok"></a>为什么要搭建自己的 ngrok</h2><ul>
 <li>管理内网服务器，内网web进行演示</li>
 <li>快速开发微信程序和第三方支付平台调试</li>
@@ -406,7 +405,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://35liuqi.com/2019/11/21/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/" title="基于 Docker 的 ngrok 内网穿透部署">https://35liuqi.com/2019/11/21/基于 Docker 的 ngrok 内网穿透部署/</a>
+    <a href="https://35liuqi.com/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/" title="基于 Docker 的 ngrok 内网穿透部署">https://35liuqi.com/2020/12/09/基于 Docker 的 ngrok 内网穿透部署/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -427,13 +426,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/" rel="prev" title="CentOS-7 安装 Docker">
-      <i class="fa fa-chevron-left"></i> CentOS-7 安装 Docker
+    <a href="/2020/12/09/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML/" rel="prev" title="Python 用  lxml 解析 HTML">
+      <i class="fa fa-chevron-left"></i> Python 用  lxml 解析 HTML
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" rel="next" title="安装Hexo常见问题">
-      安装Hexo常见问题 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -494,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#资料"><span class="nav-number">1.</span> <span class="nav-text">资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要搭建自己的-ngrok"><span class="nav-number">2.</span> <span class="nav-text">为什么要搭建自己的 ngrok</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选-ngrok-还是-frp"><span class="nav-number">3.</span> <span class="nav-text">选 ngrok 还是 frp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">4.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-解析"><span class="nav-number">5.</span> <span class="nav-text">DNS 解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-部署-ngrok"><span class="nav-number">6.</span> <span class="nav-text">docker 部署 ngrok</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉镜像"><span class="nav-number">6.1.</span> <span class="nav-text">拉镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">6.2.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看客户端"><span class="nav-number">6.3.</span> <span class="nav-text">查看客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-ngrok-服务"><span class="nav-number">6.4.</span> <span class="nav-text">启动 ngrok 服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-nginx"><span class="nav-number">7.</span> <span class="nav-text">配置 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置防火墙"><span class="nav-number">8.</span> <span class="nav-text">配置防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置客户端"><span class="nav-number">9.</span> <span class="nav-text">配置客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动客户端"><span class="nav-number">9.1.</span> <span class="nav-text">启动客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地监控"><span class="nav-number">9.2.</span> <span class="nav-text">本地监控</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#资料"><span class="nav-number">1.</span> <span class="nav-text">资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#写在前面"><span class="nav-number">1.1.</span> <span class="nav-text">写在前面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要搭建自己的-ngrok"><span class="nav-number">2.</span> <span class="nav-text">为什么要搭建自己的 ngrok</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选-ngrok-还是-frp"><span class="nav-number">3.</span> <span class="nav-text">选 ngrok 还是 frp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">4.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-解析"><span class="nav-number">5.</span> <span class="nav-text">DNS 解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-部署-ngrok"><span class="nav-number">6.</span> <span class="nav-text">docker 部署 ngrok</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉镜像"><span class="nav-number">6.1.</span> <span class="nav-text">拉镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">6.2.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看客户端"><span class="nav-number">6.3.</span> <span class="nav-text">查看客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-ngrok-服务"><span class="nav-number">6.4.</span> <span class="nav-text">启动 ngrok 服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-nginx"><span class="nav-number">7.</span> <span class="nav-text">配置 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置防火墙"><span class="nav-number">8.</span> <span class="nav-text">配置防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置客户端"><span class="nav-number">9.</span> <span class="nav-text">配置客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动客户端"><span class="nav-number">9.1.</span> <span class="nav-text">启动客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地监控"><span class="nav-number">9.2.</span> <span class="nav-text">本地监控</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -666,7 +662,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo: 'liuqi0725.github.io',
       owner: 'liuqi0725',
       admin: ['liuqi0725'],
-      id: '7a0a43c18f14d0b06abbe9ad90091ef1',
+      id: 'ff090e60dc8f80512a30831a0c73c08b',
         language: 'zh-CN',
       distractionFreeMode: true
     });
