@@ -1,6 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python 用  lxml 解析 HTML</title>
+    <url>/2020/12/09/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML/</url>
+    <content><![CDATA[<p>python 爬虫中，必然会接触到 HTML 解析。 lxml是一个Python库，使用它可以轻松处理XML和HTML文件，还可以用于web爬取。市面上有很多现成的XML解析器，但是为了获得更好的结果，开发人员有时更愿意编写自己的XML和HTML解析器。这时lxml库就派上用场了。这个库的主要优点是易于使用，在解析大型文档时速度非常快，归档的也非常好，并且提供了简单的转换方法来将数据转换为Python数据类型，从而使文件操作更容易。</p>
+<a id="more"></a>
+
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ul>
+<li><a href="https://github.com/lxml/lxml" target="_blank" rel="noopener">github 地址</a></li>
+<li><a href="https://lxml.de" target="_blank" rel="noopener">Home Page</a></li>
+<li><a href="https://lxml.de/index.html#documentation" target="_blank" rel="noopener">Documentation</a></li>
+<li><a href="https://lxml.de/api.html" target="_blank" rel="noopener">lxml etree Documentation</a></li>
+</ul>
+<blockquote>
+<p>本示例只介绍了一些常用的示例，更多的请参考官方文档.</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">　　&lt;head&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;meta name="content-type" content="text/html; charset=utf-8" /&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;title&gt;Test&lt;/title&gt;</span></span><br><span class="line"><span class="string">　　&lt;/head&gt;</span></span><br><span class="line"><span class="string">　　&lt;body&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;a href="http://a.domain.com" customer_attr="abc" target="_blank"&gt;A_site&lt;/a&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;a href="http://b.domain.com" target="_blank"&gt;B_site&lt;/a&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;a href="http://c.domain.com" target="_blank"&gt;C_site&lt;/a&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;a href="http://d.domain.com" target="_blank"&gt;D_site&lt;/a&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;a href="http://e.domain.com" target="_blank"&gt;E_site&lt;/a&gt;</span></span><br><span class="line"><span class="string">　　&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">html = etree.HTML(html.lower().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">a_links = html.xpath(<span class="string">"//a"</span>)  <span class="comment"># 查找所有 a 标签 //a 代表 html 下所有 a</span></span><br><span class="line"><span class="keyword">for</span> a_link <span class="keyword">in</span> a_links:</span><br><span class="line">    print(<span class="string">"*"</span>*<span class="number">30</span>)</span><br><span class="line">    print(a_link.attrib)      <span class="comment"># 获取属性</span></span><br><span class="line">    print(a_link.text)        <span class="comment"># 获取 a 标签 text</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">******************************</span><br><span class="line">&#123;<span class="string">'href'</span>: <span class="string">'http://a.domain.com'</span>, <span class="string">'target'</span>: <span class="string">'_blank'</span>, <span class="string">'customer_attr'</span>: <span class="string">'abc'</span>&#125;</span><br><span class="line">A_site</span><br><span class="line">******************************</span><br><span class="line">&#123;<span class="string">'href'</span>: <span class="string">'http://b.domain.com'</span>, <span class="string">'target'</span>: <span class="string">'_blank'</span>&#125;</span><br><span class="line">B_site</span><br><span class="line">******************************</span><br><span class="line">&#123;<span class="string">'href'</span>: <span class="string">'http://c.domain.com'</span>, <span class="string">'target'</span>: <span class="string">'_blank'</span>&#125;</span><br><span class="line">C_site</span><br><span class="line">******************************</span><br><span class="line">&#123;<span class="string">'href'</span>: <span class="string">'http://d.domain.com'</span>, <span class="string">'target'</span>: <span class="string">'_blank'</span>&#125;</span><br><span class="line">D_site</span><br><span class="line">******************************</span><br><span class="line">&#123;<span class="string">'href'</span>: <span class="string">'http://e.domain.com'</span>, <span class="string">'target'</span>: <span class="string">'_blank'</span>&#125;</span><br><span class="line">E_site</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="XPATH"><a href="#XPATH" class="headerlink" title="XPATH"></a>XPATH</h2><p>XPATH 基本上是用一种类似目录树的方法来描述在XML文档中的路径。用 “/“ 来作为上下层级间的分隔。第一个 “/“ 表示文档的根节点。对于一个 HTML 文件来说，最外层的节点是 “/html”</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">　　&lt;head&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;meta name="content-type" content="text/html; charset=utf-8" /&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;title&gt;Test&lt;/title&gt;</span></span><br><span class="line"><span class="string">　　&lt;/head&gt;</span></span><br><span class="line"><span class="string">　　&lt;body&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;h1&gt;I am h1 html&lt;/h1&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;p style="font-size: 50%"&gt;Hello World&lt;/p&gt;</span></span><br><span class="line"><span class="string">　　　　&lt;p&gt;Hello World 2&lt;/p&gt;</span></span><br><span class="line"><span class="string">　　&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="通过绝对路径查找"><a href="#通过绝对路径查找" class="headerlink" title="通过绝对路径查找"></a>通过绝对路径查找</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">html = etree.HTML(html.lower().decode(<span class="string">'utf-8'</span>))</span><br><span class="line"><span class="comment"># 找到 html 下 body 内的 p 。 注意 xpath 返回的不一定唯一的，是符合要求的所有节点</span></span><br><span class="line"><span class="comment"># 也可用用 //p 查找 html 下所有 p</span></span><br><span class="line">p_tags = html.xpath(<span class="string">"/html/body/p"</span>)  </span><br><span class="line"><span class="keyword">for</span> p_tag <span class="keyword">in</span> p_tags:</span><br><span class="line">    print(<span class="string">"*"</span>*<span class="number">30</span>)</span><br><span class="line">    <span class="comment"># p_tag 是一个 lxml.etree._Element 对象</span></span><br><span class="line">    print(p_tag.text)               <span class="comment"># 获取文本内容</span></span><br><span class="line">    print(a_link.values())          <span class="comment"># 获取所有属性值</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">******************************</span><br><span class="line">Hello World</span><br><span class="line">font-size: <span class="number">50</span>%</span><br><span class="line">******************************</span><br><span class="line">Hello World <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="通过属性查找"><a href="#通过属性查找" class="headerlink" title="通过属性查找"></a>通过属性查找</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">html = etree.HTML(html.lower().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">p_tag = html.xpath(<span class="string">"/html/body/p[@style='font-size: 50%']"</span>)</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">p_tag = html.xpath(<span class="string">"//p[@style='font-size: 50%']"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其他属性有:</p>
+<ul>
+<li>@name</li>
+<li>@id</li>
+<li>@value</li>
+<li>@href</li>
+<li>@src</li>
+<li>@class</li>
+<li>text()        <ul>
+<li><code>html.xpath(&quot;//p[text()=&#39;Hello World&#39;]&quot;)</code></li>
+</ul>
+</li>
+<li>postion()     <ul>
+<li><code>html.xpath(&quot;//p[position()=2]&quot;)</code> 获取第二个 p 节点</li>
+</ul>
+</li>
+</ul>
+<h3 id="任意中间节点"><a href="#任意中间节点" class="headerlink" title="任意中间节点"></a>任意中间节点</h3><h4 id="用-号"><a href="#用-号" class="headerlink" title="用 * 号"></a>用 * 号</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">html = etree.HTML(html.lower().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">p_tag = html.xpath(<span class="string">"/html/*/p[@style='font-size: 50%']"</span>)</span><br><span class="line"><span class="comment"># 加 * 号 不管 html 到 p 中间有多少层，不管当前 p 的上一级是 div 还是什么，都会被查找出来</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="用-descendant"><a href="#用-descendant" class="headerlink" title="用 descendant"></a>用 descendant</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># descendant 指代任意多层的中间节点, 它可以省略成一个 '/' 号</span></span><br><span class="line">html = etree.HTML(html.lower().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">p_tag = html.xpath(<span class="string">"/descendant::p"</span>)</span><br><span class="line"><span class="comment"># 等同于 p_tag = html.xpath("//p")</span></span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>centos7 安装 postgresql</title>
+    <url>/2020/12/09/centos7%E5%AE%89%E8%A3%85postgresql/</url>
+    <content><![CDATA[<h2 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h2><h3 id="开放-关闭端口"><a href="#开放-关闭端口" class="headerlink" title="开放/关闭端口"></a>开放/关闭端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent       <span class="comment"># 开放443端口</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=443/tcp --permanent    <span class="comment"># 关闭443端口</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看防火墙所有开放的端口"><a href="#查看防火墙所有开放的端口" class="headerlink" title="查看防火墙所有开放的端口"></a>查看防火墙所有开放的端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
+
+<h3 id="防火墙重新加载"><a href="#防火墙重新加载" class="headerlink" title="防火墙重新加载"></a>防火墙重新加载</h3><p>任何<strong>修改了防火墙相关的配置</strong>，都需要重启防火墙，使之生效</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h3><p>如果要开放的端口太多，嫌麻烦，可以关闭防火墙，安全性自行评估</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="查看防火墙状态"><a href="#查看防火墙状态" class="headerlink" title="查看防火墙状态"></a>查看防火墙状态</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><h3 id="查看监听的端口"><a href="#查看监听的端口" class="headerlink" title="查看监听的端口"></a>查看监听的端口</h3><p>centos7 默认没有 <code>netstat</code> 命令，需要安装 ‘net-tools’ 工具，<code>yum install -y net-tools</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -lnpt</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># netstat -lnpt</span></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:4040          0.0.0.0:*               LISTEN      67591/ngrok         </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      70689/nginx: master </span><br><span class="line">tcp        0      0 192.168.122.1:53        0.0.0.0:*               LISTEN      2474/dnsmasq        </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1091/sshd           </span><br><span class="line">tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1087/cupsd          </span><br><span class="line">tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1718/master         </span><br><span class="line">tcp6       0      0 :::2017                 :::*                    LISTEN      98919/v2raya        </span><br><span class="line">tcp6       0      0 :::9000                 :::*                    LISTEN      99517/docker-proxy- </span><br><span class="line">tcp6       0      0 :::20170                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::20171                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::20172                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      1091/sshd           </span><br><span class="line">tcp6       0      0 ::1:631                 :::*                    LISTEN      1087/cupsd          </span><br><span class="line">tcp6       0      0 :::32345                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 ::1:25                  :::*                    LISTEN      1718/master</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="检查端口被哪个进程占用"><a href="#检查端口被哪个进程占用" class="headerlink" title="检查端口被哪个进程占用"></a>检查端口被哪个进程占用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -lnpt |grep 80</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># netstat -lnpt |grep 80</span></span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      70689/nginx: master</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看进程的详细信息"><a href="#查看进程的详细信息" class="headerlink" title="查看进程的详细信息"></a>查看进程的详细信息</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps 70689</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># ps 70689</span></span><br><span class="line">   PID TTY      STAT   TIME COMMAND</span><br><span class="line"> 70689 ?        Ss     0:00 nginx: master process /usr/<span class="built_in">local</span>/nginx/sbin/nginx -c /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="中止进程"><a href="#中止进程" class="headerlink" title="中止进程"></a>中止进程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> 70689</span><br><span class="line"><span class="comment"># 强制 kill</span></span><br><span class="line"><span class="built_in">kill</span> -9 70689</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>CentOS7</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>centos7 安装 postgresql</title>
     <url>/2020/11/19/centos7%E5%AE%89%E8%A3%85postgresql/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum -y install postgresql-server</span><br></pre></td></tr></table></figure>

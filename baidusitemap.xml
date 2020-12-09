@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://35liuqi.com/2020/12/09/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML/</loc>
+    <lastmod>2020-12-09</lastmod>
+  </url>
+  <url>
+    <loc>https://35liuqi.com/2020/12/09/centos7%E5%AE%89%E8%A3%85postgresql/</loc>
+    <lastmod>2020-12-09</lastmod>
+  </url>
+  <url>
     <loc>https://35liuqi.com/2020/11/19/centos7%E5%AE%89%E8%A3%85postgresql/</loc>
     <lastmod>2020-12-09</lastmod>
   </url>
