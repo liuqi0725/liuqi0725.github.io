@@ -57,6 +57,34 @@
       </tags>
   </entry>
   <entry>
+    <title>Git 迁移数据到新的 Git 服务器</title>
+    <url>/2020/12/13/Git%20%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E7%9A%84%20Git%20%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 还是什么。 可能不同框架有不同的迁移方式。这里只列出最基础，也可以说是不用折腾，简单，也是最笨的方法</p>
+<ol>
+<li><p>本地新建文件夹</p>
+</li>
+<li><p>在新建文件夹中下载项目</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载项目</span></span><br><span class="line">git <span class="built_in">clone</span> --bare &lt;your-git-project-path&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">git <span class="built_in">clone</span> --bare http://192.168.0.197:9000/r/xxx/xxxx.git</span><br><span class="line"><span class="comment"># 注意，下载后的文件夹是  `xxx.git` 文件夹</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新 Git 服务器，新建同名或不同名的项目。并复制地址</p>
+<p> 比如 <code>http://192.168.0.197:10000/r/xxx/xxxx.git</code></p>
+</li>
+<li><p>推送项目</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地 cd 进入 xxx.git 目录</span></span><br><span class="line"><span class="built_in">cd</span> xxx.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">git push --mirror http://192.168.0.197:10000/r/xxx/xxxx.git</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>OK, 这样项目所有的提交记录、分支、tags、release 版本都提交了到新的版本库了</p>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于 Docker 的 ngrok 内网穿透部署</title>
     <url>/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg" alt=""><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
@@ -1040,7 +1068,11 @@
   <entry>
     <title>Docker 常用命令</title>
     <url>/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定开机启动</span></span><br><span class="line">docker update --restart=always &lt;容器id 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+
+<h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker update --restart=always &lt;容器id 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="打开容器命令行"><a href="#打开容器命令行" class="headerlink" title="打开容器命令行"></a>打开容器命令行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;容器id 或 容器别名&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行容器内脚本</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器id 或 容器别名&gt; /bin/bash &lt;脚本路径&gt;/xxx.sh</span><br></pre></td></tr></table></figure>
 
 <h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
 <p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
