@@ -3,7 +3,8 @@
   <entry>
     <title>Android-GooglePlay 3 件套</title>
     <url>/2020/12/14/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97/</url>
-    <content><![CDATA[<p>Android 用不用 GMS，google play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用 google play。</p>
+    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079183779911.jpg" alt=""></p>
+<p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
 <h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
 <li><p>Google 服务框架</p>
 <p>  GSF（Google Server Framework） 是谷歌安卓系统官方服务框架，用来作为谷歌软件的支持平台。例如<strong>GooglePlay</strong>就需要此服务框架的支持，很多国行或者改版ROM的手机都删除了这个框架，导致部分谷歌app不可正常运行。</p>
