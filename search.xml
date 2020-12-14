@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>基于Docker 安装 MantisBT 及配置</title>
+    <url>/2020/12/14/%E5%9F%BA%E4%BA%8EDocker%20%E5%AE%89%E8%A3%85%20MantisBT%20%E5%8F%8A%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079374123016.jpg" alt=""></p>
+<p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
+<p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
+<p>本文介绍基于 Docker 安装 MaintisBT 并完成配置。</p>
+<a id="more"></a>
+
+
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
+<li>Centos7</li>
+<li>Docker 19.03.13</li>
+</ul>
+<h2 id="MantisBT-镜像Pull-start"><a href="#MantisBT-镜像Pull-start" class="headerlink" title="MantisBT 镜像Pull/start"></a>MantisBT 镜像Pull/start</h2><p>使用的的 <a href="https://hub.docker.com/r/vimagick/mantisbt" target="_blank" rel="noopener">vimagick/mantisbt</a> 镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull vimagick/mantisbt</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动 Mantis 8989 替换成你希望暴露的端口</span></span><br><span class="line">docker run -d -p 8989:80 --name mantisbt vimagick/mantisbt</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化-Mantis"><a href="#初始化-Mantis" class="headerlink" title="初始化 Mantis"></a>初始化 Mantis</h2><ol>
+<li><p>新建数据库。 Mysql/postgresql 都可以。 比如:”bug_mantis”</p>
+</li>
+<li><p>访问: <a href="http://127.0.0.1:8989" target="_blank" rel="noopener">http://127.0.0.1:8989</a></p>
+<ul>
+<li>ip 改为你部署 Mantis 服务器的 ip。 如果是域名访问，自行配置 nginx 或 apache 转发</li>
+<li>port 改为你部署 Mantis 服务暴露的端口。 如果是域名访问，自行 nginx 或 apache 转发</li>
+</ul>
+</li>
+<li><p>在初始化页面配置数据库链接。</p>
+</li>
+</ol>
+<blockquote>
+<p>配置完数据库就可以使用了</p>
+</blockquote>
+<h2 id="挂载配置文件"><a href="#挂载配置文件" class="headerlink" title="挂载配置文件"></a>挂载配置文件</h2><ol>
+<li><p>进入 docker 镜像命令行</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 mantis docker 容器命令行</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container 名称或 id&gt; /bin/bash</span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line"><span class="comment"># container 名称或 id 可以通过 docker ps -a 查看。本文在 启动镜像时， 通过 --name 命名为 mantisbt</span></span><br><span class="line">docker <span class="built_in">exec</span> -it mantisbt /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制 config_inc.php 内容</p>
+<p> 当你初始化完成后，此配置文件会写入你的数据库配置。为避免 docker 容器被删除，每次都要重新初始化，我们需要将配置文件拷贝出来。并添加我们自己的配置</p>
+<p> 查看 config_inc.php 内容，并复制</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此时你应该在 docker mantisbt 容器里</span></span><br><span class="line">cat: /var/www/html/config/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">'192.168.0.197'</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">'pgsql'</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">'fx_mantisbt'</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">'postgres'</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">'fx123456'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">'fx'</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">'mantis'</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">'mantis'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">'Asia/Shanghai'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">'tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs='</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在主机下新建配置文件</p>
+<p> 位置任意，比如我是在 <code>/usr/data/</code> 下新建 <code>mantis</code> 目录</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 主机新建 config_inc.php 配置文件</span></span><br><span class="line">vi /usr/data/mantis/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开后，将 mantis 的配置复制进去</span></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">'192.168.0.197'</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">'pgsql'</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">'fx_mantisbt'</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">'postgres'</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">'fx123456'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">'fx'</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">'mantis'</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">'mantis'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">'Asia/Shanghai'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">'tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs='</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加配置</p>
+<p> 继续编辑 <code>/usr/data/mantis/config_inc.php</code> 新增邮件配置</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置完成后 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">'192.168.0.197'</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">'pgsql'</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">'fx_mantisbt'</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">'postgres'</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">'fx123456'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">'fx'</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">'mantis'</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">'mantis'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">'Asia/Shanghai'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">'tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs='</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 开启邮箱验证</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_enable_email_notification</span> = ON;</span><br><span class="line"><span class="variable">$g_phpMailer_method</span> = PHPMAILER_METHOD_SMTP;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * smtp 配置</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_smtp_host</span>            = <span class="string">'smtp.example.com'</span>;</span><br><span class="line"><span class="variable">$g_smtp_username</span>        = <span class="string">'your-mail@example.com'</span>;    </span><br><span class="line"><span class="variable">$g_smtp_password</span>        = <span class="string">'******'</span>;         </span><br><span class="line"><span class="variable">$g_smtp_port</span>            = 465;</span><br><span class="line"><span class="variable">$g_smtp_connection_mode</span> = <span class="string">'ssl'</span>;  /* 普通为 25 ，具体设置参考你使用邮箱 smtp 配置 */</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_from_name</span>            = <span class="string">'Mantis Bug Tracker'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_administrator_email</span>  = <span class="string">'your-mail@example.com'</span>;</span><br><span class="line"><span class="variable">$g_webmaster_email</span>      = <span class="string">'your-mail@example.com'</span>;</span><br><span class="line"><span class="variable">$g_return_path_email</span>    = <span class="string">'your-mail@example.com'</span>;</span><br><span class="line"><span class="variable">$g_from_email</span>           = <span class="string">'your-mail@example.com'</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 创建用户时可以设置密码,默认是通过邮件邀请，公司内部用可以启用</span><br><span class="line"> */</span><br><span class="line"><span class="variable">$g_send_reset_password</span> = OFF;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新部署容器</p>
+<p> 删除当前容器</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker stop &lt;container 名称或 id&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br><span class="line">docker rm &lt;container 名称或 id&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br></pre></td></tr></table></figure>
+
+<p> 带配置文件的启动</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8989:80 --name mantisbt -v /usr/data/mantis/config_inc.php:/var/www/html/config/config_inc.php vimagick/mantisbt</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>MantisBT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-GooglePlay 3 件套</title>
     <url>/2020/12/14/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97/</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079183779911.jpg" alt=""></p>
