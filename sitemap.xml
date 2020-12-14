@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://35liuqi.com/2020/12/14/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97/</loc>
+    
+    <lastmod>2020-12-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
     
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-10</lastmod>
     
   </url>
   
@@ -221,7 +228,7 @@
 
   <url>
     <loc>https://35liuqi.com/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -229,224 +236,231 @@
   
   <url>
     <loc>https://35liuqi.com/tags/Hexo/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/MacOS/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/v2Ray/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Apache/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Java/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/OpenCV/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/OCR/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Homebrew/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/javascript/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/macos/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/npm/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/node-js/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/%E6%8A%80%E5%B7%A7/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/%E8%BD%AC%E8%BD%BD/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/python3/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Springboot/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/nginx/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/flyway/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/freemarker/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/pjax/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/SpringSecurity/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/centos/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Docker/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/CentOS7/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/postgresql/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Python/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Nginx/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/Centos7/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/https/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/docker-compose/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/tags/SSH/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/Google/</loc>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -455,70 +469,77 @@
   
   <url>
     <loc>https://35liuqi.com/categories/%E6%8F%92%E4%BB%B6/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/MacOS/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/OpenCV/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/%E7%BB%8A%E8%84%9A%E7%9F%B3/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/python/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/Springboot/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/Docker/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/CentOS7/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/Python/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://35liuqi.com/categories/Centos7/</loc>
-    <lastmod>2020-12-09</lastmod>
+    <lastmod>2020-12-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/categories/Google/</loc>
+    <lastmod>2020-12-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

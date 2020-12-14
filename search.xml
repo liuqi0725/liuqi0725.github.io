@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android-GooglePlay 3 件套</title>
+    <url>/2020/12/14/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97/</url>
+    <content><![CDATA[<p>Android 用不用 GMS，google play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用 google play。</p>
+<h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
+<li><p>Google 服务框架</p>
+<p>  GSF（Google Server Framework） 是谷歌安卓系统官方服务框架，用来作为谷歌软件的支持平台。例如<strong>GooglePlay</strong>就需要此服务框架的支持，很多国行或者改版ROM的手机都删除了这个框架，导致部分谷歌app不可正常运行。</p>
+</li>
+</ul>
+<ul>
+<li><p>Google play services</p>
+<p>  GMS（GoogleMobile Service）。提供GooglePlay、Search、Search by Voice、Gmail、Contact Sync、Calendar Sync、Talk、Maps、Street View、YouTube、Android Market等服务，GMS为安卓上的谷歌公司系列应用提供支持</p>
+</li>
+<li><p>Google play store</p>
+<p>  Google Play是运行Android操作系统设备的官方应用程序商店。</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><ol>
+<li><p>Google 账号一枚。 <a href="https://www.google.com/intl/zh-CN/account/about/" target="_blank" rel="noopener">注册地址</a></p>
+</li>
+<li><p>确保 Android 可以<strong>访问Google（FQ敏感词）</strong></p>
+<p> 访问方式</p>
+<ul>
+<li>VPN</li>
+<li>借朋友的VPN，SSR，v2ray 账号等</li>
+<li>如果你有境外服务器，可以自己搭建<a href="https://35liuqi.com/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/">CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</a></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>小技巧：如果你有境外服务器，可以在境外服务器下载，然后通过 scp 或者 ftp 等方式下载到本地，再传到设备上。</p>
+</blockquote>
+<h2 id="安装-Google-服务框架"><a href="#安装-Google-服务框架" class="headerlink" title="安装 Google 服务框架"></a>安装 Google 服务框架</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-services-framework/" target="_blank" rel="noopener">下载地址</a></p>
+<p>注意选择与你设备 Android 系统对应的版本。</p>
+<p><img src="http://pic.fangxutuwen.com/16079170371258.jpg" alt=""></p>
+<p>选择最新的即可</p>
+<p><img src="http://pic.fangxutuwen.com/16079170974756.jpg" alt=""></p>
+<h2 id="安装-Google-Play-Service"><a href="#安装-Google-Play-Service" class="headerlink" title="安装 Google Play Service"></a>安装 Google Play Service</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-services/" target="_blank" rel="noopener">下载地址</a></p>
+<p>打开下载链接。选择<strong>最新</strong> 版本的 Google Play Service。 </p>
+<p><img src="http://pic.fangxutuwen.com/16079161039737.jpg" alt=""></p>
+<p>在下载页面，有很多选项。从 Android 4.0 - Android 最新版本。下载前先看自己设备的 Android 设备的版本。  至于nodpi、480dpi、320dpi，pad 一般 nodpi， 手机一般 480dpi 即可。</p>
+<p>选择列表中你要下载的前方红字，进入下载页面。</p>
+<p><img src="http://pic.fangxutuwen.com/16079163703960.jpg" alt=""></p>
+<h2 id="安装-Google-Play-Store"><a href="#安装-Google-Play-Store" class="headerlink" title="安装 Google Play Store"></a>安装 Google Play Store</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-store/" target="_blank" rel="noopener">下载地址</a></p>
+<p><img src="http://pic.fangxutuwen.com/16079168462071.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>Google</category>
+      </categories>
+      <tags>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于 Docker 的 ngrok 内网穿透部署</title>
     <url>/2020/12/09/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg" alt=""><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
@@ -984,7 +1039,7 @@
   <entry>
     <title>Docker 常用命令</title>
     <url>/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定开机启动</span></span><br><span class="line">docker update --restart=always &lt;容器id 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
 <p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>

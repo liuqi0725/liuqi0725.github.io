@@ -49,15 +49,15 @@
   };
 </script>
 
-  <meta name="description" content="指令1234567891011121314151617# 列出所有容器 IDdocker ps -aq  或 docker ps -a# 停止所有容器docker stop $(docker ps -aq)# 停止单个容器docker stop 要停止的容器名# 删除所有容器docker rm $(docker ps -aq)# 删除单个容器docker rm 要删除的容器名# 删除所有的镜像do">
+  <meta name="description" content="指令1234567891011121314151617181920# 列出所有容器 IDdocker ps -aq  或 docker ps -a# 停止所有容器docker stop $(docker ps -aq)# 停止单个容器docker stop 要停止的容器名# 删除所有容器docker rm $(docker ps -aq)# 删除单个容器docker rm 要删除的容器名# 删除所">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 常用命令">
 <meta property="og:url" content="https://35liuqi.com/2018/05/13/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="35Niu Blog">
-<meta property="og:description" content="指令1234567891011121314151617# 列出所有容器 IDdocker ps -aq  或 docker ps -a# 停止所有容器docker stop $(docker ps -aq)# 停止单个容器docker stop 要停止的容器名# 删除所有容器docker rm $(docker ps -aq)# 删除单个容器docker rm 要删除的容器名# 删除所有的镜像do">
+<meta property="og:description" content="指令1234567891011121314151617181920# 列出所有容器 IDdocker ps -aq  或 docker ps -a# 停止所有容器docker stop $(docker ps -aq)# 停止单个容器docker stop 要停止的容器名# 删除所有容器docker rm $(docker ps -aq)# 删除单个容器docker rm 要删除的容器名# 删除所">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-05-13T02:15:44.000Z">
-<meta property="article:modified_time" content="2020-12-09T07:28:46.542Z">
+<meta property="article:modified_time" content="2020-12-10T08:07:10.116Z">
 <meta property="article:author" content="Alexliu">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -299,7 +299,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+        <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker rm $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker rm 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定开机启动</span></span><br><span class="line">docker update --restart=always &lt;容器id 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
 <p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
@@ -428,20 +428,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
