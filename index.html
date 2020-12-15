@@ -468,18 +468,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 还是什么。 可能不同框架有不同的迁移方式。这里只列出最基础，也可以说是不用折腾，简单，也是最笨的方法</p>
-<ol>
-<li><p>本地新建文件夹</p>
+          <p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 或是balabala…… </p>
+<p>不同框架有不同的迁移方式。<strong>您可能有更好的迁移版本库的方法</strong>，这里只是提供一总迁移的方法，不用折腾，简单，也是最笨的方法。</p>
+<p><strong>这种迁移方式是跨平台的</strong></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文举例围绕将  <code>http://192.168.0.1/project_a.git</code> 迁移至 <code>http://192.168.0.2/projcet_a_new.git</code> 上。 <strong>实际操作中请替换为您的服务器地址及项目名称</strong></p>
+<h2 id="Let-s-Go"><a href="#Let-s-Go" class="headerlink" title="Let`s Go"></a>Let`s Go</h2><ol>
+<li><p>本地新建文件夹<code>server_code</code> (名称任意,  <code>主要用来clone 服务器代码到本地</code>）</p>
 </li>
-<li><p>在新建文件夹中下载项目</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载项目</span></span><br><span class="line">git <span class="built_in">clone</span> --bare &lt;your-git-project-path&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">git <span class="built_in">clone</span> --bare http://192.168.0.197:9000/r/xxx/xxxx.git</span><br><span class="line"><span class="comment"># 注意，下载后的文件夹是  `xxx.git` 文件夹</span></span><br></pre></td></tr></table></figure>
+<li><p>在 <code>server_code</code> 中 clone <code>project_a</code></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 请用命令行操作</span></span><br><span class="line">git <span class="built_in">clone</span> --bare http://192.168.0.1/project_a.git</span><br><span class="line"><span class="comment"># 注意，下载后的文件夹是  `project_a.git` 文件夹</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>新 Git 服务器，新建同名或不同名的项目。并复制地址</p>
-<p> 比如 <code>http://192.168.0.197:10000/r/xxx/xxxx.git</code></p>
+<li><p>新 Git 服务器，新建<code>同名或不同名</code>的项目。并复制地址</p>
+<p> 本示例为：<code>http://192.168.0.2/project_a_new.git</code></p>
+</li>
+<li><p>命令行 CD 进入 <code>project_a.git</code> 目录</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">$ /Users/alexliu/tmp/server_code</span><br><span class="line">$ <span class="built_in">cd</span> project_a.git</span><br><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">$ /Users/alexliu/tmp/server_code/project_a.git</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>推送项目</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地 cd 进入 xxx.git 目录</span></span><br><span class="line"><span class="built_in">cd</span> xxx.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">git push --mirror http://192.168.0.197:10000/r/xxx/xxxx.git</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推送</span></span><br><span class="line">git push --mirror http://192.168.0.2/project_a_new.git</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
