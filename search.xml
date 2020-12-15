@@ -128,8 +128,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Git 迁移数据到新的 Git 服务器</title>
-    <url>/2020/12/13/Git%20%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E7%9A%84%20Git%20%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <title>一种跨平台的迁移 Git服务器数据到新服务器的笨办法</title>
+    <url>/2020/12/13/%E4%B8%80%E7%A7%8D%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BF%81%E7%A7%BB%20Git%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AC%A8%E5%8A%9E%E6%B3%95/</url>
     <content><![CDATA[<p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 或是balabala…… </p>
 <p>不同框架有不同的迁移方式。<strong>您可能有更好的迁移版本库的方法</strong>，这里只是提供一总迁移的方法，不用折腾，简单，也是最笨的方法。</p>
 <p><strong>这种迁移方式是跨平台的</strong></p>
