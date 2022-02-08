@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="I0Z432mRgu">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Verdana:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://35liuqi.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="35Niu Blog">
+<meta property="og:url" content="https://35liuqi.com/index.html">
+<meta property="og:site_name" content="35Niu Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Alexliu">
+<meta property="article:tag" content="Blog,Alexliu,JAVA,Python,Mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://35liuqi.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false
+  };
+</script>
+
+  <title>35Niu Blog - 不积小流,无以成江海</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-111580806-5',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea03dd7be5a42bf8e873d22962b291e2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">35Niu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不积小流,无以成江海</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/liuqi0725" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/PlayWright%20%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E9%9D%9EInput%E6%A1%86%E6%97%B6%E6%93%8D%E4%BD%9C">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/PlayWright%20%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E9%9D%9EInput%E6%A1%86%E6%97%B6%E6%93%8D%E4%BD%9C" class="post-title-link" itemprop="url">PlayWright 上传文件非Input框时操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-08 23:14:00 / 修改时间：23:30:57" itemprop="dateCreated datePublished" datetime="2022-02-08T23:14:00+08:00">2022-02-08</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>比如如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ImageUpload&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload u-marginB10&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__label js-dragdrop-area&quot;</span> <span class="attr">for</span>=<span class="string">&quot;selectFileMultiple&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__hide&quot;</span>&gt;</span>drag and drop or select files<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;js-dragdrop-num&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span>up to<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>NodeJs: <a target="_blank" rel="noopener" href="https://playwright.dev/python/docs/api/class-filechooser">https://playwright.dev/python/docs/api/class-filechooser</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">page.on(&quot;filechooser&quot;, (fileChooser: FileChooser) =&gt; &#123;</span><br><span class="line">     fileChooser.setFiles([&quot;/path/to/a/file&quot;]);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Python: <a target="_blank" rel="noopener" href="https://playwright.dev/python/docs/api/class-filechooser/">https://playwright.dev/python/docs/api/class-filechooser/</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> page.expect_file_chooser() <span class="keyword">as</span> fc_info:</span><br><span class="line">    page.click(<span class="string">&quot;upload&quot;</span>)</span><br><span class="line">file_chooser = fc_info.value</span><br><span class="line">file_chooser.set_files(<span class="string">&quot;/path/to/a/file&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>Java: <a target="_blank" rel="noopener" href="https://playwright.dev/java/docs/api/class-filechooser">https://playwright.dev/java/docs/api/class-filechooser</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">FileChooser</span> <span class="variable">fileChooser</span> <span class="operator">=</span> page.waitForFileChooser(() -&gt; </span><br><span class="line">page.click(<span class="string">&quot;upload&quot;</span>));</span><br><span class="line">fileChooser.setFiles(Paths.get(<span class="string">&quot;myfile.pdf&quot;</span>));</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/Python%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%9D%97%20Click">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Python%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%9D%97%20Click" class="post-title-link" itemprop="url">Python 命令行模块 Click</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-14 10:07:41" itemprop="dateCreated datePublished" datetime="2021-08-14T10:07:41+08:00">2021-08-14</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://click.palletsprojects.com/">官网</a></p>
+<p>Python 经常需要封装命令行，来达到执行指定函数的目的。常用的有 <code>sys</code>, <a target="_blank" rel="noopener" href="https://click.palletsprojects.com/">click</a> , <a target="_blank" rel="noopener" href="https://docs.python.org/3/howto/argparse.html">argparse</a>。 sys 是 python 系统自带，使用起来不是很方便。所以一般都是用 <a target="_blank" rel="noopener" href="https://click.palletsprojects.com/">click</a> , <a target="_blank" rel="noopener" href="https://docs.python.org/3/howto/argparse.html">argparse</a>。<br><a target="_blank" rel="noopener" href="https://click.palletsprojects.com/">click</a> 相较于 <a target="_blank" rel="noopener" href="https://docs.python.org/3/howto/argparse.html">argparse</a>代码更少，也更加简洁、直观。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Python%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%9D%97%20Click#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/2021/08/01/2021-08-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/01/2021-08-01/" class="post-title-link" itemprop="url">内网穿透 FRP 安装配置使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-01 11:00:00 / 修改时间：11:01:36" itemprop="dateCreated datePublished" datetime="2021-08-01T11:00:00+08:00">2021-08-01</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CentOS7/" itemprop="url" rel="index">
+                    <span itemprop="name">CentOS7</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>内网没有公网IP，但是又有需要提供内网机器上部署的应用或者服务器给外网访问，这个动作就是内网穿透。ngrok、<a target="_blank" rel="noopener" href="https://gofrp.org/">frp</a> 等工具就是用来干这个的。  <a target="_blank" rel="noopener" href="https://gofrp.org/">frp</a> 支持tcp、udp、http、https等协议类型，并且支持web服务器根据域名进行路由转发。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/01/2021-08-01/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/%E6%B3%A8%E5%86%8C%E5%8F%B0%E6%B9%BE%20AppleID%20%E6%95%99%E7%A8%8B">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%B3%A8%E5%86%8C%E5%8F%B0%E6%B9%BE%20AppleID%20%E6%95%99%E7%A8%8B" class="post-title-link" itemprop="url">注册台湾 AppleID 教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-03T00:00:00+08:00">2021-01-03</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Appid/" itemprop="url" rel="index">
+                    <span itemprop="name">Appid</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>12 月 8 日 LOL 手游上架台湾 App Store。 为了下载，注册个台湾的账号。</p>
+<h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>打开注册页面（手机/电脑 都可以） <a target="_blank" rel="noopener" href="https://appleid.apple.com/account">Apple ID 注册页</a>， 注意以下几个数据的填写。</p>
+<ul>
+<li>地区，选择 <code>台湾</code>。  居然不是 <code>中国台湾</code>， 反正中国只有一个，台湾是中国的一部分。</li>
+<li>出生日期， 要 &gt; 18 岁</li>
+<li>手机号，可以用国内手机号进行验证。（一定是真实手机号，后面需要收短信验证码）</li>
+</ul>
+<p><img src="http://pic.fangxutuwen.com/16109597720654.jpg"></p>
+<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>Apple ，会验证您的邮箱，手机。会给你邮箱，手机发送验证码。通过后才能注册成功。</p>
+<ol>
+<li>验证邮箱，把你邮箱里的验证码输入即可。</li>
+<li>验证手机，把你短信验证码输入即可。</li>
+</ol>
+<h4 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h4><p>在手机的 AppStore 上登陆你新注册的台湾账号。<strong>注意：是从 App Store 登陆。不是从 iPhone 的设置登陆哦。</strong></p>
+<p>App Store 登陆 AppleID 分 2 种情况</p>
+<ul>
+<li><p>App Store 已登陆账号</p>
+<ol>
+<li>App Store -&gt; 右上角头像 -&gt; 滑到最底部 -&gt; 退出登录</li>
+<li>App Store -&gt; 右上角头像 -&gt; 登陆</li>
+</ol>
+</li>
+<li><p>App Store 未登录账号</p>
+<p>  App Store -&gt; 右上角头像 -&gt; 登陆</p>
+</li>
+</ul>
+<h4 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h4><ol>
+<li><p><strong>首次</strong>使用该账号登陆 App Store 会提示让你”<strong>检查</strong>“，选择“<strong>检查</strong>”即可。   </p>
+</li>
+<li><p>在选择<strong>检查</strong>后，进入完成创建 Apple ID 页面，选择“<strong>同意条款与条件</strong>”</p>
+</li>
+<li><p>进入<strong>完成您的 Apple ID</strong> 页面。  </p>
+<ul>
+<li>支付方式 ！支付方式 ！支付方式 ！ 千万别点。</li>
+<li>地址、电话随意，邮编百度一个</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ol>
+<li>支付方式。 国内的 Visa 是无法绑定的，所以除了您有台湾的visa ，请勿随意去设置支付方式，导致账号无法使用。</li>
+<li>切换国家和地区。 同样为了支付，网上说切换国家地区来支付。 你切换到中国，绑定了支付宝，app store 也切换到中国了。至于能不能去支付你之前用台湾账号下的APP，我没测。 但是！！！！ 如果你想再切换回台湾地区，不行了，因为换回来支付方式就默认选中，让你必填，你没台湾 visa，也不能电话支付，这个账号 GG 了，你如果还要用台湾账号下载其他内容，你只有重新注册一个了。</li>
+</ol>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/313583352">参考链接</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/%E5%9F%BA%E4%BA%8EDocker%20%E5%AE%89%E8%A3%85%20MantisBT%20%E5%8F%8A%E9%85%8D%E7%BD%AE">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E5%9F%BA%E4%BA%8EDocker%20%E5%AE%89%E8%A3%85%20MantisBT%20%E5%8F%8A%E9%85%8D%E7%BD%AE" class="post-title-link" itemprop="url">基于Docker 安装 MantisBT 及配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-14 17:15:44 / 修改时间：20:51:30" itemprop="dateCreated datePublished" datetime="2020-12-14T17:15:44+08:00">2020-12-14</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="http://pic.fangxutuwen.com/16079374123016.jpg"></p>
+<p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
+<p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
+<p>本文介绍基于 Docker 安装 MaintisBT 并完成配置。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E5%9F%BA%E4%BA%8EDocker%20%E5%AE%89%E8%A3%85%20MantisBT%20%E5%8F%8A%E9%85%8D%E7%BD%AE#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97" class="post-title-link" itemprop="url">Android-GooglePlay 3 件套</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-14 10:15:44 / 修改时间：11:59:52" itemprop="dateCreated datePublished" datetime="2020-12-14T10:15:44+08:00">2020-12-14</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Google/" itemprop="url" rel="index">
+                    <span itemprop="name">Google</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="http://pic.fangxutuwen.com/16079183779911.jpg"></p>
+<p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
+<h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
+<li><p>Google 服务框架</p>
+<p>  GSF（Google Server Framework） 是谷歌安卓系统官方服务框架，用来作为谷歌软件的支持平台。例如<strong>GooglePlay</strong>就需要此服务框架的支持，很多国行或者改版ROM的手机都删除了这个框架，导致部分谷歌app不可正常运行。</p>
+</li>
+<li><p>Google play services</p>
+<p>  GMS（GoogleMobile Service）。提供GooglePlay、Search、Search by Voice、Gmail、Contact Sync、Calendar Sync、Talk、Maps、Street View、YouTube、Android Market等服务，GMS为安卓上的谷歌公司系列应用提供支持</p>
+</li>
+<li><p>Google play store</p>
+<p>  Google Play是运行Android操作系统设备的官方应用程序商店。</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/%E4%B8%80%E7%A7%8D%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BF%81%E7%A7%BB%20Git%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AC%A8%E5%8A%9E%E6%B3%95">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E4%B8%80%E7%A7%8D%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BF%81%E7%A7%BB%20Git%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AC%A8%E5%8A%9E%E6%B3%95" class="post-title-link" itemprop="url">一种跨平台的迁移 Git服务器数据到新服务器的笨办法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-13 14:11:22" itemprop="dateCreated datePublished" datetime="2020-12-13T14:11:22+08:00">2020-12-13</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 或是balabala…… </p>
+<p>不同框架有不同的迁移方式。<strong>您可能有更好的迁移版本库的方法</strong>，这里只是提供一总迁移的方法，不用折腾，简单，也是最笨的方法。</p>
+<p><strong>这种迁移方式是跨平台的</strong></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文举例围绕将  <code>http://192.168.0.1/project_a.git</code> 迁移至 <code>http://192.168.0.2/projcet_a_new.git</code> 上。 <strong>实际操作中请替换为您的服务器地址及项目名称</strong></p>
+<h2 id="Let-s-Go"><a href="#Let-s-Go" class="headerlink" title="Let`s Go"></a>Let`s Go</h2><ol>
+<li><p>本地新建文件夹<code>server_code</code> (名称任意,  <code>主要用来clone 服务器代码到本地</code>）</p>
+</li>
+<li><p>在 <code>server_code</code> 中 clone <code>project_a</code></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 请用命令行操作</span></span><br><span class="line">git <span class="built_in">clone</span> --bare http://192.168.0.1/project_a.git</span><br><span class="line"><span class="comment"># 注意，下载后的文件夹是  `project_a.git` 文件夹</span></span><br></pre></td></tr></table></figure></li>
+<li><p>新 Git 服务器，新建<code>同名或不同名</code>的项目。并复制地址</p>
+<p> 本示例为：<code>http://192.168.0.2/project_a_new.git</code></p>
+</li>
+<li><p>命令行 CD 进入 <code>project_a.git</code> 目录</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">$ /Users/alexliu/tmp/server_code</span><br><span class="line">$ <span class="built_in">cd</span> project_a.git</span><br><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">$ /Users/alexliu/tmp/server_code/project_a.git</span><br></pre></td></tr></table></figure></li>
+<li><p>推送项目</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推送</span></span><br><span class="line">git push --mirror http://192.168.0.2/project_a_new.git</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>OK, 这样项目所有的提交记录、分支、tags、release 版本都提交了到新的版本库了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2" class="post-title-link" itemprop="url">基于 Docker 的 ngrok 内网穿透部署</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-09 14:11:22" itemprop="dateCreated datePublished" datetime="2020-12-09T14:11:22+08:00">2020-12-09</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="http://pic.fangxutuwen.com/16074919463781.jpg"><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML" class="post-title-link" itemprop="url">Python 用  lxml 解析 HTML</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-09 13:17:41 / 修改时间：13:22:48" itemprop="dateCreated datePublished" datetime="2020-12-09T13:17:41+08:00">2020-12-09</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>python 爬虫中，必然会接触到 HTML 解析。 lxml是一个Python库，使用它可以轻松处理XML和HTML文件，还可以用于web爬取。市面上有很多现成的XML解析器，但是为了获得更好的结果，开发人员有时更愿意编写自己的XML和HTML解析器。这时lxml库就派上用场了。这个库的主要优点是易于使用，在解析大型文档时速度非常快，归档的也非常好，并且提供了简单的转换方法来将数据转换为Python数据类型，从而使文件操作更容易。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/Centos7%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Centos7%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE" class="post-title-link" itemprop="url">Centos7 端口与防火墙配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-09 10:07:41 / 修改时间：13:27:53" itemprop="dateCreated datePublished" datetime="2020-12-09T10:07:41+08:00">2020-12-09</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CentOS7/" itemprop="url" rel="index">
+                    <span itemprop="name">CentOS7</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h2><h3 id="开放-关闭端口"><a href="#开放-关闭端口" class="headerlink" title="开放/关闭端口"></a>开放/关闭端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent       <span class="comment"># 开放443端口</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=443/tcp --permanent    <span class="comment"># 关闭443端口</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看防火墙所有开放的端口"><a href="#查看防火墙所有开放的端口" class="headerlink" title="查看防火墙所有开放的端口"></a>查看防火墙所有开放的端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
+<h3 id="防火墙重新加载"><a href="#防火墙重新加载" class="headerlink" title="防火墙重新加载"></a>防火墙重新加载</h3><p>任何<strong>修改了防火墙相关的配置</strong>，都需要重启防火墙，使之生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload </span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h3><p>如果要开放的端口太多，嫌麻烦，可以关闭防火墙，安全性自行评估</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+<h3 id="查看防火墙状态"><a href="#查看防火墙状态" class="headerlink" title="查看防火墙状态"></a>查看防火墙状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><h3 id="查看监听的端口"><a href="#查看监听的端口" class="headerlink" title="查看监听的端口"></a>查看监听的端口</h3><p>centos7 默认没有 <code>netstat</code> 命令，需要安装 ‘net-tools’ 工具，<code>yum install -y net-tools</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnpt</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># netstat -lnpt</span></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:4040          0.0.0.0:*               LISTEN      67591/ngrok         </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      70689/nginx: master </span><br><span class="line">tcp        0      0 192.168.122.1:53        0.0.0.0:*               LISTEN      2474/dnsmasq        </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1091/sshd           </span><br><span class="line">tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1087/cupsd          </span><br><span class="line">tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1718/master         </span><br><span class="line">tcp6       0      0 :::2017                 :::*                    LISTEN      98919/v2raya        </span><br><span class="line">tcp6       0      0 :::9000                 :::*                    LISTEN      99517/docker-proxy- </span><br><span class="line">tcp6       0      0 :::20170                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::20171                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::20172                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      1091/sshd           </span><br><span class="line">tcp6       0      0 ::1:631                 :::*                    LISTEN      1087/cupsd          </span><br><span class="line">tcp6       0      0 :::32345                :::*                    LISTEN      65216/v2ray         </span><br><span class="line">tcp6       0      0 ::1:25                  :::*                    LISTEN      1718/master     </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="检查端口被哪个进程占用"><a href="#检查端口被哪个进程占用" class="headerlink" title="检查端口被哪个进程占用"></a>检查端口被哪个进程占用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnpt |grep 80</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># netstat -lnpt |grep 80</span></span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      70689/nginx: master </span><br></pre></td></tr></table></figure>
+
+<h3 id="查看进程的详细信息"><a href="#查看进程的详细信息" class="headerlink" title="查看进程的详细信息"></a>查看进程的详细信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps 70689</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7-alexliu ~]<span class="comment"># ps 70689</span></span><br><span class="line">   PID TTY      STAT   TIME COMMAND</span><br><span class="line"> 70689 ?        Ss     0:00 nginx: master process /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+<h3 id="中止进程"><a href="#中止进程" class="headerlink" title="中止进程"></a>中止进程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> 70689</span><br><span class="line"><span class="comment"># 强制 kill</span></span><br><span class="line"><span class="built_in">kill</span> -9 70689</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alexliu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Alexliu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuqi0725" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuqi0725" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuqi0725@aliyun.com" title="E-Mail → mailto:liuqi0725@aliyun.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">by Alexliu</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+	<script>
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+	</script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

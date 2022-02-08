@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="I0Z432mRgu">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Verdana:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://35liuqi.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 Docker 的 ngrok 内网穿透部署">
+<meta property="og:url" content="https://35liuqi.com/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2">
+<meta property="og:site_name" content="35Niu Blog">
+<meta property="og:description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://pic.fangxutuwen.com/16074919463781.jpg">
+<meta property="article:published_time" content="2020-12-09T06:11:22.000Z">
+<meta property="article:modified_time" content="2020-12-16T01:04:12.000Z">
+<meta property="article:author" content="Alexliu">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="技巧">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.fangxutuwen.com/16074919463781.jpg">
+
+<link rel="canonical" href="https://35liuqi.com/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>基于 Docker 的 ngrok 内网穿透部署 | 35Niu Blog</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-111580806-5',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea03dd7be5a42bf8e873d22962b291e2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">35Niu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不积小流,无以成江海</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/liuqi0725" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          基于 Docker 的 ngrok 内网穿透部署
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-09 14:11:22" itemprop="dateCreated datePublished" datetime="2020-12-09T14:11:22+08:00">2020-12-09</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="http://pic.fangxutuwen.com/16074919463781.jpg"><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
+<span id="more"></span>
+
+
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a target="_blank" rel="noopener" href="https://ngrok.com/">Ngrok 官网</a> 目前已经切换为 ngrok2 。免费 8 小时<br><a target="_blank" rel="noopener" href="https://github.com/tutumcloud/ngrok.git">Ngrok Github</a>  升级为 ngrok2 后已闭源。</p>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>最近痛下决心，把服务器重装系统了。一些软件，工具能用 docker 就用 docker。管理起来方便多了。所以 ngrok 也是用 docker 方式。17 年第一次装ngrok 时，就是直接在服务器上装的，装的过程很痛苦，各种包编译的问题，或者缺胳膊少腿的，折腾了 2-3 天，7，8 篇教程的综合才安装好。所以不建议在服务器上直接安装。 特别是一些没什么基础的小白。避免安装失败或者其他原因造成的服务器各类包安装冗余，甚至冲突。使用 docker 安装，不好用删了即可。</p>
+<h2 id="为什么要搭建自己的-ngrok"><a href="#为什么要搭建自己的-ngrok" class="headerlink" title="为什么要搭建自己的 ngrok"></a>为什么要搭建自己的 ngrok</h2><ul>
+<li>管理内网服务器，内网web进行演示</li>
+<li>快速开发微信程序和第三方支付平台调试</li>
+<li>本地WEB外网访问、本地开发微信、TCP端口转发</li>
+</ul>
+<p>国内内网穿透</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.oray.com/activity/190301/buy/?utm_source=baidu&utm_medium=cpc&utm_campaign=act_190301&i=45650&bd_vid=12322937661724432394">花生壳</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ngrok.cc/">Sunny-Ngrok</a></li>
+</ul>
+<p>至于搭建自己的 ngrok 服务的目的。 因为没有免费的…… </p>
+<h2 id="选-ngrok-还是-frp"><a href="#选-ngrok-还是-frp" class="headerlink" title="选 ngrok 还是 frp"></a>选 ngrok 还是 frp</h2><p>首先你自己要清楚你的使用范围。 因为他的速度跟你服务器以及供应商息息相关。比如我买的搬瓦工VPS，倒数第二便宜那种。 那内网穿透也就仅限个人项目测试，小范围人群测试这种。  所以在这种情况下无需考虑 ngrok 或 frp 那个更优。 都慢的抓脑壳。</p>
+<p>如果是公司使用，那还是建议在阿里云等服务器上搭建一个，速度也快，性能也好。  </p>
+<p>至于 ngrok，frp 我都试过。 最后选了 ngrok，方便点</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>公网 IP 的服务器 <ul>
+<li>国内: 腾讯云，阿里云……</li>
+<li>国外: 搬瓦工，Vultr, 亚马逊……</li>
+</ul>
+</li>
+<li>域名<ul>
+<li>可以找别人借你一个二级域名</li>
+<li>可以买一个域名  便宜的首年 10 来块。 注意：推荐 GoDaddy 或者国外买域名</li>
+</ul>
+</li>
+<li>Linux 系统。 本文不支持 windows</li>
+</ul>
+<h2 id="DNS-解析"><a href="#DNS-解析" class="headerlink" title="DNS 解析"></a>DNS 解析</h2><p>全文使用 <strong>example.com</strong> 代替你购买的域名。 二级域名同理</p>
+<p>添加 2 条 A 记录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#  host     Type        TTL     value</span><br><span class="line"></span><br><span class="line">ngrok         A         900     xxx.xxx.xxx.xxx</span><br><span class="line">*.ngrok       A         900     xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
+
+<p><code>xxx.xxx.xxx.xxx</code> 为你服务器的 IP 地址</p>
+<ul>
+<li>把 ngrok.example.com 解析到 xxx.xxx.xxx.xxx</li>
+<li>把 *.ngrok.example.com 解析到 xxx.xxx.xxx.xxx<ul>
+<li>ngrok 部署后，会反向代理到对应的子域名中</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>国内的服务器服务商，DNS 解析基本都支持泛域名(*.xxx.com)添加 。这里比国外强。<br>如果你的提供商不支持，要么你每增加一个子域名，在 DNS 中增加一个，要么切换到 DNSPod 去</p>
+</blockquote>
+<h2 id="docker-部署-ngrok"><a href="#docker-部署-ngrok" class="headerlink" title="docker 部署 ngrok"></a>docker 部署 ngrok</h2><p>本文使用 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/hteen/ngrok?utm_source=ld246.com">hteen/ngrok</a> 镜像。<br>或者你自己选一个 <a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=ngrok&type=image">docker 中 ngrok 镜像搜索</a></p>
+<blockquote>
+<p>docker 的安装不在本文讨论范围。 可以参考 <a href="https://35liuqi.com/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/">CentOS-7 安装 Docker</a></p>
+</blockquote>
+<h3 id="拉镜像"><a href="#拉镜像" class="headerlink" title="拉镜像"></a>拉镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉镜像</span></span><br><span class="line">docker pull hteen/ngrok</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后检查 </span></span><br><span class="line">[root@104 ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hteen/ngrok          latest              9f29e9d374e9        4 years ago         260MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意替换域名</span></span><br><span class="line">docker run --<span class="built_in">rm</span> -it -e DOMAIN=<span class="string">&quot;ngrok.example.com&quot;</span> -v /data/ngrok:/myfiles hteen/ngrok /bin/sh /build.sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果国内服务器，这一步时间很长。耐心等待！！！</p>
+</blockquote>
+<p><strong>ngrok 初始化后</strong>，会生成 <code>/data/ngrok</code> 目录</p>
+<h3 id="查看客户端"><a href="#查看客户端" class="headerlink" title="查看客户端"></a>查看客户端</h3><p>目录 <code>/data/ngrok/bin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/ngrokd                      <span class="comment"># 服务端。 不管。  注意不要和客户端 ngrok 看混了</span></span><br><span class="line">bin/ngrok                       <span class="comment"># linux 客户端    在本地的 centos7 上验证失败</span></span><br><span class="line">bin/darwin_amd64/ngrok          <span class="comment"># osx 客户端      在本地的 macbook 上验证成功</span></span><br><span class="line">bin/windows_amd64/ngrok.exe     <span class="comment"># windows 客户端  在本地的 windows 上验证成功</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用 ftp 或者 scp 等方式拷贝对应客户端到你本地</p>
+</blockquote>
+<h3 id="启动-ngrok-服务"><a href="#启动-ngrok-服务" class="headerlink" title="启动 ngrok 服务"></a>启动 ngrok 服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意修改域名</span></span><br><span class="line"></span><br><span class="line">docker run -idt --name ngrok-server \</span><br><span class="line">-v /data/ngrok:/myfiles \</span><br><span class="line">-p 8081:80 \</span><br><span class="line">-p 8082:443 \</span><br><span class="line">-p 4443:4443 \</span><br><span class="line">-e DOMAIN=<span class="string">&#x27;ngrok.example.com&#x27;</span> hteen/ngrok /bin/sh /server.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>本地 8081 转发到 image 的 80 端口</li>
+<li>本地 8082 转发到 image 的 443 端口</li>
+<li>本地 4443 转发到 image 的 4443 端口</li>
+</ul>
+<h2 id="配置-nginx"><a href="#配置-nginx" class="headerlink" title="配置 nginx"></a>配置 nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name ngrok.example.com *.ngrok.example.com; <span class="comment"># 监听域名</span></span><br><span class="line">  </span><br><span class="line">  underscores_in_headers on; <span class="comment"># 允许传递带_ 的参数 默认 off。 比如你研发 header 中带 access_token 。不开启将无法传递</span></span><br><span class="line">  </span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">    proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    proxy_pass http://127.0.0.1:8081;  <span class="comment"># 这里的端口号是开启容器时 ngrok 监听的端口号</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置完后，重启 nginx</p>
+</blockquote>
+<h2 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=4443/tcp --permanent       <span class="comment"># 开放4443端口</span></span><br><span class="line">firewall-cmd --reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h2><p>下载客户端到本地。并新建 ngrok.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">server_addr:</span> <span class="string">&quot;ngrok.example.com:4443&quot;</span>       <span class="comment"># 服务器域名 + 端口 </span></span><br><span class="line"><span class="attr">trust_host_root_certs:</span> <span class="literal">false</span>                <span class="comment"># True 支持TLS加密协议的证书信任</span></span><br><span class="line"><span class="attr">tunnels:</span>                                    <span class="comment"># 通道,可以配置多个</span></span><br><span class="line">  <span class="attr">hello:</span>                                    <span class="comment"># 名称</span></span><br><span class="line">   <span class="attr">proto:</span>                                   <span class="comment"># 属性。固定</span></span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             <span class="comment"># http 监听本地端口</span></span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span>                            <span class="comment"># https 监听本地端口</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test1</span>                         <span class="comment"># 子域名 自定义，不能重复. 例子中访问域名为  http://test1.ngrok.example.com</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">world:</span>                                   </span><br><span class="line">   <span class="attr">proto:</span>                                   </span><br><span class="line">     <span class="attr">http:</span> <span class="number">5000</span>                             </span><br><span class="line">     <span class="attr">https:</span> <span class="number">5000</span></span><br><span class="line">   <span class="attr">subdomain:</span> <span class="string">test2</span>                    </span><br></pre></td></tr></table></figure>
+
+<h3 id="启动客户端"><a href="#启动客户端" class="headerlink" title="启动客户端"></a>启动客户端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 ngrok 客户端目录</span></span><br><span class="line">./ngrok -config=ngrok.yml start all     <span class="comment"># 启动所有监听</span></span><br><span class="line">./ngrok -config=ngrok.yml start world   <span class="comment"># 仅启动 名称为 world 的监听</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="本地监控"><a href="#本地监控" class="headerlink" title="本地监控"></a>本地监控</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:4040/">http://127.0.0.1:4040</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alexliu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://35liuqi.com/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2" title="基于 Docker 的 ngrok 内网穿透部署">https://35liuqi.com/基于 Docker 的 ngrok 内网穿透部署</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/%E6%8A%80%E5%B7%A7/" rel="tag"># 技巧</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML" rel="prev" title="Python 用  lxml 解析 HTML">
+      <i class="fa fa-chevron-left"></i> Python 用  lxml 解析 HTML
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E4%B8%80%E7%A7%8D%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BF%81%E7%A7%BB%20Git%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AC%A8%E5%8A%9E%E6%B3%95" rel="next" title="一种跨平台的迁移 Git服务器数据到新服务器的笨办法">
+      一种跨平台的迁移 Git服务器数据到新服务器的笨办法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">写在前面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-ngrok"><span class="nav-number">2.</span> <span class="nav-text">为什么要搭建自己的 ngrok</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89-ngrok-%E8%BF%98%E6%98%AF-frp"><span class="nav-number">3.</span> <span class="nav-text">选 ngrok 还是 frp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-%E8%A7%A3%E6%9E%90"><span class="nav-number">5.</span> <span class="nav-text">DNS 解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-%E9%83%A8%E7%BD%B2-ngrok"><span class="nav-number">6.</span> <span class="nav-text">docker 部署 ngrok</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E9%95%9C%E5%83%8F"><span class="nav-number">6.1.</span> <span class="nav-text">拉镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">6.3.</span> <span class="nav-text">查看客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-ngrok-%E6%9C%8D%E5%8A%A1"><span class="nav-number">6.4.</span> <span class="nav-text">启动 ngrok 服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-nginx"><span class="nav-number">7.</span> <span class="nav-text">配置 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">8.</span> <span class="nav-text">配置防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">9.</span> <span class="nav-text">配置客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">9.1.</span> <span class="nav-text">启动客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E7%9B%91%E6%8E%A7"><span class="nav-number">9.2.</span> <span class="nav-text">本地监控</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alexliu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Alexliu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuqi0725" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuqi0725" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuqi0725@aliyun.com" title="E-Mail → mailto:liuqi0725@aliyun.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">by Alexliu</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+	<script>
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+	</script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'f95ccef6d68f048836ec',
+      clientSecret: 'd2470a95274e1a8774db71af7f713be821078cd2',
+      repo: 'liuqi0725.github.io',
+      owner: 'liuqi0725',
+      admin: ['liuqi0725'],
+      id: '8d0e6355e3720f9846b686ffd2923058',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
