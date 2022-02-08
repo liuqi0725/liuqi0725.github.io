@@ -1,98 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>内网穿透 FRP 安装配置使用</title>
-    <url>/2021/08/01/2021-08-01</url>
-    <content><![CDATA[<p>内网没有公网IP，但是又有需要提供内网机器上部署的应用或者服务器给外网访问，这个动作就是内网穿透。ngrok、<a href="https://gofrp.org/">frp</a> 等工具就是用来干这个的。  <a href="https://gofrp.org/">frp</a> 支持tcp、udp、http、https等协议类型，并且支持web服务器根据域名进行路由转发。</p>
-<span id="more"></span>
-
-
-<h2 id="配置前准备"><a href="#配置前准备" class="headerlink" title="配置前准备"></a>配置前准备</h2><ul>
-<li>公网服务器一台</li>
-<li>本地计算机一台(笔记本/台式主机/服务器均可)</li>
-<li>根据系统下载所需包<a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a>  </li>
-</ul>
-<p><strong>PS:</strong> 下载包时，要考虑服务端（公网服务器）、客户端（本地计算机）的系统及芯片。  比如服务端为 centos7 64 位，  客户端为 MacOs 。 那么服务端下载的是 <code>frp_xx.xx.xx_linux_xxxx.tar.gz</code> ， 客户端下载的是 <code>frp_xx.xx.xx_darwin_xxxxx.tar.gz</code></p>
-<h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h2><ul>
-<li>服务器系统为 Centos7 AMD 64位</li>
-<li>frp 存储目录为 /usr/local/etc/frp</li>
-</ul>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据系统下载服务端文件 <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a> </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 目录可存放在自己想存放的位置</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/etc/</span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.0/frp_0.37.0_linux_arm64.tar.gz</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -zxvf frp_0.37.0_linux_arm64.tar.gz</span><br><span class="line"><span class="comment"># 重命名</span></span><br><span class="line"><span class="built_in">mv</span> frp_0.37.0_linux_arm64 frp</span><br></pre></td></tr></table></figure>
-
-<p>修改配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 到 frp 存放目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/etc/frp</span><br><span class="line"><span class="comment"># 修改配置 frps.ini </span></span><br><span class="line">vi frps.ini</span><br></pre></td></tr></table></figure>
-
-<p>frps.ini 配置修改，更多高阶配置参考<a href="https://gofrp.org/">frp</a> 文档</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line"><span class="comment"># 客户端通信端口</span></span><br><span class="line">bind_port = 7000        </span><br><span class="line"><span class="comment"># 访问 web 端口   </span></span><br><span class="line">vhost_http_port = 6800    </span><br><span class="line"><span class="comment"># 身份验证</span></span><br><span class="line">token = 123456</span><br></pre></td></tr></table></figure>
-
-<p>防火墙开放端口</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 端口修改为您 frps.ini 设置的 bind_port </span></span><br><span class="line">firewall-cmd --zone=public --add-port=7000/tcp --permanent </span><br><span class="line"><span class="comment"># 重启防火墙</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>启动方式有 2 种，2 选 1 即可</p>
-<ul>
-<li>命令行直接启动（不推荐）</li>
-<li>配置到系统服务中</li>
-</ul>
-<h4 id="配置到系统服务中"><a href="#配置到系统服务中" class="headerlink" title="配置到系统服务中"></a>配置到系统服务中</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 复制服务到系统服务中。 注意切换到你的 frp 保存路径</span></span><br><span class="line"><span class="built_in">cp</span> /usr/local/etc/frp/systemd/frps.service /etc/systemd/system/frps.service</span><br><span class="line"><span class="comment"># 编辑 service</span></span><br><span class="line">vi /etc/systemd/system/frps.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Frp Server Service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line"><span class="comment"># User=nobody, 如果要 frp 独占 80 端口需要注释掉。但大多数情况我相信大部分人都是用的 nginx 转发</span></span><br><span class="line">User=nobody</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5s</span><br><span class="line"><span class="comment"># 此处切换为你的 frp 路径</span></span><br><span class="line">ExecStart=/usr/local/etc/frp/frps -c /usr/local/etc/frp/frps.ini</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> frps</span><br><span class="line"><span class="comment"># 启动 frp</span></span><br><span class="line">systemctl start frps</span><br></pre></td></tr></table></figure>
-
-<h4 id="控制台启动（不推荐）"><a href="#控制台启动（不推荐）" class="headerlink" title="控制台启动（不推荐）"></a>控制台启动（不推荐）</h4><p>不推荐控制台启动</p>
-<ul>
-<li>显示启动，关闭 bash 就停止了</li>
-<li>后台启动，不方便关闭。 </li>
-<li>命令复杂，不容易记忆</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示启动，关闭 bash 窗口，程序就停止了</span></span><br><span class="line">./frps -c ./frps.ini       </span><br><span class="line"><span class="comment"># 后台启动，不便于关闭。关闭方法自行搜索  </span></span><br><span class="line"><span class="built_in">nohup</span> ./frps -c ./frps.ini &amp;  </span><br></pre></td></tr></table></figure>
-
-<h3 id="Nginx-转发配置"><a href="#Nginx-转发配置" class="headerlink" title="Nginx 转发配置"></a>Nginx 转发配置</h3><p>我使用的 https ，配置如下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name frp.sample.com; </span><br><span class="line">    rewrite ^(.*) https://$server_name<span class="variable">$1</span> permanent;    <span class="comment"># 转发 443</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl;</span><br><span class="line">    server_name frp.sample.com;  <span class="comment"># 修改域名/二级域名</span></span><br><span class="line"></span><br><span class="line">    underscores_in_headers on;      <span class="comment"># 允许传递带_ 的参数 默认 off</span></span><br><span class="line"></span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line">    ssl_session_cache shared:SSL:10m;</span><br><span class="line">    ssl_session_timeout 1d;</span><br><span class="line">    ssl_session_tickets off;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ssl 证书</span></span><br><span class="line">    ssl_certificate /etc/letsencrypt/live/frp.sample.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /etc/letsencrypt/live/frp.sample.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        proxy_pass http://127.0.0.1:6800;   <span class="comment"># 转发到frps.ini 配置的 vhost_http_port 端口上</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><ul>
-<li>本地计算机系统为 MacOS 11.4 Inter 64位</li>
-<li>frp 存储目录为 /User/alexliu/tools/frp</li>
-</ul>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>根据系统下载服务端文件 <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a> </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /User/alexliu/tools/frp/frpc.ini</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件配置如下</span></span><br><span class="line"></span><br><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx   <span class="comment"># 公网服务器ip，部署 frps 服务端主机 ip</span></span><br><span class="line">server_port = 7000              <span class="comment"># 与服务端bind_port一致</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 公网通过ssh访问本机</span></span><br><span class="line">[ssh]</span><br><span class="line"><span class="built_in">type</span> = tcp                      <span class="comment"># 连接协议</span></span><br><span class="line">local_ip = xxx.xxx.xxx.xxx      <span class="comment"># 本地计算机ip</span></span><br><span class="line">local_port = 22                 <span class="comment"># ssh默认端口号</span></span><br><span class="line">remote_port = 6000              <span class="comment"># 自定义的访问内部ssh端口号</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 公网访问本机web服务器以http方式</span></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http                     <span class="comment"># 根据本地 web 服务协议来，如果本地 web 服务是 ssl，就是 https</span></span><br><span class="line">local_port = 8081               <span class="comment"># web 服务端口</span></span><br><span class="line">custom_domains = frp.sample.com <span class="comment"># 公网访问域名</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./frpc -c ./frpc.ini            <span class="comment"># 显示启动</span></span><br><span class="line"><span class="built_in">nohup</span> ./frpc -c ./frpc.ini &amp;    <span class="comment"># 后台启动</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="自定义二级域名"><a href="#自定义二级域名" class="headerlink" title="自定义二级域名"></a>自定义二级域名</h3><p>自定义二级域名，可以分发至多个 web服务</p>
-<ul>
-<li>服务端修改</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 6800</span><br><span class="line">token = 123456</span><br><span class="line"><span class="comment"># 设置主域名</span></span><br><span class="line">subdomain_host = frp.sample.com</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>客户端配置</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx</span><br><span class="line">server_port = 7000</span><br><span class="line">token = 123456</span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http</span><br><span class="line">local_port = 80</span><br><span class="line"><span class="comment"># 设置子域名</span></span><br><span class="line">subdomain = a</span><br><span class="line"></span><br><span class="line">[web1]</span><br><span class="line"><span class="built_in">type</span> = http</span><br><span class="line">local_port = 8080</span><br><span class="line"><span class="comment"># 设置子域名</span></span><br><span class="line">subdomain = b</span><br></pre></td></tr></table></figure>
-
-<p>这时候 访问<code>a.frp.sample.com</code>访问 80 端口应用。  访问<code>b.frp.sample.com</code>访问8080端口应用。  nginx 转发需要改为泛域名 <code>*.frp.sample.com</code> ，如果是 https 需要申请泛域名证书</p>
-<h3 id="Dashboard"><a href="#Dashboard" class="headerlink" title="Dashboard"></a>Dashboard</h3><p>Dashboard 是可以通过浏览器查看 <a href="https://gofrp.org/">frp</a> 的状态以及代理统计信息。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑 服务端 frps.ini</span></span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 6800</span><br><span class="line">token = 123456</span><br><span class="line"><span class="comment"># 设置主域名</span></span><br><span class="line">subdomain_host = frp.sample.com</span><br><span class="line"></span><br><span class="line">dashboard_port = 7500</span><br><span class="line"><span class="comment"># dashboard 用户名密码，默认都为 admin,为空则不需要</span></span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = admin</span><br></pre></td></tr></table></figure>
-
-<p>然后开放服务端端口 7500 , 使用 IP:Port 即可访问。如果需要 nginx 转发，配置好后，转发 7500 即可</p>
-]]></content>
-      <categories>
-        <category>CentOS7</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>Nginx</tag>
-        <tag>frp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS7 Let’s encrypt certbot 证书管理</title>
-    <url>//CentOS7%20Let%E2%80%99s%20encrypt%20certbot%20%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86</url>
+    <url>/post/37ac579a.html</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074977125480.jpg"></p>
 <span id="more"></span>
 
@@ -157,7 +67,7 @@
   </entry>
   <entry>
     <title>CentOS-7 安装 Docker</title>
-    <url>//CentOS-7%20%E5%AE%89%E8%A3%85%20Docker</url>
+    <url>/post/841b6107.html</url>
     <content><![CDATA[<p>微服务现在已经是趋势，不管大型，中型，小型应用，都可以进行拆分，达到应用松耦合，可复用的目的。说到微服务，就要提到 Docker。介绍下 Docker 在 centos-7 上安装的步骤</p>
 <span id="more"></span>
 
@@ -203,7 +113,7 @@
   </entry>
   <entry>
     <title>CentOS7 yum 安装 nginx</title>
-    <url>//CentOS7%20yum%20%E5%AE%89%E8%A3%85%20nginx</url>
+    <url>/post/360ec959.html</url>
     <content><![CDATA[<p><a href="http://nginx.org/en/linux_packages.html#stable">官方说明</a></p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install yum-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 nginx  yum 源</span></span><br><span class="line"></span><br><span class="line">vi /etc/yum.repos.d/nginx.repo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -231,7 +141,7 @@
   </entry>
   <entry>
     <title>CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</title>
-    <url>//CentOS7,%20v2Ray%20,%20Apache,%20websock</url>
+    <url>/post/8e14883f.html</url>
     <content><![CDATA[<p>最近SS、SSR 老是被 ban，只有换工具了，一直听说 v2Ray 很好用。就尝试切换到 v2Ray 。网上看了下现有的教程，大多是 nginx 的，这里有几个问题。 </p>
 <ol>
 <li>大多数教程是裸搭建，仅适合为了 v2ray 买个 vps 来搭建的人</li>
@@ -315,7 +225,7 @@
   </entry>
   <entry>
     <title>Centos7 端口与防火墙配置</title>
-    <url>//Centos7%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE</url>
+    <url>/post/cb0a5d97.html</url>
     <content><![CDATA[<h2 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h2><h3 id="开放-关闭端口"><a href="#开放-关闭端口" class="headerlink" title="开放/关闭端口"></a>开放/关闭端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent       <span class="comment"># 开放443端口</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=443/tcp --permanent    <span class="comment"># 关闭443端口</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="查看防火墙所有开放的端口"><a href="#查看防火墙所有开放的端口" class="headerlink" title="查看防火墙所有开放的端口"></a>查看防火墙所有开放的端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
@@ -351,7 +261,7 @@
   </entry>
   <entry>
     <title>Docker 常用命令</title>
-    <url>//Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4</url>
+    <url>/post/f1efb8a3.html</url>
     <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker <span class="built_in">rm</span> 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
 
 <h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker update --restart=always &lt;容器<span class="built_in">id</span> 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
@@ -377,7 +287,7 @@
   </entry>
   <entry>
     <title>Hexo 创建 Sitemap</title>
-    <url>//Hexo%20%E5%88%9B%E5%BB%BA%20Sitemap</url>
+    <url>/post/19bbd224.html</url>
     <content><![CDATA[<p>Sitemap 可方便网站管理员通知搜索引擎他们网站上有哪些可供抓取的网页。最简单的 Sitemap 形式，就是XML 文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新的时间、更改的频率以及相对于网站上其他网址的重要程度为何等），以便搜索引擎可以更加智能地抓取网站。</p>
 <span id="more"></span>
 
@@ -414,7 +324,7 @@
   </entry>
   <entry>
     <title>Hexo第三方服务</title>
-    <url>//Hexo%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1</url>
+    <url>/post/77c2f60b.html</url>
     <content><![CDATA[<p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。</p>
 <span id="more"></span>
 
@@ -490,7 +400,7 @@
   </entry>
   <entry>
     <title>Homebrew 下载加速</title>
-    <url>//Homebrew%E4%B8%8B%E8%BD%BD%E5%8A%A0%E9%80%9F%E3%80%81%E6%9B%BF%E6%8D%A2%E4%B8%8B%E8%BD%BD%E6%BA%90%E3%80%81%E4%B8%8D%E4%BF%AE%E6%94%B9%E6%BA%90%E7%9A%84%E5%8A%A0%E9%80%9F%E6%96%B9%E6%B3%95</url>
+    <url>/post/1e5507db.html</url>
     <content><![CDATA[<p><a href="https://brew.sh/index_zh-cn.html">Homebrew</a> 在国内的更新速度实在感人，几十 kb 的东西，盯着进度条能把人搞崩溃。虽然换国内的源不一定就能解决问题，但是换了还是比不换好。下面来介绍如何换换国内的源，不换国内源也能下载快的偏方。望能帮助到大家。</p>
 <span id="more"></span>
 
@@ -551,7 +461,7 @@
   </entry>
   <entry>
     <title>JAVA OCR Tesseract 识别代码实现</title>
-    <url>//JAVA%20OCR%20Tesseract%20%E8%AF%86%E5%88%AB%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0</url>
+    <url>/post/7a3c4236.html</url>
     <content><![CDATA[<p>Tesseract的OCR引擎最先由HP实验室于1985年开始研发，至1995年时已经成为OCR业内最准确的三款识别引擎之一。然而，HP不久便决定放弃OCR业务，Tesseract也从从此尘封。</p>
 <p>数年以后，HP意识到，与其将Tesseract束之高阁，不如贡献给开源软件业，让其重焕新生－－2005年，Tesseract由美国内华达州信息技术研究所获得，并求诸于Google对Tesseract进行改进、消除Bug、优化工作。</p>
 <p>在修复了最重要的数个漏洞后，Google认为，Tesseract OCR已经足够稳定，可以重新以开源软件方式发布。</p>
@@ -640,7 +550,7 @@
   </entry>
   <entry>
     <title>JAVA OpenCV 入门</title>
-    <url>//JAVA%20OpenCV%20%E5%85%A5%E9%97%A8</url>
+    <url>/post/deaa1ad8.html</url>
     <content><![CDATA[<p>网上 JAVA 学习 OpenCV 的知识太少，自己通过学习把整理的示例，参数说明放在这里，大家一起互相学习。主要通过 OpenCV3.x 的官方开发文档，实体书等自学。在内容中加了大量注释起到一起学习，互相沟通的作用。<strong>函数讲解，案例代码内容我均整理在 GitHub【<a href="https://github.com/liuqi0725/OpenCV3-Study-JAVA">OpenCV3-Study-JAVA</a> 】上</strong></p>
 <span id="more"></span>
 
@@ -740,7 +650,7 @@
   </entry>
   <entry>
     <title>MacBook 卸载 node</title>
-    <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node</url>
+    <url>/post/78fbf0ed.html</url>
     <content><![CDATA[<p>MacBook 下卸载 node 比较麻烦，这两天弄 Hexo，node 升级后导致 npm 版本不一致无法 install，就准备把 node、npm 删除了重新装。在Stackoverflow 上面找到一个手动删除的方法还不错，特地记录下来。</p>
 <span id="more"></span>
 
@@ -781,7 +691,7 @@
   </entry>
   <entry>
     <title>Android-GooglePlay 3 件套</title>
-    <url>//Android-GooglePlay%203%20%E4%BB%B6%E5%A5%97</url>
+    <url>/post/687ace9e.html</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079183779911.jpg"></p>
 <p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
 <h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
@@ -835,7 +745,7 @@
   </entry>
   <entry>
     <title>一种跨平台的迁移 Git服务器数据到新服务器的笨办法</title>
-    <url>//%E4%B8%80%E7%A7%8D%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BF%81%E7%A7%BB%20Git%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AC%A8%E5%8A%9E%E6%B3%95</url>
+    <url>/post/7bc6d161.html</url>
     <content><![CDATA[<p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 或是balabala…… </p>
 <p>不同框架有不同的迁移方式。<strong>您可能有更好的迁移版本库的方法</strong>，这里只是提供一总迁移的方法，不用折腾，简单，也是最笨的方法。</p>
 <p><strong>这种迁移方式是跨平台的</strong></p>
@@ -865,7 +775,7 @@
   </entry>
   <entry>
     <title>OpenCV 3.4 Scalar 参数说明，与 CvType 结合使用</title>
-    <url>//OpenCV%203.4%20Scalar%20%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%8C%E4%B8%8E%20CvType%20%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8</url>
+    <url>/post/86aa2842.html</url>
     <content><![CDATA[<p>我们在学习OpenCV 时，发现在构造 Mat 时，会有2个关键参数，一个 CvType，一个 Scalar。很多人不明白这2个参数的意思，所以在把别人例子拿来使用或自己写的的时候发现这个参数不知道该怎么填。本文就将 Scalar 参数详细的说明下。</p>
 <p>Scalar 是一个配合 CvType 使用的参数，如果你不了解 CvType，可以先看看我写的 <a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造。</p>
 <span id="more"></span>
@@ -897,7 +807,7 @@
   </entry>
   <entry>
     <title>OpenCV3 图像膨胀 dilate、腐蚀 erode、提取图像中的条形码 JAVA 实现</title>
-    <url>//OpenCV3%20%E5%9B%BE%E5%83%8F%E8%86%A8%E8%83%80%20dilate%E3%80%81%E8%85%90%E8%9A%80%20erode%E3%80%81%E6%8F%90%E5%8F%96%E5%9B%BE%E5%83%8F%E4%B8%AD%E7%9A%84%E6%9D%A1%E5%BD%A2%E7%A0%81%20JAVA%20%E5%AE%9E%E7%8E%B0</url>
+    <url>/post/362bdff0.html</url>
     <content><![CDATA[<p>利用近期对 OpenCV 的学习，结合图像的 dilate、erode 用 JAVA 来实现提取图像中的条形码，这样就可以通过识别工具来识别图中的内容。</p>
 <span id="more"></span>
 
@@ -926,7 +836,7 @@
   </entry>
   <entry>
     <title>OpenCV 3.4 读懂 CvType ，类型构造说明 JAVA</title>
-    <url>//OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA</url>
+    <url>/post/adae42c4.html</url>
     <content><![CDATA[<p>CvType 可以说是 OpenCV 图像处理的基础常量参数。但是面对 CV_8U1C 、CV_8U2C、CV_8U3C、CV_8U4C 在初学阶段可以说一脸懵，他们代表的是什么呢？关于这些参数名门的来历，个人觉得有点 <a href="https://baike.baidu.com/item/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95/7632397?fr=aladdin">[匈牙利命名法]</a> 的影子。本文就主要说明这些字母的含义</p>
 <span id="more"></span>
 
@@ -1021,7 +931,7 @@
   </entry>
   <entry>
     <title>Python 命令行模块 Click</title>
-    <url>//Python%20%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%9D%97%20Click</url>
+    <url>/post/3ae1525e.html</url>
     <content><![CDATA[<p><a href="https://click.palletsprojects.com/">官网</a></p>
 <p>Python 经常需要封装命令行，来达到执行指定函数的目的。常用的有 <code>sys</code>, <a href="https://click.palletsprojects.com/">click</a> , <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>。 sys 是 python 系统自带，使用起来不是很方便。所以一般都是用 <a href="https://click.palletsprojects.com/">click</a> , <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>。<br><a href="https://click.palletsprojects.com/">click</a> 相较于 <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>代码更少，也更加简洁、直观。</p>
 <span id="more"></span>
@@ -1060,7 +970,7 @@
   </entry>
   <entry>
     <title>Python 用  lxml 解析 HTML</title>
-    <url>//Python%20%E7%94%A8%20%20lxml%20%E8%A7%A3%E6%9E%90%20HTML</url>
+    <url>/post/56fee5e3.html</url>
     <content><![CDATA[<p>python 爬虫中，必然会接触到 HTML 解析。 lxml是一个Python库，使用它可以轻松处理XML和HTML文件，还可以用于web爬取。市面上有很多现成的XML解析器，但是为了获得更好的结果，开发人员有时更愿意编写自己的XML和HTML解析器。这时lxml库就派上用场了。这个库的主要优点是易于使用，在解析大型文档时速度非常快，归档的也非常好，并且提供了简单的转换方法来将数据转换为Python数据类型，从而使文件操作更容易。</p>
 <span id="more"></span>
 
@@ -1124,7 +1034,7 @@
   </entry>
   <entry>
     <title>python3 处理 mp3 ID3 信息</title>
-    <url>//python3,ID3</url>
+    <url>/post/809914e1.html</url>
     <content><![CDATA[<p>现在听个音乐太难了,各大播放器在版权争夺下搞得一个音乐市场乌烟瘴气。有些歌这个平台可以听有些歌那个平台可以听。想听全就都买 VIP。懒得折腾了,还是回到起点吧”==下载音乐==”。因为主要上下班开车听听歌,发现下载下来的音乐很多都没有 id3 信息，网上找一些编辑 ID3 信息的编辑后，还是乱码。原因是现在基本都是 ID3 V2 信息了，没有写入 ID3 V1 信息。那么一些老款车或者中控都不支持 ID3 V2(比如我的车时 2012 款)，就会显示乱码。就想用 python 随便写一个来用用</p>
 <span id="more"></span>
 
@@ -1175,7 +1085,7 @@
   </entry>
   <entry>
     <title>Springboot+Nginx 做负载均衡</title>
-    <url>//Springboot+Nginx%20%E5%81%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1</url>
+    <url>/post/55431d62.html</url>
     <content><![CDATA[<p>利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。</p>
 <span id="more"></span>
 
@@ -1250,7 +1160,7 @@
   </entry>
   <entry>
     <title>centos7 安装 postgresql</title>
-    <url>//centos7%E5%AE%89%E8%A3%85postgresql</url>
+    <url>/post/a47edc12.html</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装方式一: yum 直接安装</span></span><br><span class="line"><span class="comment"># 建议先用 yum search 查看你的 yum 源下是否是 13</span></span><br><span class="line">yum -y install postgresql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装方式二: 安装官方 yum 源再安装 postgresql</span></span><br><span class="line"></span><br><span class="line">yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum install -y postgresql13-server</span><br></pre></td></tr></table></figure>
 
 
@@ -1289,7 +1199,7 @@
   </entry>
   <entry>
     <title>macOS 安装 opencv3.4</title>
-    <url>//macOS%20%E5%AE%89%E8%A3%85%20opencv3.4</url>
+    <url>/post/c9ba1314.html</url>
     <content><![CDATA[<p>介绍在 MacOs 下安装 OpenCV 3.x</p>
 <span id="more"></span>
 
@@ -1376,7 +1286,7 @@
   </entry>
   <entry>
     <title>Springboot+Flyway 管理项目SQL脚本</title>
-    <url>//Springboot+Flyway%20%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AESQL%E8%84%9A%E6%9C%AC</url>
+    <url>/post/919b1099.html</url>
     <content><![CDATA[<p>Flyway 数据库的版本控制。</p>
 <p>用一种简单、干净的方案，帮助用户完成数据库迁移的工作。使用Flyway，用户可以从任意一个数据库版本迁移到最新版本，简单而且有效。</p>
 <p>支持多个平台：windows、ios、linux、docker、java、android 。本文介绍 Springboot 集成 Flyway，及Sql 脚本命名方式</p>
@@ -1432,7 +1342,7 @@
   </entry>
   <entry>
     <title>Springboot 整合SpringSecurity实现账号密码+手机验证码登陆</title>
-    <url>//Springboot%20%E6%95%B4%E5%90%88SpringSecurity%E5%AE%9E%E7%8E%B0%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81+%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E9%99%86</url>
+    <url>/post/6e429048.html</url>
     <content><![CDATA[<p>SpringSecurity 是 Spring 提供安全管理框架。核心内容包含<strong>认证</strong>、<strong>授权</strong>、<strong>攻击防护</strong>。实际上SpringSecurity 已经发展了多年了，但是在 SSM/SSH 中整合 SpringSecurity 相较于 Shiro 来说显得要麻烦很多，所以在安全管理框架这块一直都是 Shiro 的天下。</p>
 <p>自从有了 SpringBoot ，SpringSecurity 的完美兼容让其价值完整的体现了出来。在 SpringBoot 中基本零配置就可以使用 SpringSecurity了。</p>
 <span id="more"></span>
@@ -1505,7 +1415,7 @@
   </entry>
   <entry>
     <title>springboot+freemarker+pjax 实现单页局部刷新</title>
-    <url>//springboot+freemarker+pjax%20%E5%AE%9E%E7%8E%B0%E5%8D%95%E9%A1%B5%E5%B1%80%E9%83%A8%E5%88%B7%E6%96%B0</url>
+    <url>/post/ec3b14f1.html</url>
     <content><![CDATA[<p>使用 Springboot + freemarker + pjax 实现单页应用，局部刷新。提升用户体验，降低服务器压力。</p>
 <span id="more"></span>
 
@@ -1562,7 +1472,7 @@
   </entry>
   <entry>
     <title>MacOS 使用 SSH 方式连接服务器</title>
-    <url>//MacOS%20%E4%BD%BF%E7%94%A8%20SSH%20%E6%96%B9%E5%BC%8F%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8</url>
+    <url>/post/e8f3c962.html</url>
     <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>服务器： centos7 64 位<br>客户端： Macos 10.13</p>
 <p>内容主要讲解本地证书创建，拷贝证书，本地别名等</p>
 <h2 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -t 秘钥类型 默认 rsa 可以省略</span></span><br><span class="line"><span class="comment"># -C 注释文字，一般是你的邮箱，可以省略</span></span><br><span class="line"><span class="comment"># -f 是存放文件及名称。不加的话，默认是 id_rsh</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxx@xx.com&quot;</span> -f ~/.ssh/id_rsa_gitee</span><br></pre></td></tr></table></figure>
@@ -1596,7 +1506,7 @@
   </entry>
   <entry>
     <title>基于 Docker 的 ngrok 内网穿透部署</title>
-    <url>//%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20ngrok%20%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%83%A8%E7%BD%B2</url>
+    <url>/post/85afc9a0.html</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg"><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
 <span id="more"></span>
 
@@ -1695,7 +1605,7 @@
   </entry>
   <entry>
     <title>docker-compose 命令详解</title>
-    <url>//docker-compose%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3</url>
+    <url>/post/efe1c160.html</url>
     <content><![CDATA[<h2 id="docker-compose-命令详解"><a href="#docker-compose-命令详解" class="headerlink" title="docker-compose 命令详解"></a>docker-compose 命令详解</h2><p>docker-compose的使用非常类似于docker命令的使用，但是需要注意的是大部分的compose命令都需要到docker-compose.yml文件所在的目录下才能执行。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 命令聚合每个容器的输出，命令退出时，所有容器都将停止。</span></span><br><span class="line">docker-compose up </span><br><span class="line">		</span><br><span class="line"><span class="comment"># 在后台启动容器并使它们保持运行。</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看该容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker-compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker logs -f &lt;container_id&gt; 			</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(查看最后n条日志打印)。 例：`docker logs -f --tail 50 44b `</span></span><br><span class="line">docker logs -f --<span class="built_in">tail</span> &lt;数量&gt; &lt;container_id&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止compose服务。</span></span><br><span class="line">docker-compose stop 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启compose服务。</span></span><br><span class="line">docker-compose restart 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># kill compose服务。</span></span><br><span class="line">docker-compose <span class="built_in">kill</span> 					</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看compose服务状态。</span></span><br><span class="line">docker-compose ps 						</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除compose服务。	</span></span><br><span class="line">docker-compose <span class="built_in">rm</span> 						</span><br></pre></td></tr></table></figure>
 
@@ -1712,7 +1622,7 @@
   </entry>
   <entry>
     <title>安装Hexo常见问题</title>
-    <url>/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</url>
+    <url>/post/e4e699fe.html</url>
     <content><![CDATA[<p>随着WP安装的插件越来越多，自己的 VPS 又配置偏低，导致访问越来越慢。之前就知道 Hexo，但是因为当时忙于项目，懒得搞。最近实在无法忍受了，就考虑迁移到Hexo上。在安装过程中发现一些问题，特地记录下</p>
 <span id="more"></span>
 
@@ -1768,7 +1678,7 @@
   </entry>
   <entry>
     <title>注册台湾 AppleID 教程</title>
-    <url>//%E6%B3%A8%E5%86%8C%E5%8F%B0%E6%B9%BE%20AppleID%20%E6%95%99%E7%A8%8B</url>
+    <url>/post/f1cbcb38.html</url>
     <content><![CDATA[<p>12 月 8 日 LOL 手游上架台湾 App Store。 为了下载，注册个台湾的账号。</p>
 <h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>打开注册页面（手机/电脑 都可以） <a href="https://appleid.apple.com/account">Apple ID 注册页</a>， 注意以下几个数据的填写。</p>
 <ul>
@@ -1822,7 +1732,7 @@
   </entry>
   <entry>
     <title>基于Docker 安装 MantisBT 及配置</title>
-    <url>//%E5%9F%BA%E4%BA%8EDocker%20%E5%AE%89%E8%A3%85%20MantisBT%20%E5%8F%8A%E9%85%8D%E7%BD%AE</url>
+    <url>/post/137bd650.html</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079374123016.jpg"></p>
 <p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
 <p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
@@ -1885,8 +1795,98 @@
       </tags>
   </entry>
   <entry>
+    <title>内网穿透 FRP 安装配置使用</title>
+    <url>/post/f3ebe7d9.html</url>
+    <content><![CDATA[<p>内网没有公网IP，但是又有需要提供内网机器上部署的应用或者服务器给外网访问，这个动作就是内网穿透。ngrok、<a href="https://gofrp.org/">frp</a> 等工具就是用来干这个的。  <a href="https://gofrp.org/">frp</a> 支持tcp、udp、http、https等协议类型，并且支持web服务器根据域名进行路由转发。</p>
+<span id="more"></span>
+
+
+<h2 id="配置前准备"><a href="#配置前准备" class="headerlink" title="配置前准备"></a>配置前准备</h2><ul>
+<li>公网服务器一台</li>
+<li>本地计算机一台(笔记本/台式主机/服务器均可)</li>
+<li>根据系统下载所需包<a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a>  </li>
+</ul>
+<p><strong>PS:</strong> 下载包时，要考虑服务端（公网服务器）、客户端（本地计算机）的系统及芯片。  比如服务端为 centos7 64 位，  客户端为 MacOs 。 那么服务端下载的是 <code>frp_xx.xx.xx_linux_xxxx.tar.gz</code> ， 客户端下载的是 <code>frp_xx.xx.xx_darwin_xxxxx.tar.gz</code></p>
+<h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h2><ul>
+<li>服务器系统为 Centos7 AMD 64位</li>
+<li>frp 存储目录为 /usr/local/etc/frp</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据系统下载服务端文件 <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a> </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 目录可存放在自己想存放的位置</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/etc/</span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.0/frp_0.37.0_linux_arm64.tar.gz</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -zxvf frp_0.37.0_linux_arm64.tar.gz</span><br><span class="line"><span class="comment"># 重命名</span></span><br><span class="line"><span class="built_in">mv</span> frp_0.37.0_linux_arm64 frp</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 到 frp 存放目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/etc/frp</span><br><span class="line"><span class="comment"># 修改配置 frps.ini </span></span><br><span class="line">vi frps.ini</span><br></pre></td></tr></table></figure>
+
+<p>frps.ini 配置修改，更多高阶配置参考<a href="https://gofrp.org/">frp</a> 文档</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line"><span class="comment"># 客户端通信端口</span></span><br><span class="line">bind_port = 7000        </span><br><span class="line"><span class="comment"># 访问 web 端口   </span></span><br><span class="line">vhost_http_port = 6800    </span><br><span class="line"><span class="comment"># 身份验证</span></span><br><span class="line">token = 123456</span><br></pre></td></tr></table></figure>
+
+<p>防火墙开放端口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 端口修改为您 frps.ini 设置的 bind_port </span></span><br><span class="line">firewall-cmd --zone=public --add-port=7000/tcp --permanent </span><br><span class="line"><span class="comment"># 重启防火墙</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>启动方式有 2 种，2 选 1 即可</p>
+<ul>
+<li>命令行直接启动（不推荐）</li>
+<li>配置到系统服务中</li>
+</ul>
+<h4 id="配置到系统服务中"><a href="#配置到系统服务中" class="headerlink" title="配置到系统服务中"></a>配置到系统服务中</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 复制服务到系统服务中。 注意切换到你的 frp 保存路径</span></span><br><span class="line"><span class="built_in">cp</span> /usr/local/etc/frp/systemd/frps.service /etc/systemd/system/frps.service</span><br><span class="line"><span class="comment"># 编辑 service</span></span><br><span class="line">vi /etc/systemd/system/frps.service</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Frp Server Service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line"><span class="comment"># User=nobody, 如果要 frp 独占 80 端口需要注释掉。但大多数情况我相信大部分人都是用的 nginx 转发</span></span><br><span class="line">User=nobody</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5s</span><br><span class="line"><span class="comment"># 此处切换为你的 frp 路径</span></span><br><span class="line">ExecStart=/usr/local/etc/frp/frps -c /usr/local/etc/frp/frps.ini</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> frps</span><br><span class="line"><span class="comment"># 启动 frp</span></span><br><span class="line">systemctl start frps</span><br></pre></td></tr></table></figure>
+
+<h4 id="控制台启动（不推荐）"><a href="#控制台启动（不推荐）" class="headerlink" title="控制台启动（不推荐）"></a>控制台启动（不推荐）</h4><p>不推荐控制台启动</p>
+<ul>
+<li>显示启动，关闭 bash 就停止了</li>
+<li>后台启动，不方便关闭。 </li>
+<li>命令复杂，不容易记忆</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示启动，关闭 bash 窗口，程序就停止了</span></span><br><span class="line">./frps -c ./frps.ini       </span><br><span class="line"><span class="comment"># 后台启动，不便于关闭。关闭方法自行搜索  </span></span><br><span class="line"><span class="built_in">nohup</span> ./frps -c ./frps.ini &amp;  </span><br></pre></td></tr></table></figure>
+
+<h3 id="Nginx-转发配置"><a href="#Nginx-转发配置" class="headerlink" title="Nginx 转发配置"></a>Nginx 转发配置</h3><p>我使用的 https ，配置如下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name frp.sample.com; </span><br><span class="line">    rewrite ^(.*) https://$server_name<span class="variable">$1</span> permanent;    <span class="comment"># 转发 443</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl;</span><br><span class="line">    server_name frp.sample.com;  <span class="comment"># 修改域名/二级域名</span></span><br><span class="line"></span><br><span class="line">    underscores_in_headers on;      <span class="comment"># 允许传递带_ 的参数 默认 off</span></span><br><span class="line"></span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line">    ssl_session_cache shared:SSL:10m;</span><br><span class="line">    ssl_session_timeout 1d;</span><br><span class="line">    ssl_session_tickets off;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ssl 证书</span></span><br><span class="line">    ssl_certificate /etc/letsencrypt/live/frp.sample.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /etc/letsencrypt/live/frp.sample.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        proxy_pass http://127.0.0.1:6800;   <span class="comment"># 转发到frps.ini 配置的 vhost_http_port 端口上</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><ul>
+<li>本地计算机系统为 MacOS 11.4 Inter 64位</li>
+<li>frp 存储目录为 /User/alexliu/tools/frp</li>
+</ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>根据系统下载服务端文件 <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a> </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /User/alexliu/tools/frp/frpc.ini</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件配置如下</span></span><br><span class="line"></span><br><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx   <span class="comment"># 公网服务器ip，部署 frps 服务端主机 ip</span></span><br><span class="line">server_port = 7000              <span class="comment"># 与服务端bind_port一致</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 公网通过ssh访问本机</span></span><br><span class="line">[ssh]</span><br><span class="line"><span class="built_in">type</span> = tcp                      <span class="comment"># 连接协议</span></span><br><span class="line">local_ip = xxx.xxx.xxx.xxx      <span class="comment"># 本地计算机ip</span></span><br><span class="line">local_port = 22                 <span class="comment"># ssh默认端口号</span></span><br><span class="line">remote_port = 6000              <span class="comment"># 自定义的访问内部ssh端口号</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 公网访问本机web服务器以http方式</span></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http                     <span class="comment"># 根据本地 web 服务协议来，如果本地 web 服务是 ssl，就是 https</span></span><br><span class="line">local_port = 8081               <span class="comment"># web 服务端口</span></span><br><span class="line">custom_domains = frp.sample.com <span class="comment"># 公网访问域名</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./frpc -c ./frpc.ini            <span class="comment"># 显示启动</span></span><br><span class="line"><span class="built_in">nohup</span> ./frpc -c ./frpc.ini &amp;    <span class="comment"># 后台启动</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="自定义二级域名"><a href="#自定义二级域名" class="headerlink" title="自定义二级域名"></a>自定义二级域名</h3><p>自定义二级域名，可以分发至多个 web服务</p>
+<ul>
+<li>服务端修改</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 6800</span><br><span class="line">token = 123456</span><br><span class="line"><span class="comment"># 设置主域名</span></span><br><span class="line">subdomain_host = frp.sample.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>客户端配置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx</span><br><span class="line">server_port = 7000</span><br><span class="line">token = 123456</span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http</span><br><span class="line">local_port = 80</span><br><span class="line"><span class="comment"># 设置子域名</span></span><br><span class="line">subdomain = a</span><br><span class="line"></span><br><span class="line">[web1]</span><br><span class="line"><span class="built_in">type</span> = http</span><br><span class="line">local_port = 8080</span><br><span class="line"><span class="comment"># 设置子域名</span></span><br><span class="line">subdomain = b</span><br></pre></td></tr></table></figure>
+
+<p>这时候 访问<code>a.frp.sample.com</code>访问 80 端口应用。  访问<code>b.frp.sample.com</code>访问8080端口应用。  nginx 转发需要改为泛域名 <code>*.frp.sample.com</code> ，如果是 https 需要申请泛域名证书</p>
+<h3 id="Dashboard"><a href="#Dashboard" class="headerlink" title="Dashboard"></a>Dashboard</h3><p>Dashboard 是可以通过浏览器查看 <a href="https://gofrp.org/">frp</a> 的状态以及代理统计信息。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑 服务端 frps.ini</span></span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 6800</span><br><span class="line">token = 123456</span><br><span class="line"><span class="comment"># 设置主域名</span></span><br><span class="line">subdomain_host = frp.sample.com</span><br><span class="line"></span><br><span class="line">dashboard_port = 7500</span><br><span class="line"><span class="comment"># dashboard 用户名密码，默认都为 admin,为空则不需要</span></span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = admin</span><br></pre></td></tr></table></figure>
+
+<p>然后开放服务端端口 7500 , 使用 IP:Port 即可访问。如果需要 nginx 转发，配置好后，转发 7500 即可</p>
+]]></content>
+      <categories>
+        <category>CentOS7</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Nginx</tag>
+        <tag>frp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PlayWright 上传文件非Input框时操作</title>
-    <url>//PlayWright%20%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E9%9D%9EInput%E6%A1%86%E6%97%B6%E6%93%8D%E4%BD%9C</url>
+    <url>/post/568b603f.html</url>
     <content><![CDATA[<p>比如如下</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ImageUpload&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload u-marginB10&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__label js-dragdrop-area&quot;</span> <span class="attr">for</span>=<span class="string">&quot;selectFileMultiple&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__hide&quot;</span>&gt;</span>drag and drop or select files<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;js-dragdrop-num&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span>up to<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
