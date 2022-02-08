@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>内网穿透 FRP 安装配置使用</title>
-    <url>/2021/08/01/2021-08-01/</url>
+    <url>/2021/08/01/2021-08-01</url>
     <content><![CDATA[<p>内网没有公网IP，但是又有需要提供内网机器上部署的应用或者服务器给外网访问，这个动作就是内网穿透。ngrok、<a href="https://gofrp.org/">frp</a> 等工具就是用来干这个的。  <a href="https://gofrp.org/">frp</a> 支持tcp、udp、http、https等协议类型，并且支持web服务器根据域名进行路由转发。</p>
 <span id="more"></span>
 
@@ -740,7 +740,7 @@
   </entry>
   <entry>
     <title>MacBook 卸载 node</title>
-    <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node/</url>
+    <url>/2020/01/14/MacBook%20%E5%8D%B8%E8%BD%BD%20node</url>
     <content><![CDATA[<p>MacBook 下卸载 node 比较麻烦，这两天弄 Hexo，node 升级后导致 npm 版本不一致无法 install，就准备把 node、npm 删除了重新装。在Stackoverflow 上面找到一个手动删除的方法还不错，特地记录下来。</p>
 <span id="more"></span>
 
@@ -1712,7 +1712,7 @@
   </entry>
   <entry>
     <title>安装Hexo常见问题</title>
-    <url>/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
+    <url>/2020/01/14/%E5%AE%89%E8%A3%85Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</url>
     <content><![CDATA[<p>随着WP安装的插件越来越多，自己的 VPS 又配置偏低，导致访问越来越慢。之前就知道 Hexo，但是因为当时忙于项目，懒得搞。最近实在无法忍受了，就考虑迁移到Hexo上。在安装过程中发现一些问题，特地记录下</p>
 <span id="more"></span>
 
