@@ -49,16 +49,20 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="35Niu Blog">
-<meta property="og:url" content="https://35liuqi.com/categories/Docker/index.html">
+  <meta name="description" content="termius 是 Mac上非常好用的命令行扩展。 但是对中文支持非常差。下面介绍如何修改支持中文。 打开配置文件1vi ~&#x2F;.zshrc   加入配置1export LANG&#x3D;en_US.UTF-8  启用配置1source ~&#x2F;.zshrc  重启termius即可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="termius终端中文乱码处理">
+<meta property="og:url" content="https://35liuqi.com/post/46a9669c.html">
 <meta property="og:site_name" content="35Niu Blog">
+<meta property="og:description" content="termius 是 Mac上非常好用的命令行扩展。 但是对中文支持非常差。下面介绍如何修改支持中文。 打开配置文件1vi ~&#x2F;.zshrc   加入配置1export LANG&#x3D;en_US.UTF-8  启用配置1source ~&#x2F;.zshrc  重启termius即可">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-09T02:19:20.000Z">
+<meta property="article:modified_time" content="2022-02-09T02:19:20.000Z">
 <meta property="article:author" content="Alexliu">
-<meta property="article:tag" content="Blog,Alexliu,JAVA,Python,Mysql">
+<meta property="article:tag" content="技巧">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://35liuqi.com/categories/Docker/">
+<link rel="canonical" href="https://35liuqi.com/post/46a9669c.html">
 
 
 <script id="page-configurations">
@@ -66,11 +70,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>分类: Docker | 35Niu Blog</title>
+  <title>termius终端中文乱码处理 | 35Niu Blog</title>
   
     <script>
       function sendPageView() {
@@ -233,143 +237,129 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Docker
-          <small>分类</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/46a9669c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          termius终端中文乱码处理
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-09 10:19:20" itemprop="dateCreated datePublished" datetime="2022-02-09T10:19:20+08:00">2022-02-09</time>
+            </span>
 
       
-    <div class="collection-year">
-      <h2 class="collection-header">2020</h2>
-    </div>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MacOS/" itemprop="url" rel="index">
+                    <span itemprop="name">MacOS</span>
+                  </a>
+                </span>
+            </span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-14T17:15:44+08:00"
-              content="2020-12-14">
-          12-14
-        </time>
-      </div>
+        </div>
+      </header>
 
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/137bd650.html" itemprop="url">
-            <span itemprop="name">基于Docker 安装 MantisBT 及配置</span>
-          </a>
-      </h3>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-    </header>
-  </article>
+      
+        <p><a target="_blank" rel="noopener" href="https://termius.com/">termius</a> 是 Mac上非常好用的命令行扩展。 但是对中文支持非常差。下面介绍如何修改支持中文。</p>
+<h3 id="打开配置文件"><a href="#打开配置文件" class="headerlink" title="打开配置文件"></a>打开配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.zshrc </span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h3 id="加入配置"><a href="#加入配置" class="headerlink" title="加入配置"></a>加入配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-09T14:11:22+08:00"
-              content="2020-12-09">
-          12-09
-        </time>
-      </div>
+<h3 id="启用配置"><a href="#启用配置" class="headerlink" title="启用配置"></a>启用配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/85afc9a0.html" itemprop="url">
-            <span itemprop="name">基于 Docker 的 ngrok 内网穿透部署</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h2 class="collection-header">2019</h2>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-06-27T20:11:22+08:00"
-              content="2019-06-27">
-          06-27
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/841b6107.html" itemprop="url">
-            <span itemprop="name">CentOS-7 安装 Docker</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h2 class="collection-header">2018</h2>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-05-13T10:15:44+08:00"
-              content="2018-05-13">
-          05-13
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/f1efb8a3.html" itemprop="url">
-            <span itemprop="name">Docker 常用命令</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h2 class="collection-header">2017</h2>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2017-07-25T15:11:22+08:00"
-              content="2017-07-25">
-          07-25
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/efe1c160.html" itemprop="url">
-            <span itemprop="name">docker-compose 命令详解</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
+<p>重启<a target="_blank" rel="noopener" href="https://termius.com/">termius</a>即可</p>
 
     </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alexliu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://35liuqi.com/post/46a9669c.html" title="termius终端中文乱码处理">https://35liuqi.com/post/46a9669c.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E5%B7%A7/" rel="tag"># 技巧</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/568b603f.html" rel="prev" title="PlayWright 上传文件非Input框时操作">
+      <i class="fa fa-chevron-left"></i> PlayWright 上传文件非Input框时操作
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -416,6 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">打开配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">加入配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">启用配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -576,6 +567,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'f95ccef6d68f048836ec',
+      clientSecret: 'd2470a95274e1a8774db71af7f713be821078cd2',
+      repo: 'liuqi0725.github.io',
+      owner: 'liuqi0725',
+      admin: ['liuqi0725'],
+      id: 'd8c4fd1fe8c2e0ed4577f8cdf9ba5d44',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

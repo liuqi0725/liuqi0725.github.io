@@ -1921,4 +1921,23 @@
         <tag>Hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>termius终端中文乱码处理</title>
+    <url>/post/46a9669c.html</url>
+    <content><![CDATA[<p><a href="https://termius.com/">termius</a> 是 Mac上非常好用的命令行扩展。 但是对中文支持非常差。下面介绍如何修改支持中文。</p>
+<h3 id="打开配置文件"><a href="#打开配置文件" class="headerlink" title="打开配置文件"></a>打开配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.zshrc </span><br></pre></td></tr></table></figure>
+
+<h3 id="加入配置"><a href="#加入配置" class="headerlink" title="加入配置"></a>加入配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用配置"><a href="#启用配置" class="headerlink" title="启用配置"></a>启用配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>重启<a href="https://termius.com/">termius</a>即可</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
 </search>
