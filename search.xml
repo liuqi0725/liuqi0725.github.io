@@ -1960,4 +1960,127 @@
         <tag>Redis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MacOS M1 docker安装Mysql 5.7</title>
+    <url>/post/9d25e51e.html</url>
+    <content><![CDATA[<h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装5.7</span></span><br><span class="line">docker pull mysql/mysql-server:5.7  </span><br><span class="line"><span class="comment"># 安装最新  </span></span><br><span class="line">docker pull mysql/mysql-server:latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载设置安装mysql5-7"><a href="#下载设置安装mysql5-7" class="headerlink" title="下载设置安装mysql5.7"></a>下载设置安装mysql5.7</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --restart=always --name=mysql --privileged=<span class="literal">true</span> -p 3306:3306 -v /Users/liuqi/home/dev/hock/docker_volumes/mysql5.7:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql/mysql-server:5.7</span><br></pre></td></tr></table></figure>
+
+<h2 id="进入容器病修改配置"><a href="#进入容器病修改配置" class="headerlink" title="进入容器病修改配置"></a>进入容器病修改配置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mysql bash</span><br><span class="line"></span><br><span class="line">mysql -uroot -p 123456</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改本地root 密码</span></span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED WITH mysql_native_password BY <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建新用户，可供外部访问</span></span><br><span class="line">CREATE USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED BY <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line"><span class="comment"># 授权</span></span><br><span class="line">GRANT ALL ON *.* TO <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改外部连接root 用户密码</span></span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED WITH mysql_native_password BY <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="arm64-警告"><a href="#arm64-警告" class="headerlink" title="arm64 警告"></a>arm64 警告</h2><p><code>image may have poor performance,or fail, if run via emulation</code><br>在模拟环境下，性能降低, 如果不喜欢，装最新版即可。</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS M1 docker安装 PostgreSql</title>
+    <url>/post/b87556ef.html</url>
+    <content><![CDATA[<h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=postgresql&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 12.9 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull postgres:12.9</span><br></pre></td></tr></table></figure>
+<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># --name 名称</span></span><br><span class="line"><span class="comment"># -e TZ=PRC 时区-中国</span></span><br><span class="line"><span class="comment"># -p 端口</span></span><br><span class="line"><span class="comment"># -v 数据库本地挂载目录</span></span><br><span class="line">docker run --name pg_test -e POSTGRES_PASSWORD=123456 -e TZ=PRC -p 15432:5432 -v /Users/liuqi/home/dev/hock/docker_volumes/pg/data:/var/lib/postgresql/data -d postgres:12.9</span><br></pre></td></tr></table></figure>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>PORT:15432<br>postgres/123456</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>database</tag>
+        <tag>PostgreSql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql 5.7 sql_mode=only_full_group_by</title>
+    <url>/post/4ba979c5.html</url>
+    <content><![CDATA[<p>Mysql 5.7 以上group by向下兼容时容易出现如下错误</p>
+<blockquote>
+<p>1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column ‘csc_risk.a.DefaultDate’ which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by, Time: 0.035000s </p>
+</blockquote>
+<p>原因是：MySQL5.7版本默认设置了 <strong>sql_mode = only_full_group_by</strong> 属性，导致报错。</p>
+<span id="more"></span>
+
+<h2 id="only-full-group-by-说明"><a href="#only-full-group-by-说明" class="headerlink" title="only_full_group_by 说明"></a>only_full_group_by 说明</h2><p>mysql5.7.x版本，默认是开启了 <strong>only_full_group_by</strong> 模式的，一旦开启 <strong>only_full_group_by</strong> ，group by 将变成和 distinct 一样，只能获取受到其影响的字段信息，无法和其他未受其影响的字段共存，这样 group by 的功能将变得十分狭窄了。 </p>
+<p>但是 <strong>only_full_group_by</strong> 模式还是开启比较好。因为在 mysql 中有一个函数： any_value(field) 允许，非分组字段的出现（和关闭 only_full_group_by 模式有相同效果）。并且也能规范<strong>我们写的sql语句</strong></p>
+<h2 id="关闭-only-full-group-by"><a href="#关闭-only-full-group-by" class="headerlink" title="关闭 only_full_group_by"></a>关闭 only_full_group_by</h2><ol>
+<li>查看 sql_mode</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT @@sql_mode;</span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line">ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>去掉ONLY_FULL_GROUP_BY，重新设置值。【新建数据库有效】</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET @@global.sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>上面是改变了全局sql_mode，对于已存在的数据库，则需要在对应的数据下执行</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Common</category>
+      </categories>
+      <tags>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>抛弃七牛云, 好用的图床 sm</title>
+    <url>/post/bd4891b9.html</url>
+    <content><![CDATA[<p>markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 <a href="https://sm.ms/">sm.ms</a> 在境外搭建blogger 或业务时，非常的不错。</p>
+<p>如果仅在境内使用，我还是比较推荐七牛云的。</p>
+<span id="more"></span>
+
+<h3 id="免费内容有什么"><a href="#免费内容有什么" class="headerlink" title="免费内容有什么"></a>免费内容有什么</h3><p>具体详情可以查看<a href="https://sm.ms/pricing">https://sm.ms/pricing</a></p>
+<p><img src="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>生成自己的api-token</p>
+<p><img src="https://s2.loli.net/2022/02/09/H6bR9kzSfZpCNru.jpg"></p>
+<p>然后就可以在自己的应用中，或者markdown编辑器中添加图床</p>
+]]></content>
+      <categories>
+        <category>Common</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>图床</tag>
+        <tag>MarkDown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搬瓦工 SWAP 修改、新增SWAP分区的大小的方法</title>
+    <url>/post/a88f1873.html</url>
+    <content><![CDATA[<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
+<li>Centos7</li>
+</ul>
+<h2 id="1-查看swap分区的大小"><a href="#1-查看swap分区的大小" class="headerlink" title="1. 查看swap分区的大小"></a>1. 查看swap分区的大小</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">free -h</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">free -m</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-删除旧分区"><a href="#2-删除旧分区" class="headerlink" title="2. 删除旧分区"></a>2. 删除旧分区</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">swapoff -a</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-新建swap分区"><a href="#3-新建swap分区" class="headerlink" title="3. 新建swap分区"></a>3. 新建swap分区</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在opt下新建 1G 的swap 分区【位置可以任意】</span></span><br><span class="line"><span class="comment"># bs 每一块大小， count 共多少块  1024*1M = 1024M = 1G </span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/opt/swap bs=1M count=1024</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-格式化-SWAP-分区文件"><a href="#4-格式化-SWAP-分区文件" class="headerlink" title="4. 格式化 SWAP 分区文件"></a>4. 格式化 SWAP 分区文件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkswap /opt/swap</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-激活-SWAP-分区"><a href="#5-激活-SWAP-分区" class="headerlink" title="5. 激活 SWAP 分区"></a>5. 激活 SWAP 分区</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">swapon /opt/swap</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-赋予-SWAP-文件适当的权限"><a href="#6-赋予-SWAP-文件适当的权限" class="headerlink" title="6. 赋予 SWAP 文件适当的权限"></a>6. 赋予 SWAP 文件适当的权限</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chown</span> root:root /opt/swap</span><br><span class="line"><span class="built_in">chmod</span> 600 /opt/swap</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-修改-etc-fstab-文件"><a href="#7-修改-etc-fstab-文件" class="headerlink" title="7. 修改 /etc/fstab 文件"></a>7. 修改 <code>/etc/fstab</code> 文件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/fstab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将下面内容加入</span></span><br><span class="line"><span class="comment"># 如果原来有类似的，要删除掉</span></span><br><span class="line"></span><br><span class="line">/opt/swap swap swap defaults 0 0</span><br><span class="line"><span class="comment"># 保存退出</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-查看swap分区是否生效"><a href="#8-查看swap分区是否生效" class="headerlink" title="8. 查看swap分区是否生效"></a>8. 查看swap分区是否生效</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2021/12/09/39ebBgAiYxhVJSz.jpg"></p>
+]]></content>
+      <categories>
+        <category>CentOS7</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
 </search>
