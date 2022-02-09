@@ -107,7 +107,7 @@
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>centos</tag>
+        <tag>CentOS7</tag>
         <tag>Docker</tag>
       </tags>
   </entry>
@@ -216,6 +216,7 @@
 ]]></content>
       <categories>
         <category>CentOS7</category>
+        <category>Common</category>
       </categories>
       <tags>
         <tag>CentOS7</tag>
@@ -282,6 +283,7 @@
         <category>Docker</category>
       </categories>
       <tags>
+        <tag>CentOS7</tag>
         <tag>Docker</tag>
       </tags>
   </entry>
@@ -315,7 +317,7 @@
 <p>然后你需要把你的 sitemap 配置到您的 <a href="https://search.google.com/search-console/about">GoogleSearchConsole</a> , <a href="https://ziyuan.baidu.com/">百度资源管理平台</a> 中去</p>
 ]]></content>
       <categories>
-        <category>绊脚石</category>
+        <category>Common</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -391,11 +393,10 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># AddThis Share. See: https://www.addthis.com</span></span><br><span class="line"><span class="comment"># Go to https://www.addthis.com/dashboard to customize your tools.</span></span><br><span class="line">add_this_id: </span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>插件</category>
+        <category>Common</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
-        <tag>第三方服务</tag>
       </tags>
   </entry>
   <entry>
@@ -540,12 +541,12 @@
 </ul>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
         <tag>OCR</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -641,11 +642,11 @@
 </ol>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -678,19 +679,17 @@
 </blockquote>
 ]]></content>
       <categories>
-        <category>绊脚石</category>
+        <category>MacOS</category>
       </categories>
       <tags>
         <tag>技巧</tag>
-        <tag>javascript</tag>
-        <tag>macos</tag>
         <tag>npm</tag>
-        <tag>node.js</tag>
         <tag>转载</tag>
+        <tag>node</tag>
       </tags>
   </entry>
   <entry>
-    <title>Android-GooglePlay 3 件套</title>
+    <title>Android-Google(谷歌)三件套 安装指南</title>
     <url>/post/687ace9e.html</url>
     <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079183779911.jpg"></p>
 <p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
@@ -737,10 +736,11 @@
 <p><img src="http://pic.fangxutuwen.com/16079168462071.jpg"></p>
 ]]></content>
       <categories>
-        <category>Google</category>
+        <category>Common</category>
       </categories>
       <tags>
-        <tag>Google</tag>
+        <tag>Common</tag>
+        <tag>google</tag>
       </tags>
   </entry>
   <entry>
@@ -766,11 +766,12 @@
 <p>OK, 这样项目所有的提交记录、分支、tags、release 版本都提交了到新的版本库了</p>
 ]]></content>
       <categories>
-        <category>Git</category>
+        <category>CentOS7</category>
       </categories>
       <tags>
-        <tag>Centos7</tag>
+        <tag>CentOS7</tag>
         <tag>技巧</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -798,11 +799,11 @@
 <h2 id="Scalar-参数的数据范围"><a href="#Scalar-参数的数据范围" class="headerlink" title="Scalar 参数的数据范围"></a>Scalar 参数的数据范围</h2><p>处理 Alpha 通道值为 0~255 ，其他通道取值范围根据图像的位数（Bite）来决定。可以查看<a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造，后面后各 Bite 下通道的取值范围。</p>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -827,11 +828,11 @@
 <p><img src="https://static.oschina.net/uploads/img/201804/19160325_cZbS.png"></p>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -922,11 +923,11 @@
 <p><a href="http://blog.sina.com.cn/s/blog_662c7859010105za.html">这篇文章对8,16,32,64位下大小取值范围说明很详细</a></p>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1026,6 +1027,7 @@
 ]]></content>
       <categories>
         <category>Python</category>
+        <category>Crawler</category>
       </categories>
       <tags>
         <tag>技巧</tag>
@@ -1077,10 +1079,11 @@
 <p><strong>app 存放在项目目录 py2app 创建的 dist 目录下</strong></p>
 ]]></content>
       <categories>
-        <category>python</category>
+        <category>Python</category>
       </categories>
       <tags>
-        <tag>python3</tag>
+        <tag>Python</tag>
+        <tag>tkinter</tag>
       </tags>
   </entry>
   <entry>
@@ -1151,11 +1154,12 @@
 
 ]]></content>
       <categories>
-        <category>Springboot</category>
+        <category>JAVA</category>
       </categories>
       <tags>
+        <tag>Nginx</tag>
         <tag>Springboot</tag>
-        <tag>nginx</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1195,6 +1199,7 @@
       <tags>
         <tag>CentOS7</tag>
         <tag>postgresql</tag>
+        <tag>database</tag>
       </tags>
   </entry>
   <entry>
@@ -1277,11 +1282,11 @@
 <p>在手动安装 make 时，老是出错，就放弃了。</p>
 ]]></content>
       <categories>
-        <category>OpenCV</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>OpenCV</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1333,11 +1338,12 @@
 </ol>
 ]]></content>
       <categories>
-        <category>Springboot</category>
+        <category>JAVA</category>
       </categories>
       <tags>
         <tag>Springboot</tag>
         <tag>flyway</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1406,11 +1412,12 @@
 <h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>更多说明请参考代码中的注释。要点太多，Readme 写的话，又要写一次代码。</p>
 ]]></content>
       <categories>
-        <category>Springboot</category>
+        <category>JAVA</category>
       </categories>
       <tags>
         <tag>Springboot</tag>
         <tag>SpringSecurity</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1462,12 +1469,13 @@
 <h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><p>头部添加<br>request.headers[‘X-PJAX-URL’] = “<a href="http://35liuqi.com/redirect&quot;">http://35liuqi.com/redirect&quot;</a></p>
 ]]></content>
       <categories>
-        <category>Springboot</category>
+        <category>JAVA</category>
       </categories>
       <tags>
         <tag>Springboot</tag>
         <tag>freemarker</tag>
         <tag>pjax</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -1616,7 +1624,9 @@
         <category>Docker</category>
       </categories>
       <tags>
+        <tag>CentOS7</tag>
         <tag>Docker</tag>
+        <tag>MacOS</tag>
         <tag>docker-compose</tag>
       </tags>
   </entry>
@@ -1669,7 +1679,7 @@
 <p><a href="https://www.jianshu.com/p/77db3862595c">Mac 系统下搭建hexo个人博客</a><br><a href="https://www.jianshu.com/p/4547c3d5f819">Hexo部署到服务器并完成自动发布</a><br><a href="https://www.cnblogs.com/fly_dragon/p/8718614.html">CentOS搭建Git服务器及权限管理</a><br><a href="https://www.jianshu.com/p/7debbf85f437">Hexo搭建的Github博客之优化</a><br><a href="https://www.cnblogs.com/aoguai/p/11481253.html">Hexo博客Next v7.X 主题升级,美化</a></p>
 ]]></content>
       <categories>
-        <category>绊脚石</category>
+        <category>Common</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -1724,10 +1734,11 @@
 <h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://zhuanlan.zhihu.com/p/313583352">参考链接</a></p>
 ]]></content>
       <categories>
-        <category>Appid</category>
+        <category>Common</category>
       </categories>
       <tags>
-        <tag>Appid</tag>
+        <tag>Common</tag>
+        <tag>账号注册</tag>
       </tags>
   </entry>
   <entry>
@@ -1790,6 +1801,7 @@
         <category>Docker</category>
       </categories>
       <tags>
+        <tag>CentOS7</tag>
         <tag>Docker</tag>
         <tag>MantisBT</tag>
       </tags>
@@ -1902,6 +1914,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">FileChooser</span> <span class="variable">fileChooser</span> <span class="operator">=</span> page.waitForFileChooser(() -&gt; </span><br><span class="line">page.click(<span class="string">&quot;upload&quot;</span>));</span><br><span class="line">fileChooser.setFiles(Paths.get(<span class="string">&quot;myfile.pdf&quot;</span>));</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python</category>
+        <category>Crawler</category>
       </categories>
       <tags>
         <tag>Python</tag>
