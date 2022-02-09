@@ -353,6 +353,20 @@
 
   
   <url>
+    <loc>https://35liuqi.com/tags/Centos7/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/https/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/tags/CentOS7/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -367,14 +381,7 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/tags/Centos7/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/tags/https/</loc>
+    <loc>https://35liuqi.com/tags/Docker/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -395,13 +402,6 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/tags/Docker/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://35liuqi.com/tags/Git/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -416,6 +416,13 @@
   </url>
   
   <url>
+    <loc>https://35liuqi.com/tags/Hexo/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/tags/Common/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -424,13 +431,6 @@
   
   <url>
     <loc>https://35liuqi.com/tags/google/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/tags/Hexo/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -479,6 +479,13 @@
   </url>
   
   <url>
+    <loc>https://35liuqi.com/tags/OCR/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://35liuqi.com/tags/Python/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -500,13 +507,6 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/tags/OCR/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://35liuqi.com/tags/Springboot/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -515,20 +515,6 @@
   
   <url>
     <loc>https://35liuqi.com/tags/SpringSecurity/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/tags/postgresql/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://35liuqi.com/tags/database/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -550,6 +536,20 @@
   
   <url>
     <loc>https://35liuqi.com/tags/MacOS/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/postgresql/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://35liuqi.com/tags/database/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -584,14 +584,14 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/tags/%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C/</loc>
+    <loc>https://35liuqi.com/tags/MantisBT/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://35liuqi.com/tags/MantisBT/</loc>
+    <loc>https://35liuqi.com/tags/%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -600,14 +600,14 @@
 
   
   <url>
-    <loc>https://35liuqi.com/categories/CentOS7/</loc>
+    <loc>https://35liuqi.com/categories/Centos7/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://35liuqi.com/categories/Centos7/</loc>
+    <loc>https://35liuqi.com/categories/CentOS7/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -628,13 +628,6 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/categories/CentOS7/Common/</loc>
-    <lastmod>2022-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://35liuqi.com/categories/MacOS/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -649,14 +642,14 @@
   </url>
   
   <url>
-    <loc>https://35liuqi.com/categories/Python/</loc>
+    <loc>https://35liuqi.com/categories/Crawler/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://35liuqi.com/categories/Python/Crawler/</loc>
+    <loc>https://35liuqi.com/categories/Python/</loc>
     <lastmod>2022-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
