@@ -49,16 +49,21 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="35Niu Blog">
-<meta property="og:url" content="https://35liuqi.com/archives/2021/index.html">
+  <meta name="description" content="查看docker版本1234# 网页查看版本# https:&#x2F;&#x2F;hub.docker.com&#x2F;search?q&#x3D;redis&amp;type&#x3D;imagedocker search postgresql 拉取镜像12# 6.2.6 可以换成你想要的版本号， 不填表示最新版本docker pull redis:6.2.6  新建redis本地配置123456# 允许远程连接bind 0.0.0.0#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MacOS M1 docker 安装 Redis">
+<meta property="og:url" content="https://35liuqi.com/post/61de956b.html">
 <meta property="og:site_name" content="35Niu Blog">
+<meta property="og:description" content="查看docker版本1234# 网页查看版本# https:&#x2F;&#x2F;hub.docker.com&#x2F;search?q&#x3D;redis&amp;type&#x3D;imagedocker search postgresql 拉取镜像12# 6.2.6 可以换成你想要的版本号， 不填表示最新版本docker pull redis:6.2.6  新建redis本地配置123456# 允许远程连接bind 0.0.0.0#">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-09T02:44:07.000Z">
+<meta property="article:modified_time" content="2022-02-09T02:44:07.000Z">
 <meta property="article:author" content="Alexliu">
-<meta property="article:tag" content="Blog,Alexliu,JAVA,Python,Mysql">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://35liuqi.com/archives/2021/">
+<link rel="canonical" href="https://35liuqi.com/post/61de956b.html">
 
 
 <script id="page-configurations">
@@ -66,11 +71,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>归档 | 35Niu Blog</title>
+  <title>MacOS M1 docker 安装 Redis | 35Niu Blog</title>
   
     <script>
       function sendPageView() {
@@ -233,94 +238,130 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">还行! 目前共计 36 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/61de956b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          MacOS M1 docker 安装 Redis
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-09 10:44:07" itemprop="dateCreated datePublished" datetime="2022-02-09T10:44:07+08:00">2022-02-09</time>
+            </span>
 
       
-    <div class="collection-year">
-      <h2 class="collection-header">2021</h2>
-    </div>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MacOS/" itemprop="url" rel="index">
+                    <span itemprop="name">MacOS</span>
+                  </a>
+                </span>
+            </span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-14T10:07:41+08:00"
-              content="2021-08-14">
-          08-14
-        </time>
-      </div>
+        </div>
+      </header>
 
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/3ae1525e.html" itemprop="url">
-            <span itemprop="name">Python 命令行模块 Click</span>
-          </a>
-      </h3>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-    </header>
-  </article>
+      
+        <h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=redis&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 6.2.6 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull redis:6.2.6</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h3 id="新建redis本地配置"><a href="#新建redis本地配置" class="headerlink" title="新建redis本地配置"></a>新建redis本地配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许远程连接</span></span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0</span><br><span class="line"><span class="comment"># 端口</span></span><br><span class="line">port 6379</span><br><span class="line"><span class="comment"># 开启AOP持久</span></span><br><span class="line">appendonly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-08-01T11:00:00+08:00"
-              content="2021-08-01">
-          08-01
-        </time>
-      </div>
 
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/f3ebe7d9.html" itemprop="url">
-            <span itemprop="name">内网穿透 FRP 安装配置使用</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-01-03T00:00:00+08:00"
-              content="2021-01-03">
-          01-03
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/post/f1cbcb38.html" itemprop="url">
-            <span itemprop="name">注册台湾 AppleID 教程</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-
+<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --name 名称</span></span><br><span class="line"><span class="comment"># -v 数据库本地挂载目录</span></span><br><span class="line"><span class="comment"># 6.2.6 替换为您下载的版本， 最新版本不填</span></span><br><span class="line"><span class="comment"># 注意！！！ 引入配置文件，各版本docker 中配置文件位置可能不一样 。6.2.6 为 &#x27;/etc/redis.conf&#x27;</span></span><br><span class="line"></span><br><span class="line">docker run --name redis6.2.6 \</span><br><span class="line">-v /Users/liuqi/home/dev/hock/docker_volumes/redis/data:/data \</span><br><span class="line">-v /Users/liuqi/home/dev/hock/docker_volumes/redis/conf/redis.conf:/etc/redis.conf \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-d redis:6.2.6 redis-server /etc/redis.conf</span><br></pre></td></tr></table></figure>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>默认登录没有用户名、密码。如需要密码请在<code>redis.conf</code> 中配置</p>
 
     </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alexliu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://35liuqi.com/post/61de956b.html" title="MacOS M1 docker 安装 Redis">https://35liuqi.com/post/61de956b.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/46a9669c.html" rel="prev" title="termius终端中文乱码处理">
+      <i class="fa fa-chevron-left"></i> termius终端中文乱码处理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -367,6 +408,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdocker%E7%89%88%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">查看docker版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">拉取镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAredis%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">新建redis本地配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">登录</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -527,6 +569,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'f95ccef6d68f048836ec',
+      clientSecret: 'd2470a95274e1a8774db71af7f713be821078cd2',
+      repo: 'liuqi0725.github.io',
+      owner: 'liuqi0725',
+      admin: ['liuqi0725'],
+      id: 'a6a4b889bedc7cef47829580b2fc44e4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
