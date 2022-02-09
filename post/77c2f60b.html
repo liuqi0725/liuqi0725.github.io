@@ -56,15 +56,15 @@
 <meta property="og:site_name" content="35Niu Blog">
 <meta property="og:description" content="静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://pic.fangxutuwen.com/15791914036296.jpg">
-<meta property="og:image" content="http://pic.fangxutuwen.com/15791915407945.jpg">
+<meta property="og:image" content="https://s2.loli.net/2022/02/09/SzFYZnAGlNBU91K.jpg">
+<meta property="og:image" content="https://s2.loli.net/2022/02/09/gxAY1RIfcMsrdk2.jpg">
 <meta property="og:image" content="http://pic.fangxutuwen.com/15791898823300.jpg">
 <meta property="article:published_time" content="2020-01-16T16:23:26.000Z">
 <meta property="article:modified_time" content="2020-01-16T16:23:26.000Z">
 <meta property="article:author" content="Alexliu">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://pic.fangxutuwen.com/15791914036296.jpg">
+<meta name="twitter:image" content="https://s2.loli.net/2022/02/09/SzFYZnAGlNBU91K.jpg">
 
 <link rel="canonical" href="https://35liuqi.com/post/77c2f60b.html">
 
@@ -321,8 +321,8 @@
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">disqusjs:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  <span class="comment"># API Endpoint of Disqus API (https://disqus.com/api/).</span></span><br><span class="line">  <span class="comment"># Leave api empty if you are able to connect to Disqus API. Otherwise you need a reverse proxy for it.</span></span><br><span class="line">  <span class="comment"># For example:</span></span><br><span class="line">  <span class="comment"># api: https://disqus.skk.moe/disqus/</span></span><br><span class="line">  api:</span><br><span class="line">  apikey: <span class="comment"># Register new application from https://disqus.com/api/applications/</span></span><br><span class="line">  shortname: <span class="comment"># See: https://disqus.com/admin/settings/general/</span></span><br></pre></td></tr></table></figure>
 <h3 id="Gitalk-评论"><a href="#Gitalk-评论" class="headerlink" title="Gitalk 评论"></a>Gitalk 评论</h3><p><a target="_blank" rel="noopener" href="https://gitalk.github.io/">Gitalk</a> 是一个基于 GitHub Issue 和 Preact 开发的评论插件。<a target="_blank" rel="noopener" href="https://gitalk.github.io/">Demo</a></p>
 <p>需要<code>Git Application</code> 用于授权登录，到<a target="_blank" rel="noopener" href="https://github.com/settings/applications/new">New Applications</a>注册一个即可。就可以得到 <code>client_id</code>,<code>client_secret</code>。</p>
-<p><img src="http://pic.fangxutuwen.com/15791914036296.jpg"></p>
-<p><img src="http://pic.fangxutuwen.com/15791915407945.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/SzFYZnAGlNBU91K.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/gxAY1RIfcMsrdk2.jpg"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  github_id: liuqi0725 <span class="comment"># GitHub repo owner 你 github 用户名</span></span><br><span class="line">  repo: liuqi0725.github.io <span class="comment"># Repository name to store issues 用来放评论的仓库名称</span></span><br><span class="line">  client_id: <span class="comment"># GitHub Application Client ID </span></span><br><span class="line">  client_secret: <span class="comment"># GitHub Application Client Secret</span></span><br><span class="line">  admin_user: liuqi0725 <span class="comment"># GitHub repo owner and collaborators, only these guys can initialize   gitHub issues</span></span><br><span class="line">  distraction_free_mode: <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">  <span class="comment"># Gitalk&#x27;s display language depends on user&#x27;s browser or system environment</span></span><br><span class="line">  <span class="comment"># If you want everyone visiting your site to see a uniform language, you can set a  force language value</span></span><br><span class="line">  <span class="comment"># Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span></span><br><span class="line">  language: zh-CN</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：本地调试时。因为无法获取 Git Application 授权，所以无法使用。</p>

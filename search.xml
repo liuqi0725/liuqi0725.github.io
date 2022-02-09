@@ -3,7 +3,7 @@
   <entry>
     <title>CentOS7 Let’s encrypt certbot 证书管理</title>
     <url>/post/37ac579a.html</url>
-    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074977125480.jpg"></p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/opzq4VKntDG5RCI.jpg"></p>
 <span id="more"></span>
 
 
@@ -233,13 +233,13 @@
 <h2 id="客户端-安装配置"><a href="#客户端-安装配置" class="headerlink" title="客户端-安装配置"></a>客户端-安装配置</h2><p><a href="https://github.com/yanue/V2rayU/releases">V2RayU【MacOS客户端】新版下载地址</a></p>
 <p>所有平台包括移动到客户端下载参考<a href="https://www.v2ray.com/awesome/tools.html">官网-神一样的工具们</a></p>
 <h3 id="v2rayU-下载不能打开解决"><a href="#v2rayU-下载不能打开解决" class="headerlink" title="v2rayU 下载不能打开解决"></a>v2rayU 下载不能打开解决</h3><p>下载下来打不开，可以打开 <code>安全与隐私</code> -&gt; <code>允许任何来源</code></p>
-<p><img src="http://pic.fangxutuwen.com/15848861296482.jpg"></p>
-<h3 id="配置本地监听"><a href="#配置本地监听" class="headerlink" title="配置本地监听"></a>配置本地监听</h3><p><img src="http://pic.fangxutuwen.com/15848862716534.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/CRMqmbPatzjBgZV.jpg"></p>
+<h3 id="配置本地监听"><a href="#配置本地监听" class="headerlink" title="配置本地监听"></a>配置本地监听</h3><p><img src="https://s2.loli.net/2022/02/09/NPmzBWZnTXO7U8l.jpg"></p>
 <h3 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h3><ul>
 <li>id、alterId、level、security 和你 v2ray conf.json 配置一样。</li>
 <li>其他参考你 apache 进行配置</li>
 </ul>
-<p><img src="http://pic.fangxutuwen.com/15848865424308.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/Jv4XRwSxGqm7g9U.jpg"></p>
 ]]></content>
       <categories>
         <category>CentOS7</category>
@@ -357,7 +357,7 @@
   <entry>
     <title>Android-Google(谷歌)三件套 安装指南</title>
     <url>/post/687ace9e.html</url>
-    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079183779911.jpg"></p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/kpjL7sJrmiqDUBZ.jpg"></p>
 <p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
 <h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
 <li><p>Google 服务框架</p>
@@ -389,17 +389,17 @@
 </blockquote>
 <h2 id="安装-Google-服务框架"><a href="#安装-Google-服务框架" class="headerlink" title="安装 Google 服务框架"></a>安装 Google 服务框架</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-services-framework/">下载地址</a></p>
 <p>注意选择与你设备 Android 系统对应的版本。</p>
-<p><img src="http://pic.fangxutuwen.com/16079170371258.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/YT5IUDVfevrE9z1.jpg"></p>
 <p>选择最新的即可</p>
-<p><img src="http://pic.fangxutuwen.com/16079170974756.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/KQJeNBATm6YGn25.jpg"></p>
 <h2 id="安装-Google-Play-Service"><a href="#安装-Google-Play-Service" class="headerlink" title="安装 Google Play Service"></a>安装 Google Play Service</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-services/">下载地址</a></p>
 <p>打开下载链接。选择<strong>最新</strong> 版本的 Google Play Service。 </p>
-<p><img src="http://pic.fangxutuwen.com/16079161039737.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/OLT89l7iDSrYFJW.jpg"></p>
 <p>在下载页面，有很多选项。从 Android 4.0 - Android 最新版本。下载前先看自己设备的 Android 设备的版本。  至于nodpi、480dpi、320dpi，pad 一般 nodpi， 手机一般 480dpi 即可。</p>
 <p>选择列表中你要下载的前方红字，进入下载页面。</p>
-<p><img src="http://pic.fangxutuwen.com/16079163703960.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/CkGJc9qLl12g6Va.jpg"></p>
 <h2 id="安装-Google-Play-Store"><a href="#安装-Google-Play-Store" class="headerlink" title="安装 Google Play Store"></a>安装 Google Play Store</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-store/">下载地址</a></p>
-<p><img src="http://pic.fangxutuwen.com/16079168462071.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/ioOmz7E6U1StVsD.jpg"></p>
 ]]></content>
       <categories>
         <category>Common</category>
@@ -430,8 +430,8 @@
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">disqusjs:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  <span class="comment"># API Endpoint of Disqus API (https://disqus.com/api/).</span></span><br><span class="line">  <span class="comment"># Leave api empty if you are able to connect to Disqus API. Otherwise you need a reverse proxy for it.</span></span><br><span class="line">  <span class="comment"># For example:</span></span><br><span class="line">  <span class="comment"># api: https://disqus.skk.moe/disqus/</span></span><br><span class="line">  api:</span><br><span class="line">  apikey: <span class="comment"># Register new application from https://disqus.com/api/applications/</span></span><br><span class="line">  shortname: <span class="comment"># See: https://disqus.com/admin/settings/general/</span></span><br></pre></td></tr></table></figure>
 <h3 id="Gitalk-评论"><a href="#Gitalk-评论" class="headerlink" title="Gitalk 评论"></a>Gitalk 评论</h3><p><a href="https://gitalk.github.io/">Gitalk</a> 是一个基于 GitHub Issue 和 Preact 开发的评论插件。<a href="https://gitalk.github.io/">Demo</a></p>
 <p>需要<code>Git Application</code> 用于授权登录，到<a href="https://github.com/settings/applications/new">New Applications</a>注册一个即可。就可以得到 <code>client_id</code>,<code>client_secret</code>。</p>
-<p><img src="http://pic.fangxutuwen.com/15791914036296.jpg"></p>
-<p><img src="http://pic.fangxutuwen.com/15791915407945.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/SzFYZnAGlNBU91K.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/gxAY1RIfcMsrdk2.jpg"></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  github_id: liuqi0725 <span class="comment"># GitHub repo owner 你 github 用户名</span></span><br><span class="line">  repo: liuqi0725.github.io <span class="comment"># Repository name to store issues 用来放评论的仓库名称</span></span><br><span class="line">  client_id: <span class="comment"># GitHub Application Client ID </span></span><br><span class="line">  client_secret: <span class="comment"># GitHub Application Client Secret</span></span><br><span class="line">  admin_user: liuqi0725 <span class="comment"># GitHub repo owner and collaborators, only these guys can initialize   gitHub issues</span></span><br><span class="line">  distraction_free_mode: <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">  <span class="comment"># Gitalk&#x27;s display language depends on user&#x27;s browser or system environment</span></span><br><span class="line">  <span class="comment"># If you want everyone visiting your site to see a uniform language, you can set a  force language value</span></span><br><span class="line">  <span class="comment"># Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span></span><br><span class="line">  language: zh-CN</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：本地调试时。因为无法获取 Git Application 授权，所以无法使用。</p>
@@ -1050,8 +1050,8 @@
 <blockquote>
 <p>注意 图片、歌词等属于 V2 信息，V1 信息只有文件末尾的 128k 的数据，代码里有说明</p>
 </blockquote>
-<p>  <img src="http://pic.fangxutuwen.com/15827086640315.jpg"></p>
-<p>  <img src="http://pic.fangxutuwen.com/15827087089609.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/tum4TVOSPof8igM.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/ZSc3XCqUIKhPxdt.jpg"></p>
 <h3 id="打包成可执行的-APP"><a href="#打包成可执行的-APP" class="headerlink" title="打包成可执行的 APP"></a>打包成可执行的 APP</h3><p><strong>先安装 <code>py2app</code> , 当前最新是 0.21</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install py2app</span><br></pre></td></tr></table></figure>
 
@@ -1150,7 +1150,7 @@
 <li>access 会放过白名单，对非白名单的请求进行认证，认证的依据来源（权限、角色…），没有则返回 403</li>
 <li>authenticaton 用户访问一个需要授权的 URL 时，会进行用户认证，认证通过后再通过 access 去判断是否可以访问<strong>（授权）</strong></li>
 </ul>
-<p><img src="http://pic.fangxutuwen.com/16003563830451.jpg"></p>
+<p><img src="https://s2.loli.net/2022/02/09/OvWfkgwsH9ZeqCm.jpg"></p>
 <h2 id="CSRF-跨站请求伪造防护"><a href="#CSRF-跨站请求伪造防护" class="headerlink" title="CSRF 跨站请求伪造防护"></a>CSRF 跨站请求伪造防护</h2><p>Demo 中没有开启 csrf。 如果需要可以自行开启。</p>
 <p>开启后，通过如下代码获取</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;$&#123;_csrf.parameterName&#125;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;_csrf.token&#125;&quot;</span>&gt;</span></span><br><span class="line">或者放在head 中</span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf”</span> <span class="attr">content</span> = <span class="string">“$&#123;_csrf.token&#125;”</span> /&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span> = <span class="string">“_csrf_header”</span>  <span class="attr">content</span> = <span class="string">“$&#123;_csrf.headerName&#125;”</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </span><br></pre></td></tr></table></figure>
@@ -1395,7 +1395,7 @@
 <h2 id="负载均衡介绍"><a href="#负载均衡介绍" class="headerlink" title="负载均衡介绍"></a>负载均衡介绍</h2><p><a href="https://zh.wikipedia.org/wiki/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">wiki</a></p>
 <p><a href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/932451?fr=aladdin">百度百科</a></p>
 <p>简单来说就是提升吞吐量、避免服务器过载。分为<strong>硬</strong>（如 F5），<strong>软</strong>(如 apache、nginx 的反向代理，还有其他模式)</p>
-<h2 id="Nginx-负载均衡网络图"><a href="#Nginx-负载均衡网络图" class="headerlink" title="Nginx 负载均衡网络图"></a>Nginx 负载均衡网络图</h2><p><img src="http://pic.fangxutuwen.com/16001457299038.jpg"></p>
+<h2 id="Nginx-负载均衡网络图"><a href="#Nginx-负载均衡网络图" class="headerlink" title="Nginx 负载均衡网络图"></a>Nginx 负载均衡网络图</h2><p><img src="https://s2.loli.net/2022/02/09/FIyHuevCmUWkGOw.jpg"></p>
 <h2 id="Nginx-负载均衡策略"><a href="#Nginx-负载均衡策略" class="headerlink" title="Nginx 负载均衡策略"></a>Nginx 负载均衡策略</h2><p>nginx 负载均衡使用 <code>upstream</code> 配置. 包括内置策略，还有通过第三方插件方式的策略。有兴趣的可以深入学习。</p>
 <h4 id="轮循（默认）-Round-Robin"><a href="#轮循（默认）-Round-Robin" class="headerlink" title="轮循（默认）[Round Robin]"></a>轮循（默认）[Round Robin]</h4><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果服务器shutdown 了，将不在分发请求到该服务器。 </p>
 <ul>
@@ -1646,7 +1646,8 @@
   <entry>
     <title>基于 Docker 的 ngrok 内网穿透部署</title>
     <url>/post/85afc9a0.html</url>
-    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16074919463781.jpg"><br>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/YlfmtoQauLvU8qW.jpg"></p>
+<p>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
 <span id="more"></span>
 
 
@@ -1745,7 +1746,7 @@
   <entry>
     <title>基于Docker 安装 MantisBT 及配置</title>
     <url>/post/137bd650.html</url>
-    <content><![CDATA[<p><img src="http://pic.fangxutuwen.com/16079374123016.jpg"></p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/7KYmfpl3IhGjnQE.jpg"></p>
 <p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
 <p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
 <p>本文介绍基于 Docker 安装 MaintisBT 并完成配置。</p>
@@ -1879,12 +1880,12 @@
 <h3 id="从码云上-clone-【推荐】"><a href="#从码云上-clone-【推荐】" class="headerlink" title="从码云上 clone 【推荐】"></a>从码云上 clone 【推荐】</h3><ul>
 <li><strong>把你需要 clone 的目标在 Github 上复制地址</strong></li>
 </ul>
-<img src="http://pic.fangxutuwen.com/15790090279075.jpg" width="300" style="align:center">
+<img src="https://s2.loli.net/2022/02/09/fS3cRKWI6pvQh9H.jpg" width="300" style="align:center">
      
 <ul>
 <li><strong>打开码云<a href="https://gitee.com/">gitee.com</a></strong>, 新建仓库-&gt;从 GitHub 导入</li>
 </ul>
-<img src="http://pic.fangxutuwen.com/15790112635781.jpg" width="300" style="align:center">
+<img src="https://s2.loli.net/2022/02/09/TSsPXmN2Zx4jatG.jpg" width="300" style="align:center">
 
 <ul>
 <li><strong>在本地用码云的仓库地址 进行 clone</strong></li>

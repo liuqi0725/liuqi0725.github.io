@@ -56,7 +56,7 @@
 <meta property="og:site_name" content="35Niu Blog">
 <meta property="og:description" content="利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://pic.fangxutuwen.com/16001457299038.jpg">
+<meta property="og:image" content="https://s2.loli.net/2022/02/09/FIyHuevCmUWkGOw.jpg">
 <meta property="article:published_time" content="2018-06-19T02:07:41.000Z">
 <meta property="article:modified_time" content="2018-06-19T02:07:41.000Z">
 <meta property="article:author" content="Alexliu">
@@ -64,7 +64,7 @@
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="Springboot">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://pic.fangxutuwen.com/16001457299038.jpg">
+<meta name="twitter:image" content="https://s2.loli.net/2022/02/09/FIyHuevCmUWkGOw.jpg">
 
 <link rel="canonical" href="https://35liuqi.com/post/55431d62.html">
 
@@ -310,7 +310,7 @@
 <h2 id="负载均衡介绍"><a href="#负载均衡介绍" class="headerlink" title="负载均衡介绍"></a>负载均衡介绍</h2><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">wiki</a></p>
 <p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/932451?fr=aladdin">百度百科</a></p>
 <p>简单来说就是提升吞吐量、避免服务器过载。分为<strong>硬</strong>（如 F5），<strong>软</strong>(如 apache、nginx 的反向代理，还有其他模式)</p>
-<h2 id="Nginx-负载均衡网络图"><a href="#Nginx-负载均衡网络图" class="headerlink" title="Nginx 负载均衡网络图"></a>Nginx 负载均衡网络图</h2><p><img src="http://pic.fangxutuwen.com/16001457299038.jpg"></p>
+<h2 id="Nginx-负载均衡网络图"><a href="#Nginx-负载均衡网络图" class="headerlink" title="Nginx 负载均衡网络图"></a>Nginx 负载均衡网络图</h2><p><img src="https://s2.loli.net/2022/02/09/FIyHuevCmUWkGOw.jpg"></p>
 <h2 id="Nginx-负载均衡策略"><a href="#Nginx-负载均衡策略" class="headerlink" title="Nginx 负载均衡策略"></a>Nginx 负载均衡策略</h2><p>nginx 负载均衡使用 <code>upstream</code> 配置. 包括内置策略，还有通过第三方插件方式的策略。有兴趣的可以深入学习。</p>
 <h4 id="轮循（默认）-Round-Robin"><a href="#轮循（默认）-Round-Robin" class="headerlink" title="轮循（默认）[Round Robin]"></a>轮循（默认）[Round Robin]</h4><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果服务器shutdown 了，将不在分发请求到该服务器。 </p>
 <ul>
