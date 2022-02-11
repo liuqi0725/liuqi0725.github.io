@@ -49,25 +49,20 @@
   };
 </script>
 
-  <meta name="description" content="markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 sm.ms 在境外搭建blogger 或业务时，非常的不错。 如果仅在境内使用，我还是比较推荐七牛云的。">
+  <meta name="description" content="当我们需要生成 requirements 文件时，一般就是使用 pip freeze 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 pip freeze 就不那么友好了，它会导出当前环境所有的 lib。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="抛弃七牛云, 好用的图床 sm">
-<meta property="og:url" content="https://35liuqi.com/post/bd4891b9.html">
+<meta property="og:title" content="Python 项目生成当前项目的 requirements 文件">
+<meta property="og:url" content="https://35liuqi.com/post/509ba068.html">
 <meta property="og:site_name" content="35Niu Blog">
-<meta property="og:description" content="markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 sm.ms 在境外搭建blogger 或业务时，非常的不错。 如果仅在境内使用，我还是比较推荐七牛云的。">
+<meta property="og:description" content="当我们需要生成 requirements 文件时，一般就是使用 pip freeze 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 pip freeze 就不那么友好了，它会导出当前环境所有的 lib。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg">
-<meta property="og:image" content="https://s2.loli.net/2022/02/09/H6bR9kzSfZpCNru.jpg">
-<meta property="article:published_time" content="2022-02-09T03:03:10.000Z">
-<meta property="article:modified_time" content="2022-02-09T03:03:10.000Z">
+<meta property="article:published_time" content="2022-02-11T16:24:26.000Z">
+<meta property="article:modified_time" content="2022-02-11T16:24:26.000Z">
 <meta property="article:author" content="Alexliu">
-<meta property="article:tag" content="技巧">
-<meta property="article:tag" content="图床">
-<meta property="article:tag" content="MarkDown">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg">
 
-<link rel="canonical" href="https://35liuqi.com/post/bd4891b9.html">
+<link rel="canonical" href="https://35liuqi.com/post/509ba068.html">
 
 
 <script id="page-configurations">
@@ -79,7 +74,7 @@
   };
 </script>
 
-  <title>抛弃七牛云, 好用的图床 sm | 35Niu Blog</title>
+  <title>Python 项目生成当前项目的 requirements 文件 | 35Niu Blog</title>
   
     <script>
       function sendPageView() {
@@ -247,7 +242,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/bd4891b9.html">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/509ba068.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -260,7 +255,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          抛弃七牛云, 好用的图床 sm
+          Python 项目生成当前项目的 requirements 文件
         </h2>
 
         <div class="post-meta">
@@ -270,7 +265,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-02-09 11:03:10" itemprop="dateCreated datePublished" datetime="2022-02-09T11:03:10+08:00">2022-02-09</time>
+              <time title="创建时间：2022-02-12 00:24:26" itemprop="dateCreated datePublished" datetime="2022-02-12T00:24:26+08:00">2022-02-12</time>
             </span>
 
       
@@ -280,8 +275,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Common/" itemprop="url" rel="index">
-                    <span itemprop="name">Common</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
             </span>
@@ -304,16 +299,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 <a target="_blank" rel="noopener" href="https://sm.ms/">sm.ms</a> 在境外搭建blogger 或业务时，非常的不错。</p>
-<p>如果仅在境内使用，我还是比较推荐七牛云的。</p>
+        <!--categories 类型有: Common Crawler Python JAVA CentOS Docker MacOS-->
+
+<p>当我们需要生成 <code>requirements</code> 文件时，一般就是使用 <code>pip freeze</code> 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 <code>pip freeze</code> 就不那么友好了，它会导出当前环境所有的 lib。</p>
 <span id="more"></span>
 
-<h3 id="免费内容有什么"><a href="#免费内容有什么" class="headerlink" title="免费内容有什么"></a>免费内容有什么</h3><p>具体详情可以查看<a target="_blank" rel="noopener" href="https://sm.ms/pricing">https://sm.ms/pricing</a></p>
-<p><img src="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg"></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>生成自己的api-token</p>
-<p><img src="https://s2.loli.net/2022/02/09/H6bR9kzSfZpCNru.jpg"></p>
-<p>然后就可以在自己的应用中，或者markdown编辑器中添加图床</p>
+<h2 id="使用-pipreqs-导出当前项目的包"><a href="#使用-pipreqs-导出当前项目的包" class="headerlink" title="使用 pipreqs 导出当前项目的包"></a>使用 pipreqs 导出当前项目的包</h2><p>pipreqs 会对当前项目包扫描，找到不属于 python 默认库的包就会添加到 requirements 文件中</p>
+<p>安装工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pipreqs</span><br></pre></td></tr></table></figure>
 
+<p>进入工程主目录,执行如下命令将生成 <code>requirements.txt</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipreqs ./</span><br></pre></td></tr></table></figure>
+
+<p>如果提示“UnicodeDecodeError: ‘gbk’ codec can’t decode ”的错误，需要指定字符集 –encoding=utf8</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipreqs ./ --encoding=utf8</span><br></pre></td></tr></table></figure>
+
+<p>如果requirements.txt文件已存在，需要增加–force，最终命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipreqs ./ --force</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -328,7 +330,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://35liuqi.com/post/bd4891b9.html" title="抛弃七牛云, 好用的图床 sm">https://35liuqi.com/post/bd4891b9.html</a>
+    <a href="https://35liuqi.com/post/509ba068.html" title="Python 项目生成当前项目的 requirements 文件">https://35liuqi.com/post/509ba068.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -339,9 +341,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%8A%80%E5%B7%A7/" rel="tag"># 技巧</a>
-              <a href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag"># 图床</a>
-              <a href="/tags/MarkDown/" rel="tag"># MarkDown</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
           </div>
 
         
@@ -350,13 +350,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/post/b87556ef.html" rel="prev" title="MacOS M1 docker安装 PostgreSql">
-      <i class="fa fa-chevron-left"></i> MacOS M1 docker安装 PostgreSql
+    <a href="/post/4ba979c5.html" rel="prev" title="Mysql 5.7 sql_mode=only_full_group_by">
+      <i class="fa fa-chevron-left"></i> Mysql 5.7 sql_mode=only_full_group_by
     </a></div>
-      <div class="post-nav-item">
-    <a href="/post/a88f1873.html" rel="next" title="搬瓦工 SWAP 修改、新增SWAP分区的大小的方法">
-      搬瓦工 SWAP 修改、新增SWAP分区的大小的方法 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -417,7 +414,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%8D%E8%B4%B9%E5%86%85%E5%AE%B9%E6%9C%89%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">免费内容有什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-pipreqs-%E5%AF%BC%E5%87%BA%E5%BD%93%E5%89%8D%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">使用 pipreqs 导出当前项目的包</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -589,7 +586,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo: 'liuqi0725.github.io',
       owner: 'liuqi0725',
       admin: ['liuqi0725'],
-      id: '8618431ffe19c27a03ebcaf05f414e74',
+      id: '38db7076e58edf288bba51d246f8b4d2',
         language: 'zh-CN',
       distractionFreeMode: true
     });

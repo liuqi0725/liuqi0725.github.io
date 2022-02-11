@@ -2083,4 +2083,31 @@
         <tag>技巧</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Python 项目生成当前项目的 requirements 文件</title>
+    <url>/post/509ba068.html</url>
+    <content><![CDATA[<!--categories 类型有: Common Crawler Python JAVA CentOS Docker MacOS-->
+
+<p>当我们需要生成 <code>requirements</code> 文件时，一般就是使用 <code>pip freeze</code> 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 <code>pip freeze</code> 就不那么友好了，它会导出当前环境所有的 lib。</p>
+<span id="more"></span>
+
+<h2 id="使用-pipreqs-导出当前项目的包"><a href="#使用-pipreqs-导出当前项目的包" class="headerlink" title="使用 pipreqs 导出当前项目的包"></a>使用 pipreqs 导出当前项目的包</h2><p>pipreqs 会对当前项目包扫描，找到不属于 python 默认库的包就会添加到 requirements 文件中</p>
+<p>安装工具</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pipreqs</span><br></pre></td></tr></table></figure>
+
+<p>进入工程主目录,执行如下命令将生成 <code>requirements.txt</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pipreqs ./</span><br></pre></td></tr></table></figure>
+
+<p>如果提示“UnicodeDecodeError: ‘gbk’ codec can’t decode ”的错误，需要指定字符集 –encoding=utf8</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --encoding=utf8</span><br></pre></td></tr></table></figure>
+
+<p>如果requirements.txt文件已存在，需要增加–force，最终命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --force</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
 </search>
