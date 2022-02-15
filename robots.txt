@@ -1,0 +1,4 @@
+User-agent: * 
+Allow: .html$
+Allow: .gif$
+Sitemap: https://35liuqi.com/sitemap.xml
