@@ -2110,4 +2110,20 @@
         <tag>Python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Git 删除标签 Tag</title>
+    <url>/post/e484a152.html</url>
+    <content><![CDATA[<p>删除本地tag</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git tag -d tag-name</span><br></pre></td></tr></table></figure>
+
+
+<p>删除远程tag</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin :refs/tags/tag-name</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Common</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
 </search>
