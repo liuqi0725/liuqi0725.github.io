@@ -1,7 +1,3 @@
-User-agent: * 
-Allow: /tags
-Allow: /categories
-Allow: /archives
-Allow: .html$
-Allow: .gif$
+User-agent: *
+Disallow: 
 Sitemap: https://35liuqi.com/sitemap.xml
