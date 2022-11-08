@@ -238,6 +238,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/568b603f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/568b603f.html" class="post-title-link" itemprop="url">PlayWright 上传文件非Input框时操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-08 23:14:00" itemprop="dateCreated datePublished" datetime="2022-02-08T23:14:00+08:00">2022-02-08</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Crawler/" itemprop="url" rel="index">
+                    <span itemprop="name">Crawler</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>比如如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ImageUpload&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload u-marginB10&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__label js-dragdrop-area&quot;</span> <span class="attr">for</span>=<span class="string">&quot;selectFileMultiple&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__hide&quot;</span>&gt;</span>drag and drop or select files<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;js-dragdrop-num&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span>up to<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>NodeJs: <a target="_blank" rel="noopener" href="https://playwright.dev/python/docs/api/class-filechooser">https://playwright.dev/python/docs/api/class-filechooser</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">page.on(&quot;filechooser&quot;, (fileChooser: FileChooser) =&gt; &#123;</span><br><span class="line">     fileChooser.setFiles([&quot;/path/to/a/file&quot;]);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Python: <a target="_blank" rel="noopener" href="https://playwright.dev/python/docs/api/class-filechooser/">https://playwright.dev/python/docs/api/class-filechooser/</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> page.expect_file_chooser() <span class="keyword">as</span> fc_info:</span><br><span class="line">    page.click(<span class="string">&quot;upload&quot;</span>)</span><br><span class="line">file_chooser = fc_info.value</span><br><span class="line">file_chooser.set_files(<span class="string">&quot;/path/to/a/file&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>Java: <a target="_blank" rel="noopener" href="https://playwright.dev/java/docs/api/class-filechooser">https://playwright.dev/java/docs/api/class-filechooser</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">FileChooser</span> <span class="variable">fileChooser</span> <span class="operator">=</span> page.waitForFileChooser(() -&gt; </span><br><span class="line">page.click(<span class="string">&quot;upload&quot;</span>));</span><br><span class="line">fileChooser.setFiles(Paths.get(<span class="string">&quot;myfile.pdf&quot;</span>));</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/3ae1525e.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -980,103 +1062,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/a47edc12.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Alexliu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="35Niu Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/a47edc12.html" class="post-title-link" itemprop="url">centos7 安装 postgresql</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-19 10:07:41" itemprop="dateCreated datePublished" datetime="2020-11-19T10:07:41+08:00">2020-11-19</time>
-            </span>
-
-      
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CentOS7/" itemprop="url" rel="index">
-                    <span itemprop="name">CentOS7</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装方式一: yum 直接安装</span></span><br><span class="line"><span class="comment"># 建议先用 yum search 查看你的 yum 源下是否是 13</span></span><br><span class="line">yum -y install postgresql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装方式二: 安装官方 yum 源再安装 postgresql</span></span><br><span class="line"></span><br><span class="line">yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum install -y postgresql13-server</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不初始化没有配置文件数据等  或者 /usr/pgsql-13/bin/postgresql-13-setup initdb</span></span><br><span class="line">postgresql-setup initdb  </span><br></pre></td></tr></table></figure>
-
-<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><p>安装 postgresql 后，会创建 <code>postgres</code> 用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换用户</span></span><br><span class="line">su -postgres</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换成功后. 可以看到命令行变为</span></span><br><span class="line"></span><br><span class="line">[root@alexliu ~]<span class="comment"># su - postgres</span></span><br><span class="line">上一次登录：三 12月  9 11:11:56 CST 2020pts/0 上</span><br><span class="line">-bash-4.2$ </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开 postgresql</span></span><br><span class="line"></span><br><span class="line">psql -U postgres</span><br><span class="line"></span><br><span class="line"><span class="comment"># 成功后</span></span><br><span class="line">-bash-4.2$ psql -U postgres</span><br><span class="line">psql (9.2.24)</span><br><span class="line">输入 <span class="string">&quot;help&quot;</span> 来获取帮助信息.</span><br><span class="line"></span><br><span class="line">postgres=<span class="comment"># </span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改密码, 密码内容自定义 , 注意语句结束需要加上 `;`</span></span><br><span class="line">ALTER USER postgres with encrypted password <span class="string">&#x27;abc123&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改完成后 </span></span><br><span class="line">\q      <span class="comment"># 退出 postgresql</span></span><br><span class="line"><span class="built_in">exit</span>    <span class="comment"># 退出 postgresql 后输入 exit 返回 root 用户</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="获取配置目录"><a href="#获取配置目录" class="headerlink" title="获取配置目录"></a>获取配置目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换用户</span></span><br><span class="line">su -postgres</span><br><span class="line"><span class="comment"># 打开 postgresql</span></span><br><span class="line">psql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询config_file</span></span><br><span class="line">postgres=<span class="comment"># show config_file;</span></span><br><span class="line">             config_file             </span><br><span class="line">-------------------------------------</span><br><span class="line"> /data/pgsql/13/data/postgresql.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询当前数据目录</span></span><br><span class="line">postgres=<span class="comment"># show data_directory;</span></span><br><span class="line">   data_directory    </span><br><span class="line">---------------------</span><br><span class="line"> /data/pgsql/13/data</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vi /var/lib/pgsql/13/data/postgresql.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开配置后</span></span><br><span class="line">:<span class="built_in">set</span> number <span class="comment"># 开启行号显示</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把第 59 行的 监听地址 改为 * . 默认是注释掉的</span></span><br><span class="line">59 listen_addresses = <span class="string">&#x27;*&#x27;</span>                   <span class="comment"># what IP address(es) to listen on;</span></span><br><span class="line">60                                          <span class="comment"># comma-separated list of addresses;</span></span><br><span class="line">61                                          <span class="comment"># defaults to &#x27;localhost&#x27;; use &#x27;*&#x27; for all</span></span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">vi /var/lib/pgsql/13/data/pg_hba.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开配置后， 找到如下配置（最后面）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># TYPE  DATABASE        USER            ADDRESS                 METHOD</span></span><br><span class="line"><span class="comment"># &quot;local&quot; is for Unix domain socket connections only</span></span><br><span class="line"><span class="built_in">local</span>   all             all                                     peer</span><br><span class="line"><span class="comment"># IPv4 local connections:</span></span><br><span class="line">host    all             all             127.0.0.1/32            ident</span><br><span class="line"><span class="comment"># IPv6 local connections:</span></span><br><span class="line">host    all             all             ::1/128                 ident</span><br><span class="line"><span class="comment"># Allow replication connections from localhost, by a user with the</span></span><br><span class="line"><span class="comment"># replication privilege.</span></span><br><span class="line"><span class="comment">#local   replication     postgres                                peer</span></span><br><span class="line"><span class="comment">#host    replication     postgres        127.0.0.1/32            ident</span></span><br><span class="line"><span class="comment">#host    replication     postgres        ::1/128                 ident</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加如下内容在最后</span></span><br><span class="line">host    all             all             0.0.0.0/0               md5</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h2><h3 id="启动-停止-开机启动"><a href="#启动-停止-开机启动" class="headerlink" title="启动\停止\开机启动"></a>启动\停止\开机启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start postgresql</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">systemctl start postgresql</span><br><span class="line"><span class="comment"># 状态</span></span><br><span class="line">systemctl status postgresql</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">systemctl restart postgresql</span><br><span class="line"><span class="comment"># 开机启动 </span></span><br><span class="line">systemctl <span class="built_in">enable</span> postgresql</span><br></pre></td></tr></table></figure>
-
-<h3 id="防火墙配置"><a href="#防火墙配置" class="headerlink" title="防火墙配置"></a>防火墙配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-service=postgresql --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=5432/tcp --permanent          <span class="comment"># 5432为postgresql端口</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙开放端口</span></span><br><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1149,7 +1134,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1162,7 +1147,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -2126,4 +2126,72 @@
         <tag>Git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Macos 回退系统安装 Mojava</title>
+    <url>/post/46a9669c.html</url>
+    <content><![CDATA[<p>苹果系统（macOS）虽然稳定，但凡事都有例外，比如换硬盘、对新系统不满意、软件不兼容等问题想重装系统，下面就说说通过制作U盘安装 Mojava 10.14.6 </p>
+<p>U盘进行重装的方法，重装等待的时间短，操作也不复杂。</p>
+<ul>
+<li>准备一个8G以上的U盘 （最好两个，我当时第一个U盘在复制文件时，老是0%，换了个u盘就好了）</li>
+<li>U盘建议USB 3.0以上</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><h4 id="App-Store"><a href="#App-Store" class="headerlink" title="App Store"></a>App Store</h4><p><a href="https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12">https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12</a></p>
+<p>App Store 下载后会保存在 Application 中。<br>App Store 可能会存在与系统不兼容，不让下载。可以尝试通过第三方下载。</p>
+<h4 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h4><ul>
+<li><p>参考: <a href="https://www.pc6.com/mac/582745.html">https://www.pc6.com/mac/582745.html</a></p>
+</li>
+<li><p>参考： <a href="https://sysin.org/blog/macOS-Mojave/">https://sysin.org/blog/macOS-Mojave/</a></p>
+<p>  macOS Mojave 10.14.0 (18A391) - 2018-09-24<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw">https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw</a></p>
+<p>  macOS Mojave 10.14.5 (18F132) - 2019-05-13<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj">https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj</a></p>
+<p>  macOS Mojave 10.14.6 (18G103) - Supplemental Update - 2019-09-26<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g">https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g</a></p>
+</li>
+<li><p>参考： <a href="https://www.imacpc.net/archives/4153">https://www.imacpc.net/archives/4153</a></p>
+</li>
+</ul>
+<h3 id="获取-Install-macOS-Mojava-app"><a href="#获取-Install-macOS-Mojava-app" class="headerlink" title="获取 Install macOS Mojava.app"></a>获取 Install macOS Mojava.app</h3><ul>
+<li>App Store 下载的，默认在 <code>/Application</code> 中。</li>
+<li>第三方下载，如果下载的是 <code>.app</code> 请拖到<code>应用程序</code>中。 也就是 <code>/Application</code>中。</li>
+<li>第三方下载，如果下载的是 <code>.dmg</code> 直接安装，会直接在安装在 <code>/Application</code>中。</li>
+</ul>
+<p>完成后检查 <code>/Application</code> 也就是 <code>应用程序</code>中是否存在 <code>Install macOS Mojava.app</code>,中文系统会翻译为 <code>安装 macOS Mojava.app</code></p>
+<h3 id="制作启动盘"><a href="#制作启动盘" class="headerlink" title="制作启动盘"></a>制作启动盘</h3><h4 id="备份U盘数据"><a href="#备份U盘数据" class="headerlink" title="备份U盘数据"></a>备份U盘数据</h4><p>U盘会被格式化，如果存在重要资料请备份</p>
+<h4 id="格式化U盘"><a href="#格式化U盘" class="headerlink" title="格式化U盘"></a>格式化U盘</h4><p><img src="https://s2.loli.net/2022/11/08/7AlSp3inagCOm8V.jpg"></p>
+<ul>
+<li>打开 <code>磁盘工具</code> ，菜单栏选择 “显示 -&gt; 显示所有设备”</li>
+<li>选择U盘，注意是U盘的上一级</li>
+<li>点击 <code>抹掉</code></li>
+<li>格式化U盘，名称 <code>Mojava</code>, 格式 <code>Mac OS扩展(日志式)</code>, 方案 <code>GUID分区图</code></li>
+</ul>
+<h4 id="制作启动U盘"><a href="#制作启动U盘" class="headerlink" title="制作启动U盘"></a>制作启动U盘</h4><p>制作U盘前，请先备份U盘重要数据.</p>
+<p>执行制作U盘启动命令 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如果名称不一致，规则如下, 注意空格</span></span><br><span class="line"><span class="comment"># sudo &lt;Install macOS Mojava.app 路径&gt;/Contents/Resources/createinstallmedia --volume &lt;U盘路径&gt; &lt;Install macOS Mojava.app 路径&gt; --nointeraction</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下。 执行过程时间不等，视您手上电脑性能、U盘传输速度决定。  正常情况下3-5分钟。如果出现 <code>Copying to disk</code> 一直是 0%, 建议换一块U盘试试。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br><span class="line">Password:</span><br><span class="line">Erasing Disk: 0%... 10%... 20%... 30%... 100%</span><br><span class="line">Copying to disk: 0%... 10%... 20%... 30%... 40%... 50%... 60%... 70%... 80%... 90%... 100%</span><br><span class="line">Making disk bootable...</span><br><span class="line">Copying boot files...</span><br><span class="line">Install media now available at <span class="string">&quot;/Volumes/Install macOS Mojave&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Mojava"><a href="#安装-Mojava" class="headerlink" title="安装 Mojava"></a>安装 Mojava</h3><ul>
+<li>安装前请先备份电脑中所有的重要文件，会格式化整个硬盘</li>
+<li>重启电脑，长按 <code>option</code> 会进入 <code>OSX 实用工具</code>, 选择 <code>Install macOS Mojava</code>。</li>
+<li>选择<code>磁盘工具</code>, 选择电脑<code>系统盘</code> -&gt; <code>抹掉</code>。 格式根据系统决定，10.3以上系统版本请选择<code>APFS</code>磁盘格式，10.3以下系统版本选择<code>Mac OS 扩展</code>磁盘格式。 格式化以后退出<code>磁盘工具</code></li>
+<li>选择<code>安装macOS</code></li>
+</ul>
+<h4 id="安装中出现应用程序副本已损坏，不能用来安装Mac-OS"><a href="#安装中出现应用程序副本已损坏，不能用来安装Mac-OS" class="headerlink" title="安装中出现应用程序副本已损坏，不能用来安装Mac OS"></a>安装中出现应用程序副本已损坏，不能用来安装Mac OS</h4><ul>
+<li>点右上角wifi，关闭wifi，断开网络</li>
+<li>点菜单栏-&gt; 实用工具-&gt; 打开终端</li>
+<li>终端输入：date 032208102015.20</li>
+<li>退出终端，重新选择<code>安装 macOS</code>即可</li>
+</ul>
+<p>此方法适用于 10.8 ~ 10.15 所有版本</p>
+<p>整个操作时间一般半个小时左右，安装的快慢取决于USB读取速度和电脑性能，完成以后电脑会自动重启。等整个进度条走完，再进行简单的用户设置，就和刚买来的一样了。而刚刚重装的U盘也可以留着以后重装系统用。</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Mojava 10.14.6 启动U盘</tag>
+      </tags>
+  </entry>
 </search>
