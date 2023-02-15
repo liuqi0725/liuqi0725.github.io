@@ -247,6 +247,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/5e87845c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/5e87845c.html" class="post-title-link" itemprop="url">Pycharm中OpenCV无提示并且函数为警告色(黄色)的解决方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-15 10:19:20" itemprop="dateCreated datePublished" datetime="2023-02-15T10:19:20+08:00">2023-02-15</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安装OpenCV-python 后，在Pycharm中所有的函数都没有提示，就算把函数手敲出来，还是警告色。虽然不影响使用，但是看着糟心。而且也不方便。</p>
+<blockquote>
+<p>阅读方法前，我将假设您已经基本掌握Python的环境配置及Pycharm的基本使用。</p>
+</blockquote>
+<h3 id="复制-Opencv-Python-包路径"><a href="#复制-Opencv-Python-包路径" class="headerlink" title="复制 Opencv-Python 包路径"></a>复制 Opencv-Python 包路径</h3><p>此路径在你当前项目的Python环境下的<code>site-packages</code> 下，如果你有多个python环境，或者虚拟环境，请自行前往复制。</p>
+<p>复制路径示例: <code>/Users/xxxx/python/env/img_pos/python3.8/site-packages/cv2</code></p>
+<blockquote>
+<p>Windows 下差不多。 路径仅为参考，不用和您的路径对应</p>
+</blockquote>
+<h3 id="添加-Opencv-Python-路径到解析器"><a href="#添加-Opencv-Python-路径到解析器" class="headerlink" title="添加 Opencv-Python 路径到解析器"></a>添加 Opencv-Python 路径到解析器</h3><ul>
+<li>打开设置 <code>File -&gt; Preferences</code></li>
+<li>找到 <code>Python Interpreter</code></li>
+<li>在 <code>Python Interpreter</code> 下拉中，选择 <code>show all</code></li>
+<li>选择你当前项目的环境点击 <code>show paths for the selected interpreter</code><br>  <img src="https://s2.loli.net/2023/02/15/Cnr9x7f5YMelsqw.jpg"></li>
+<li>将 <code>Opencv-Python</code> 包路径增加上一步 <code>show paths for the selected interpreter</code> 展开的列表中</li>
+</ul>
+<blockquote>
+<p>老版本Pycharm 可能在 <code>Python Interpreter</code> 后面的点击 <code>齿轮</code> 显示 <code>show all</code></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/75a0dc43.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -963,84 +1052,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/61de956b.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Alexliu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="35Niu Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/61de956b.html" class="post-title-link" itemprop="url">MacOS M1 docker 安装 Redis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-09 10:44:07" itemprop="dateCreated datePublished" datetime="2022-02-09T10:44:07+08:00">2022-02-09</time>
-            </span>
-
-      
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MacOS/" itemprop="url" rel="index">
-                    <span itemprop="name">MacOS</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=redis&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
-<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 6.2.6 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull redis:6.2.6</span><br></pre></td></tr></table></figure>
-
-<h3 id="新建redis本地配置"><a href="#新建redis本地配置" class="headerlink" title="新建redis本地配置"></a>新建redis本地配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许远程连接</span></span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0</span><br><span class="line"><span class="comment"># 端口</span></span><br><span class="line">port 6379</span><br><span class="line"><span class="comment"># 开启AOP持久</span></span><br><span class="line">appendonly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --name 名称</span></span><br><span class="line"><span class="comment"># -v 数据库本地挂载目录</span></span><br><span class="line"><span class="comment"># 6.2.6 替换为您下载的版本， 最新版本不填</span></span><br><span class="line"><span class="comment"># 注意！！！ 引入配置文件，各版本docker 中配置文件位置可能不一样 。6.2.6 为 &#x27;/etc/redis.conf&#x27;</span></span><br><span class="line"></span><br><span class="line">docker run --name redis6.2.6 \</span><br><span class="line">-v /Users/liuqi/home/dev/hock/docker_volumes/redis/data:/data \</span><br><span class="line">-v /Users/liuqi/home/dev/hock/docker_volumes/redis/conf/redis.conf:/etc/redis.conf \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-d redis:6.2.6 redis-server /etc/redis.conf</span><br></pre></td></tr></table></figure>
-<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>默认登录没有用户名、密码。如需要密码请在<code>redis.conf</code> 中配置</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1113,14 +1124,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
