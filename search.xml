@@ -1,54 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CentOS-7 安装 Docker</title>
-    <url>/post/841b6107.html</url>
-    <content><![CDATA[<p>微服务现在已经是趋势，不管大型，中型，小型应用，都可以进行拆分，达到应用松耦合，可复用的目的。说到微服务，就要提到 Docker。介绍下 Docker 在 centos-7 上安装的步骤</p>
-<span id="more"></span>
-
-
-<h2 id="删除已存在的-docker-版本"><a href="#删除已存在的-docker-版本" class="headerlink" title="删除已存在的 docker 版本"></a>删除已存在的 docker 版本</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
-
-<p>删除 <code>/var/lib/docker</code> 目录下的图片，资源等</p>
-<h2 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h2><p>安装方式</p>
-<ol>
-<li>大多数用户设置了Docker的存储库并从它们进行安装，以方便安装和升级任务。这是推荐的方法。</li>
-<li>一些用户下载RPM包并手动安装，并完全手动管理升级。这在一些情况下非常有用，比如在没有访问internet的被隔离的系统上安装Docker。</li>
-<li>在测试和开发环境中，一些用户选择使用自动化的方便脚本来安装Docker。</li>
-</ol>
-<h2 id="使用-repository-安装（推荐）"><a href="#使用-repository-安装（推荐）" class="headerlink" title="使用 repository 安装（推荐）"></a>使用 repository 安装（推荐）</h2><h3 id="安装-yum-utils"><a href="#安装-yum-utils" class="headerlink" title="安装 yum-utils"></a>安装 <code>yum-utils</code></h3><p>安装um-utils包(它提供了um-config-manager实用程序)并设置稳定存储库。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y yum-utils</span><br></pre></td></tr></table></figure>
-
-<h3 id="设置-docker-的存储库（repository）"><a href="#设置-docker-的存储库（repository）" class="headerlink" title="设置 docker 的存储库（repository）"></a>设置 docker 的存储库（repository）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Docker-引擎"><a href="#安装-Docker-引擎" class="headerlink" title="安装 Docker 引擎"></a>安装 Docker 引擎</h3><ol>
-<li>安装最新版本</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
-
-<p>安装过程如果出现，要求接受 GPG 秘钥，通过<br><code>If prompted to accept the GPG key, verify that the fingerprint matches 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35, and if so, accept it.</code></p>
-<p>至此 Docker 已经安装好了， docker group 也自动创建了，但是没有用户在该 group 下。</p>
-<ol start="2">
-<li>安装指定版本</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示仓库中的版本</span></span><br><span class="line">yum list docker-ce --showduplicates | <span class="built_in">sort</span> -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 顺序由高到低</span></span><br><span class="line">docker-ce.x86_64  3:18.09.1-3.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64  3:18.09.0-3.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64  18.06.1.ce-3.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64  18.06.0.ce-3.el7                    docker-ce-stable</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line"><span class="comment"># VERSION_STRING : 包名。 版本字符串(第二列)，从第一个冒号(:)开始，直到第一个连字符(-)。</span></span><br><span class="line"><span class="comment"># 例如 3:18.09.1-3.el7 版本的包名是 18.09.1</span></span><br><span class="line">yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io</span><br></pre></td></tr></table></figure>
-
-<h3 id="启动-验证-Docker"><a href="#启动-验证-Docker" class="headerlink" title="启动/验证 Docker"></a>启动/验证 Docker</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker.service</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start docker</span><br><span class="line"><span class="comment"># 验证 ， 这个命令会在容器中下载一个test 图像。</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="使用资源包-RPM-安装"><a href="#使用资源包-RPM-安装" class="headerlink" title="使用资源包 RPM 安装"></a>使用资源包 RPM 安装</h2><p>详见<a href="https://docs.docker.com/engine/install/centos/">官方安装文档</a></p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS7 Let’s encrypt certbot 证书管理</title>
-    <url>/post/37ac579a.html</url>
+    <url>/post/37ac579a/</url>
     <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/opzq4VKntDG5RCI.jpg"></p>
 <span id="more"></span>
 
@@ -112,8 +66,54 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS-7 安装 Docker</title>
+    <url>/post/841b6107/</url>
+    <content><![CDATA[<p>微服务现在已经是趋势，不管大型，中型，小型应用，都可以进行拆分，达到应用松耦合，可复用的目的。说到微服务，就要提到 Docker。介绍下 Docker 在 centos-7 上安装的步骤</p>
+<span id="more"></span>
+
+
+<h2 id="删除已存在的-docker-版本"><a href="#删除已存在的-docker-版本" class="headerlink" title="删除已存在的 docker 版本"></a>删除已存在的 docker 版本</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
+
+<p>删除 <code>/var/lib/docker</code> 目录下的图片，资源等</p>
+<h2 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h2><p>安装方式</p>
+<ol>
+<li>大多数用户设置了Docker的存储库并从它们进行安装，以方便安装和升级任务。这是推荐的方法。</li>
+<li>一些用户下载RPM包并手动安装，并完全手动管理升级。这在一些情况下非常有用，比如在没有访问internet的被隔离的系统上安装Docker。</li>
+<li>在测试和开发环境中，一些用户选择使用自动化的方便脚本来安装Docker。</li>
+</ol>
+<h2 id="使用-repository-安装（推荐）"><a href="#使用-repository-安装（推荐）" class="headerlink" title="使用 repository 安装（推荐）"></a>使用 repository 安装（推荐）</h2><h3 id="安装-yum-utils"><a href="#安装-yum-utils" class="headerlink" title="安装 yum-utils"></a>安装 <code>yum-utils</code></h3><p>安装um-utils包(它提供了um-config-manager实用程序)并设置稳定存储库。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y yum-utils</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-docker-的存储库（repository）"><a href="#设置-docker-的存储库（repository）" class="headerlink" title="设置 docker 的存储库（repository）"></a>设置 docker 的存储库（repository）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Docker-引擎"><a href="#安装-Docker-引擎" class="headerlink" title="安装 Docker 引擎"></a>安装 Docker 引擎</h3><ol>
+<li>安装最新版本</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<p>安装过程如果出现，要求接受 GPG 秘钥，通过<br><code>If prompted to accept the GPG key, verify that the fingerprint matches 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35, and if so, accept it.</code></p>
+<p>至此 Docker 已经安装好了， docker group 也自动创建了，但是没有用户在该 group 下。</p>
+<ol start="2">
+<li>安装指定版本</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示仓库中的版本</span></span><br><span class="line">yum list docker-ce --showduplicates | <span class="built_in">sort</span> -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 顺序由高到低</span></span><br><span class="line">docker-ce.x86_64  3:18.09.1-3.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64  3:18.09.0-3.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64  18.06.1.ce-3.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64  18.06.0.ce-3.el7                    docker-ce-stable</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line"><span class="comment"># VERSION_STRING : 包名。 版本字符串(第二列)，从第一个冒号(:)开始，直到第一个连字符(-)。</span></span><br><span class="line"><span class="comment"># 例如 3:18.09.1-3.el7 版本的包名是 18.09.1</span></span><br><span class="line">yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-验证-Docker"><a href="#启动-验证-Docker" class="headerlink" title="启动/验证 Docker"></a>启动/验证 Docker</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker.service</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start docker</span><br><span class="line"><span class="comment"># 验证 ， 这个命令会在容器中下载一个test 图像。</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="使用资源包-RPM-安装"><a href="#使用资源包-RPM-安装" class="headerlink" title="使用资源包 RPM 安装"></a>使用资源包 RPM 安装</h2><p>详见<a href="https://docs.docker.com/engine/install/centos/">官方安装文档</a></p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS7 yum 安装 nginx</title>
-    <url>/post/360ec959.html</url>
+    <url>/post/360ec959/</url>
     <content><![CDATA[<p><a href="http://nginx.org/en/linux_packages.html#stable">官方说明</a></p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install yum-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 nginx  yum 源</span></span><br><span class="line"></span><br><span class="line">vi /etc/yum.repos.d/nginx.repo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -141,7 +141,7 @@
   </entry>
   <entry>
     <title>CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</title>
-    <url>/post/8e14883f.html</url>
+    <url>/post/8e14883f/</url>
     <content><![CDATA[<p>最近SS、SSR 老是被 ban，只有换工具了，一直听说 v2Ray 很好用。就尝试切换到 v2Ray 。网上看了下现有的教程，大多是 nginx 的，这里有几个问题。 </p>
 <ol>
 <li>大多数教程是裸搭建，仅适合为了 v2ray 买个 vps 来搭建的人</li>
@@ -224,8 +224,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker 常用命令</title>
+    <url>/post/f1efb8a3/</url>
+    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker <span class="built_in">rm</span> 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+
+<h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker update --restart=always &lt;容器<span class="built_in">id</span> 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="打开容器命令行"><a href="#打开容器命令行" class="headerlink" title="打开容器命令行"></a>打开容器命令行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行容器内脚本</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash &lt;脚本路径&gt;/xxx.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
+<p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
+<ul>
+<li><strong>image_id</strong> : 镜像 id  可以通过 <code>docker ps -a</code> 查看，可以简写(取 id 前几位)</li>
+<li><strong>target_dir_path</strong> : docker 中目标文件夹路径</li>
+<li><strong>local_dir_path</strong> : 拷贝到本地的路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 示例 </span></span><br><span class="line"><span class="comment"># 查看镜像  `741c99bf26bb` 是镜像id  </span></span><br><span class="line">$ docker ps -a                                                                                </span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                            PORTS               NAMES</span><br><span class="line">741c99bf26bb        vanas/tokenmanager   <span class="string">&quot;/bin/sh -c &#x27;circusd…&quot;</span>   3 minutes ago       Restarting (127) 14 seconds ago                       vanastokenmanager_web1_1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 docker 镜像下 /app  到本地的  /Users/alexliu/app 目录</span></span><br><span class="line">$ docker <span class="built_in">cp</span> 74:/app /Users/alexliu/app</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Centos7 端口与防火墙配置</title>
-    <url>/post/cb0a5d97.html</url>
+    <url>/post/cb0a5d97/</url>
     <content><![CDATA[<h2 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h2><h3 id="开放-关闭端口"><a href="#开放-关闭端口" class="headerlink" title="开放/关闭端口"></a>开放/关闭端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent       <span class="comment"># 开放443端口</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=443/tcp --permanent    <span class="comment"># 关闭443端口</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="查看防火墙所有开放的端口"><a href="#查看防火墙所有开放的端口" class="headerlink" title="查看防火墙所有开放的端口"></a>查看防火墙所有开放的端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
@@ -260,35 +287,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 常用命令</title>
-    <url>/post/f1efb8a3.html</url>
-    <content><![CDATA[<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker <span class="built_in">rm</span> 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
-
-<h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker update --restart=always &lt;容器<span class="built_in">id</span> 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="打开容器命令行"><a href="#打开容器命令行" class="headerlink" title="打开容器命令行"></a>打开容器命令行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行容器内脚本</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash &lt;脚本路径&gt;/xxx.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
-<p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
-<ul>
-<li><strong>image_id</strong> : 镜像 id  可以通过 <code>docker ps -a</code> 查看，可以简写(取 id 前几位)</li>
-<li><strong>target_dir_path</strong> : docker 中目标文件夹路径</li>
-<li><strong>local_dir_path</strong> : 拷贝到本地的路径</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 示例 </span></span><br><span class="line"><span class="comment"># 查看镜像  `741c99bf26bb` 是镜像id  </span></span><br><span class="line">$ docker ps -a                                                                                </span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                            PORTS               NAMES</span><br><span class="line">741c99bf26bb        vanas/tokenmanager   <span class="string">&quot;/bin/sh -c &#x27;circusd…&quot;</span>   3 minutes ago       Restarting (127) 14 seconds ago                       vanastokenmanager_web1_1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 docker 镜像下 /app  到本地的  /Users/alexliu/app 目录</span></span><br><span class="line">$ docker <span class="built_in">cp</span> 74:/app /Users/alexliu/app</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker部署GitLab远程SSH需要密码</title>
-    <url>/post/75a0dc43.html</url>
+    <url>/post/75a0dc43/</url>
     <content><![CDATA[<p>因为Docker 部署时，我们一般都会映射端口，防止与服务器的端口冲突或占用。Gitlab默认的 SSH 是<code>22</code> 端口，如果我们做了端口映射，但是不修改 Gitlab 的SSH 连接端口，会导致权限验证失败变成需要输入密码才能连接。</p>
 <h3 id="查看-Gitlab-映射的22端口"><a href="#查看-Gitlab-映射的22端口" class="headerlink" title="查看 Gitlab 映射的22端口"></a>查看 Gitlab 映射的22端口</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># docker ps -a</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS                                                                           NAMES</span><br><span class="line">cd685db5315a        gitlab/gitlab-ce    <span class="string">&quot;/assets/wrapper&quot;</span>        2 years ago         Up 21 hours (healthy)        80/tcp, 0.0.0.0:10000-&gt;10000/tcp, 0.0.0.0:2223-&gt;22/tcp, 0.0.0.0:8444-&gt;443/tcp   fx-gitlab</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -310,7 +310,7 @@
   </entry>
   <entry>
     <title>Git 删除标签 Tag</title>
-    <url>/post/e484a152.html</url>
+    <url>/post/e484a152/</url>
     <content><![CDATA[<p>删除本地tag</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git tag -d tag-name</span><br></pre></td></tr></table></figure>
 
@@ -325,8 +325,100 @@
       </tags>
   </entry>
   <entry>
+    <title>Android-Google(谷歌)三件套 安装指南</title>
+    <url>/post/687ace9e/</url>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/kpjL7sJrmiqDUBZ.jpg"></p>
+<p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
+<h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
+<li><p>Google 服务框架</p>
+<p>  GSF（Google Server Framework） 是谷歌安卓系统官方服务框架，用来作为谷歌软件的支持平台。例如<strong>GooglePlay</strong>就需要此服务框架的支持，很多国行或者改版ROM的手机都删除了这个框架，导致部分谷歌app不可正常运行。</p>
+</li>
+<li><p>Google play services</p>
+<p>  GMS（GoogleMobile Service）。提供GooglePlay、Search、Search by Voice、Gmail、Contact Sync、Calendar Sync、Talk、Maps、Street View、YouTube、Android Market等服务，GMS为安卓上的谷歌公司系列应用提供支持</p>
+</li>
+<li><p>Google play store</p>
+<p>  Google Play是运行Android操作系统设备的官方应用程序商店。</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><ol>
+<li><p>Google 账号一枚。 <a href="https://www.google.com/intl/zh-CN/account/about/">注册地址</a></p>
+</li>
+<li><p>确保 Android 可以<strong>访问Google（FQ敏感词）</strong></p>
+<p> 访问方式</p>
+<ul>
+<li>VPN</li>
+<li>借朋友的VPN，SSR，v2ray 账号等</li>
+<li>如果你有境外服务器，可以自己搭建<a href="https://35liuqi.com/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/">CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</a></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>小技巧：如果你有境外服务器，可以在境外服务器下载，然后通过 scp 或者 ftp 等方式下载到本地，再传到设备上。</p>
+</blockquote>
+<h2 id="安装-Google-服务框架"><a href="#安装-Google-服务框架" class="headerlink" title="安装 Google 服务框架"></a>安装 Google 服务框架</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-services-framework/">下载地址</a></p>
+<p>注意选择与你设备 Android 系统对应的版本。</p>
+<p><img src="https://s2.loli.net/2022/02/09/YT5IUDVfevrE9z1.jpg"></p>
+<p>选择最新的即可</p>
+<p><img src="https://s2.loli.net/2022/02/09/KQJeNBATm6YGn25.jpg"></p>
+<h2 id="安装-Google-Play-Service"><a href="#安装-Google-Play-Service" class="headerlink" title="安装 Google Play Service"></a>安装 Google Play Service</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-services/">下载地址</a></p>
+<p>打开下载链接。选择<strong>最新</strong> 版本的 Google Play Service。 </p>
+<p><img src="https://s2.loli.net/2022/02/09/OLT89l7iDSrYFJW.jpg"></p>
+<p>在下载页面，有很多选项。从 Android 4.0 - Android 最新版本。下载前先看自己设备的 Android 设备的版本。  至于nodpi、480dpi、320dpi，pad 一般 nodpi， 手机一般 480dpi 即可。</p>
+<p>选择列表中你要下载的前方红字，进入下载页面。</p>
+<p><img src="https://s2.loli.net/2022/02/09/CkGJc9qLl12g6Va.jpg"></p>
+<h2 id="安装-Google-Play-Store"><a href="#安装-Google-Play-Store" class="headerlink" title="安装 Google Play Store"></a>安装 Google Play Store</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-store/">下载地址</a></p>
+<p><img src="https://s2.loli.net/2022/02/09/ioOmz7E6U1StVsD.jpg"></p>
+]]></content>
+      <categories>
+        <category>Common</category>
+      </categories>
+      <tags>
+        <tag>Common</tag>
+        <tag>google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 创建 Sitemap</title>
+    <url>/post/19bbd224/</url>
+    <content><![CDATA[<p>Sitemap 可方便网站管理员通知搜索引擎他们网站上有哪些可供抓取的网页。最简单的 Sitemap 形式，就是XML 文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新的时间、更改的频率以及相对于网站上其他网址的重要程度为何等），以便搜索引擎可以更加智能地抓取网站。</p>
+<span id="more"></span>
+
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
+<li>hexo: 4.2.0</li>
+<li>hexo-theme-next v7.x</li>
+<li>Macos 10.15</li>
+</ul>
+<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>打开您的 hexo 站点目录，编辑 <code>hemes/next/_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="attr">sitemap:</span> <span class="string">/sitemap.xml</span> <span class="string">||</span> <span class="string">sitemap</span>   <span class="comment"># 默认是注释掉的。 去掉注释</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>可以装第一个，或者 2 个都安装 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通用 sitemap 生成。 会在 public 目录下生成 sitemap.xml</span></span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line"><span class="comment"># 百度 sitemap 生成。 会在 public 目录下生成 baidusitemap.xml</span></span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>过一会就可以访问</p>
+<ul>
+<li><code>http://your.domain/sitemap.xml</code> </li>
+<li><code>http://your.domain/baidusitemap.xml</code></li>
+</ul>
+<p>然后你需要把你的 sitemap 配置到您的 <a href="https://search.google.com/search-console/about">GoogleSearchConsole</a> , <a href="https://ziyuan.baidu.com/">百度资源管理平台</a> 中去</p>
+]]></content>
+      <categories>
+        <category>Common</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一种跨平台的迁移 Git服务器数据到新服务器的笨办法</title>
-    <url>/post/7bc6d161.html</url>
+    <url>/post/7bc6d161/</url>
     <content><![CDATA[<p>我们可能会在特定情况下，需要将公司 Git 版本库进行迁移。 这里不讨论公司的 Git 服务器是gitlab 、gitblit 或是balabala…… </p>
 <p>不同框架有不同的迁移方式。<strong>您可能有更好的迁移版本库的方法</strong>，这里只是提供一总迁移的方法，不用折腾，简单，也是最笨的方法。</p>
 <p><strong>这种迁移方式是跨平台的</strong></p>
@@ -357,7 +449,7 @@
   </entry>
   <entry>
     <title>Hexo第三方服务</title>
-    <url>/post/77c2f60b.html</url>
+    <url>/post/77c2f60b/</url>
     <content><![CDATA[<p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展站点的功能。 罗列一些 NexT 目前支持的第三方服务，你可以根据你的需求集成一些功能进来。</p>
 <span id="more"></span>
 
@@ -431,100 +523,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Android-Google(谷歌)三件套 安装指南</title>
-    <url>/post/687ace9e.html</url>
-    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/kpjL7sJrmiqDUBZ.jpg"></p>
-<p>Android系统不能使用 Google Play 简直是 2 个世界。本文介绍如何安装 google 3 件套，使用Goolge Play服务。</p>
-<h2 id="Google-3-件套"><a href="#Google-3-件套" class="headerlink" title="Google 3 件套"></a>Google 3 件套</h2><ul>
-<li><p>Google 服务框架</p>
-<p>  GSF（Google Server Framework） 是谷歌安卓系统官方服务框架，用来作为谷歌软件的支持平台。例如<strong>GooglePlay</strong>就需要此服务框架的支持，很多国行或者改版ROM的手机都删除了这个框架，导致部分谷歌app不可正常运行。</p>
-</li>
-<li><p>Google play services</p>
-<p>  GMS（GoogleMobile Service）。提供GooglePlay、Search、Search by Voice、Gmail、Contact Sync、Calendar Sync、Talk、Maps、Street View、YouTube、Android Market等服务，GMS为安卓上的谷歌公司系列应用提供支持</p>
-</li>
-<li><p>Google play store</p>
-<p>  Google Play是运行Android操作系统设备的官方应用程序商店。</p>
-</li>
-</ul>
-<span id="more"></span>
-
-<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><ol>
-<li><p>Google 账号一枚。 <a href="https://www.google.com/intl/zh-CN/account/about/">注册地址</a></p>
-</li>
-<li><p>确保 Android 可以<strong>访问Google（FQ敏感词）</strong></p>
-<p> 访问方式</p>
-<ul>
-<li>VPN</li>
-<li>借朋友的VPN，SSR，v2ray 账号等</li>
-<li>如果你有境外服务器，可以自己搭建<a href="https://35liuqi.com/2020/03/02/CentOS7,%20v2Ray%20,%20Apache,%20websock/">CentOS7+v2Ray+WS+Apache（httpd）+ MacOs(V2RayU)科学上网流量伪装</a></li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>小技巧：如果你有境外服务器，可以在境外服务器下载，然后通过 scp 或者 ftp 等方式下载到本地，再传到设备上。</p>
-</blockquote>
-<h2 id="安装-Google-服务框架"><a href="#安装-Google-服务框架" class="headerlink" title="安装 Google 服务框架"></a>安装 Google 服务框架</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-services-framework/">下载地址</a></p>
-<p>注意选择与你设备 Android 系统对应的版本。</p>
-<p><img src="https://s2.loli.net/2022/02/09/YT5IUDVfevrE9z1.jpg"></p>
-<p>选择最新的即可</p>
-<p><img src="https://s2.loli.net/2022/02/09/KQJeNBATm6YGn25.jpg"></p>
-<h2 id="安装-Google-Play-Service"><a href="#安装-Google-Play-Service" class="headerlink" title="安装 Google Play Service"></a>安装 Google Play Service</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-services/">下载地址</a></p>
-<p>打开下载链接。选择<strong>最新</strong> 版本的 Google Play Service。 </p>
-<p><img src="https://s2.loli.net/2022/02/09/OLT89l7iDSrYFJW.jpg"></p>
-<p>在下载页面，有很多选项。从 Android 4.0 - Android 最新版本。下载前先看自己设备的 Android 设备的版本。  至于nodpi、480dpi、320dpi，pad 一般 nodpi， 手机一般 480dpi 即可。</p>
-<p>选择列表中你要下载的前方红字，进入下载页面。</p>
-<p><img src="https://s2.loli.net/2022/02/09/CkGJc9qLl12g6Va.jpg"></p>
-<h2 id="安装-Google-Play-Store"><a href="#安装-Google-Play-Store" class="headerlink" title="安装 Google Play Store"></a>安装 Google Play Store</h2><p><a href="https://www.apkmirror.com/apk/google-inc/google-play-store/">下载地址</a></p>
-<p><img src="https://s2.loli.net/2022/02/09/ioOmz7E6U1StVsD.jpg"></p>
-]]></content>
-      <categories>
-        <category>Common</category>
-      </categories>
-      <tags>
-        <tag>Common</tag>
-        <tag>google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 创建 Sitemap</title>
-    <url>/post/19bbd224.html</url>
-    <content><![CDATA[<p>Sitemap 可方便网站管理员通知搜索引擎他们网站上有哪些可供抓取的网页。最简单的 Sitemap 形式，就是XML 文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新的时间、更改的频率以及相对于网站上其他网址的重要程度为何等），以便搜索引擎可以更加智能地抓取网站。</p>
-<span id="more"></span>
-
-<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
-<li>hexo: 4.2.0</li>
-<li>hexo-theme-next v7.x</li>
-<li>Macos 10.15</li>
-</ul>
-<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>打开您的 hexo 站点目录，编辑 <code>hemes/next/_config.yml</code></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="attr">sitemap:</span> <span class="string">/sitemap.xml</span> <span class="string">||</span> <span class="string">sitemap</span>   <span class="comment"># 默认是注释掉的。 去掉注释</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>可以装第一个，或者 2 个都安装 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通用 sitemap 生成。 会在 public 目录下生成 sitemap.xml</span></span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line"><span class="comment"># 百度 sitemap 生成。 会在 public 目录下生成 baidusitemap.xml</span></span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<h2 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>过一会就可以访问</p>
-<ul>
-<li><code>http://your.domain/sitemap.xml</code> </li>
-<li><code>http://your.domain/baidusitemap.xml</code></li>
-</ul>
-<p>然后你需要把你的 sitemap 配置到您的 <a href="https://search.google.com/search-console/about">GoogleSearchConsole</a> , <a href="https://ziyuan.baidu.com/">百度资源管理平台</a> 中去</p>
-]]></content>
-      <categories>
-        <category>Common</category>
-      </categories>
-      <tags>
-        <tag>技巧</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Homebrew 下载加速</title>
-    <url>/post/1e5507db.html</url>
+    <url>/post/1e5507db/</url>
     <content><![CDATA[<p><a href="https://brew.sh/index_zh-cn.html">Homebrew</a> 在国内的更新速度实在感人，几十 kb 的东西，盯着进度条能把人搞崩溃。虽然换国内的源不一定就能解决问题，但是换了还是比不换好。下面来介绍如何换换国内的源，不换国内源也能下载快的偏方。望能帮助到大家。</p>
 <span id="more"></span>
 
@@ -585,7 +585,7 @@
   </entry>
   <entry>
     <title>JAVA OCR Tesseract 识别代码实现</title>
-    <url>/post/7a3c4236.html</url>
+    <url>/post/7a3c4236/</url>
     <content><![CDATA[<p>Tesseract的OCR引擎最先由HP实验室于1985年开始研发，至1995年时已经成为OCR业内最准确的三款识别引擎之一。然而，HP不久便决定放弃OCR业务，Tesseract也从从此尘封。</p>
 <p>数年以后，HP意识到，与其将Tesseract束之高阁，不如贡献给开源软件业，让其重焕新生－－2005年，Tesseract由美国内华达州信息技术研究所获得，并求诸于Google对Tesseract进行改进、消除Bug、优化工作。</p>
 <p>在修复了最重要的数个漏洞后，Google认为，Tesseract OCR已经足够稳定，可以重新以开源软件方式发布。</p>
@@ -674,7 +674,7 @@
   </entry>
   <entry>
     <title>JAVA OpenCV 入门</title>
-    <url>/post/deaa1ad8.html</url>
+    <url>/post/deaa1ad8/</url>
     <content><![CDATA[<p>网上 JAVA 学习 OpenCV 的知识太少，自己通过学习把整理的示例，参数说明放在这里，大家一起互相学习。主要通过 OpenCV3.x 的官方开发文档，实体书等自学。在内容中加了大量注释起到一起学习，互相沟通的作用。<strong>函数讲解，案例代码内容我均整理在 GitHub【<a href="https://github.com/liuqi0725/OpenCV3-Study-JAVA">OpenCV3-Study-JAVA</a> 】上</strong></p>
 <span id="more"></span>
 
@@ -774,7 +774,7 @@
   </entry>
   <entry>
     <title>MacBook 卸载 node</title>
-    <url>/post/78fbf0ed.html</url>
+    <url>/post/78fbf0ed/</url>
     <content><![CDATA[<p>MacBook 下卸载 node 比较麻烦，这两天弄 Hexo，node 升级后导致 npm 版本不一致无法 install，就准备把 node、npm 删除了重新装。在Stackoverflow 上面找到一个手动删除的方法还不错，特地记录下来。</p>
 <span id="more"></span>
 
@@ -812,8 +812,24 @@
       </tags>
   </entry>
   <entry>
+    <title>MacOS M1 docker安装 PostgreSql</title>
+    <url>/post/b87556ef/</url>
+    <content><![CDATA[<h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=postgresql&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 12.9 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull postgres:12.9</span><br></pre></td></tr></table></figure>
+<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># --name 名称</span></span><br><span class="line"><span class="comment"># -e TZ=PRC 时区-中国</span></span><br><span class="line"><span class="comment"># -p 端口</span></span><br><span class="line"><span class="comment"># -v 数据库本地挂载目录</span></span><br><span class="line">docker run --name pg_test -e POSTGRES_PASSWORD=123456 -e TZ=PRC -p 15432:5432 -v /Users/liuqi/home/dev/hock/docker_volumes/pg/data:/var/lib/postgresql/data -d postgres:12.9</span><br></pre></td></tr></table></figure>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>PORT:15432<br>postgres/123456</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>database</tag>
+        <tag>PostgreSql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacOS M1 docker 安装 Redis</title>
-    <url>/post/61de956b.html</url>
+    <url>/post/61de956b/</url>
     <content><![CDATA[<h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=redis&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
 <h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 6.2.6 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull redis:6.2.6</span><br></pre></td></tr></table></figure>
 
@@ -832,24 +848,8 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS M1 docker安装 PostgreSql</title>
-    <url>/post/b87556ef.html</url>
-    <content><![CDATA[<h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 网页查看版本</span></span><br><span class="line"><span class="comment"># https://hub.docker.com/search?q=postgresql&amp;type=image</span></span><br><span class="line"></span><br><span class="line">docker search postgresql</span><br></pre></td></tr></table></figure>
-<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 12.9 可以换成你想要的版本号， 不填表示最新版本</span></span><br><span class="line">docker pull postgres:12.9</span><br></pre></td></tr></table></figure>
-<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># --name 名称</span></span><br><span class="line"><span class="comment"># -e TZ=PRC 时区-中国</span></span><br><span class="line"><span class="comment"># -p 端口</span></span><br><span class="line"><span class="comment"># -v 数据库本地挂载目录</span></span><br><span class="line">docker run --name pg_test -e POSTGRES_PASSWORD=123456 -e TZ=PRC -p 15432:5432 -v /Users/liuqi/home/dev/hock/docker_volumes/pg/data:/var/lib/postgresql/data -d postgres:12.9</span><br></pre></td></tr></table></figure>
-<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>PORT:15432<br>postgres/123456</p>
-]]></content>
-      <categories>
-        <category>MacOS</category>
-      </categories>
-      <tags>
-        <tag>database</tag>
-        <tag>PostgreSql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MacOS M1 docker安装Mysql 5.7</title>
-    <url>/post/9d25e51e.html</url>
+    <url>/post/9d25e51e/</url>
     <content><![CDATA[<h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装5.7</span></span><br><span class="line">docker pull mysql/mysql-server:5.7  </span><br><span class="line"><span class="comment"># 安装最新  </span></span><br><span class="line">docker pull mysql/mysql-server:latest</span><br></pre></td></tr></table></figure>
 
 <h2 id="下载设置安装mysql5-7"><a href="#下载设置安装mysql5-7" class="headerlink" title="下载设置安装mysql5.7"></a>下载设置安装mysql5.7</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --restart=always --name=mysql --privileged=<span class="literal">true</span> -p 3306:3306 -v /Users/liuqi/home/dev/hock/docker_volumes/mysql5.7:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql/mysql-server:5.7</span><br></pre></td></tr></table></figure>
@@ -867,43 +867,40 @@
       </tags>
   </entry>
   <entry>
-    <title>Mysql 5.7 sql_mode=only_full_group_by</title>
-    <url>/post/4ba979c5.html</url>
-    <content><![CDATA[<p>Mysql 5.7 以上group by向下兼容时容易出现如下错误</p>
-<blockquote>
-<p>1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column ‘csc_risk.a.DefaultDate’ which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by, Time: 0.035000s </p>
-</blockquote>
-<p>原因是：MySQL5.7版本默认设置了 <strong>sql_mode = only_full_group_by</strong> 属性，导致报错。</p>
+    <title>OpenCV 3.4 Scalar 参数说明，与 CvType 结合使用</title>
+    <url>/post/86aa2842/</url>
+    <content><![CDATA[<p>我们在学习OpenCV 时，发现在构造 Mat 时，会有2个关键参数，一个 CvType，一个 Scalar。很多人不明白这2个参数的意思，所以在把别人例子拿来使用或自己写的的时候发现这个参数不知道该怎么填。本文就将 Scalar 参数详细的说明下。</p>
+<p>Scalar 是一个配合 CvType 使用的参数，如果你不了解 CvType，可以先看看我写的 <a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造。</p>
 <span id="more"></span>
 
-<h2 id="only-full-group-by-说明"><a href="#only-full-group-by-说明" class="headerlink" title="only_full_group_by 说明"></a>only_full_group_by 说明</h2><p>mysql5.7.x版本，默认是开启了 <strong>only_full_group_by</strong> 模式的，一旦开启 <strong>only_full_group_by</strong> ，group by 将变成和 distinct 一样，只能获取受到其影响的字段信息，无法和其他未受其影响的字段共存，这样 group by 的功能将变得十分狭窄了。 </p>
-<p>但是 <strong>only_full_group_by</strong> 模式还是开启比较好。因为在 mysql 中有一个函数： any_value(field) 允许，非分组字段的出现（和关闭 only_full_group_by 模式有相同效果）。并且也能规范<strong>我们写的sql语句</strong></p>
-<h2 id="关闭-only-full-group-by"><a href="#关闭-only-full-group-by" class="headerlink" title="关闭 only_full_group_by"></a>关闭 only_full_group_by</h2><ol>
-<li>查看 sql_mode</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT @@sql_mode;</span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line">ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure>
+<p><strong>本文下列实例均是 JAVA 代码，其他语言实现类同</strong></p>
+<h2 id="Scalar-构造器"><a href="#Scalar-构造器" class="headerlink" title="Scalar 构造器"></a>Scalar 构造器</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Scalar</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span>[] val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1, <span class="type">double</span> v2, <span class="type">double</span> v3)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, v2, v3&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1, <span class="type">double</span> v2)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, v2, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, <span class="number">0.0D</span>, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, <span class="number">0.0D</span>, <span class="number">0.0D</span>, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span>[] vals)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (vals != <span class="literal">null</span> &amp;&amp; vals.length == <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.val = (<span class="type">double</span>[])vals.clone();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[<span class="number">4</span>];</span><br><span class="line">            <span class="built_in">this</span>.set(vals);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>去掉ONLY_FULL_GROUP_BY，重新设置值。【新建数据库有效】</li>
+<p>可以看到有5个构造函数，参数也不复杂，很容易理解。除开 <code>public Scalar(double[] vals) </code> 这个数组入参的构造函数，其他4个构造函数分别是传入1个、2个、3个、4个 double 类型的构造函数，那么这些参数代表什么意思，他的取值范围是什么？</p>
+<h2 id="Scalar-参数的含义"><a href="#Scalar-参数的含义" class="headerlink" title="Scalar 参数的含义"></a>Scalar 参数的含义</h2><p>Scalar <strong>一定是与 CvType</strong> 结合使用的，他代表 CvType 中指定通道的值。如果您不了解 CvType，可以先看看我写的 <a href="https://my.oschina.net/u/3767256/blog/1794173">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造。</p>
+<p>构造说明：</p>
+<ol>
+<li>构造函数的入参（值）的数量 &lt;= 通道数量 [如果是2通道图像，用4个参数的构造函数，后面2个参数不起作用]</li>
+<li>构造函数的入参（值）的数量 &lt; 通道数量 时，未传入值的通道值为0</li>
+<li>多通道图像时，入参顺序 new Scalar(B,G,R,alpha)</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET @@global.sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>下面来看示例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.opencv.core.CvType;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Mat;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Scalar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestScalar</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建灰色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createGrayImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//选择一个单通道类型 CV_8UC1</span></span><br><span class="line">        <span class="comment">//单通道下 0 为黑，255为白，取中间值 125 ，灰色。</span></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC1, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">125</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/gary-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建蓝色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createBlueImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//蓝色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//蓝色是 RGB 中的 B，其RGB值为 R：0  ,  G：0  ,  B：255</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(255) 的意思为 B 通道值为255 ，G、R 值不传递的话，默认为0</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/blue-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建绿色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createGreenImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//绿色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//绿色是 RGB 中的  G，其RGB值为 R：0  ,  G：255  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,255) 的意思为 B 通道值为0，G通道值为255，R 值不传递的话，默认为0</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/green-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建红色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createRedImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//红色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//红色是 RGB 中的 R，其RGB值为 R：255  ,  G：0  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,0,255) 的意思为 B 通道值为 0，G 通道值为 0，R 通道值为 255</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/red-image.png&quot;</span>,sourceImage);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建透明图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createAlphaImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//透明图像为4通道图像，所以通道类型为4通道，CV_8UC4</span></span><br><span class="line">        <span class="comment">//创建一个半透明的红色图像来试试</span></span><br><span class="line">        <span class="comment">//红色是 RGB 中的 R，其RGB值为 R：255  ,  G：0  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,0,255,125) 的意思为 B 通道值为 0，G 通道值为 0，R 通道值为 255，Alpha 通道值为125 （255为不透明，0为全透明会忽略所有的 RGB 颜色）</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC4, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>,<span class="number">125</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/alpha-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>上面是改变了全局sql_mode，对于已存在的数据库，则需要在对应的数据下执行</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
+<p><strong>通过上边的例子，应该已经明白 Scalar 的意思了吧，就是通道的值</strong></p>
+<h2 id="Scalar-参数的数据范围"><a href="#Scalar-参数的数据范围" class="headerlink" title="Scalar 参数的数据范围"></a>Scalar 参数的数据范围</h2><p>处理 Alpha 通道值为 0~255 ，其他通道取值范围根据图像的位数（Bite）来决定。可以查看<a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造，后面后各 Bite 下通道的取值范围。</p>
 ]]></content>
       <categories>
-        <category>Common</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Mysql</tag>
+        <tag>JAVA</tag>
+        <tag>OpenCV</tag>
       </tags>
   </entry>
   <entry>
     <title>OpenCV 3.4 读懂 CvType ，类型构造说明 JAVA</title>
-    <url>/post/adae42c4.html</url>
+    <url>/post/adae42c4/</url>
     <content><![CDATA[<p>CvType 可以说是 OpenCV 图像处理的基础常量参数。但是面对 CV_8U1C 、CV_8U2C、CV_8U3C、CV_8U4C 在初学阶段可以说一脸懵，他们代表的是什么呢？关于这些参数名门的来历，个人觉得有点 <a href="https://baike.baidu.com/item/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95/7632397?fr=aladdin">[匈牙利命名法]</a> 的影子。本文就主要说明这些字母的含义</p>
 <span id="more"></span>
 
@@ -997,40 +994,43 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenCV 3.4 Scalar 参数说明，与 CvType 结合使用</title>
-    <url>/post/86aa2842.html</url>
-    <content><![CDATA[<p>我们在学习OpenCV 时，发现在构造 Mat 时，会有2个关键参数，一个 CvType，一个 Scalar。很多人不明白这2个参数的意思，所以在把别人例子拿来使用或自己写的的时候发现这个参数不知道该怎么填。本文就将 Scalar 参数详细的说明下。</p>
-<p>Scalar 是一个配合 CvType 使用的参数，如果你不了解 CvType，可以先看看我写的 <a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造。</p>
+    <title>Mysql 5.7 sql_mode=only_full_group_by</title>
+    <url>/post/4ba979c5/</url>
+    <content><![CDATA[<p>Mysql 5.7 以上group by向下兼容时容易出现如下错误</p>
+<blockquote>
+<p>1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column ‘csc_risk.a.DefaultDate’ which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by, Time: 0.035000s </p>
+</blockquote>
+<p>原因是：MySQL5.7版本默认设置了 <strong>sql_mode = only_full_group_by</strong> 属性，导致报错。</p>
 <span id="more"></span>
 
-<p><strong>本文下列实例均是 JAVA 代码，其他语言实现类同</strong></p>
-<h2 id="Scalar-构造器"><a href="#Scalar-构造器" class="headerlink" title="Scalar 构造器"></a>Scalar 构造器</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Scalar</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span>[] val;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1, <span class="type">double</span> v2, <span class="type">double</span> v3)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, v2, v3&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1, <span class="type">double</span> v2)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, v2, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0, <span class="type">double</span> v1)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, v1, <span class="number">0.0D</span>, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span> v0)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;v0, <span class="number">0.0D</span>, <span class="number">0.0D</span>, <span class="number">0.0D</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Scalar</span><span class="params">(<span class="type">double</span>[] vals)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (vals != <span class="literal">null</span> &amp;&amp; vals.length == <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.val = (<span class="type">double</span>[])vals.clone();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.val = <span class="keyword">new</span> <span class="title class_">double</span>[<span class="number">4</span>];</span><br><span class="line">            <span class="built_in">this</span>.set(vals);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到有5个构造函数，参数也不复杂，很容易理解。除开 <code>public Scalar(double[] vals) </code> 这个数组入参的构造函数，其他4个构造函数分别是传入1个、2个、3个、4个 double 类型的构造函数，那么这些参数代表什么意思，他的取值范围是什么？</p>
-<h2 id="Scalar-参数的含义"><a href="#Scalar-参数的含义" class="headerlink" title="Scalar 参数的含义"></a>Scalar 参数的含义</h2><p>Scalar <strong>一定是与 CvType</strong> 结合使用的，他代表 CvType 中指定通道的值。如果您不了解 CvType，可以先看看我写的 <a href="https://my.oschina.net/u/3767256/blog/1794173">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造。</p>
-<p>构造说明：</p>
-<ol>
-<li>构造函数的入参（值）的数量 &lt;= 通道数量 [如果是2通道图像，用4个参数的构造函数，后面2个参数不起作用]</li>
-<li>构造函数的入参（值）的数量 &lt; 通道数量 时，未传入值的通道值为0</li>
-<li>多通道图像时，入参顺序 new Scalar(B,G,R,alpha)</li>
+<h2 id="only-full-group-by-说明"><a href="#only-full-group-by-说明" class="headerlink" title="only_full_group_by 说明"></a>only_full_group_by 说明</h2><p>mysql5.7.x版本，默认是开启了 <strong>only_full_group_by</strong> 模式的，一旦开启 <strong>only_full_group_by</strong> ，group by 将变成和 distinct 一样，只能获取受到其影响的字段信息，无法和其他未受其影响的字段共存，这样 group by 的功能将变得十分狭窄了。 </p>
+<p>但是 <strong>only_full_group_by</strong> 模式还是开启比较好。因为在 mysql 中有一个函数： any_value(field) 允许，非分组字段的出现（和关闭 only_full_group_by 模式有相同效果）。并且也能规范<strong>我们写的sql语句</strong></p>
+<h2 id="关闭-only-full-group-by"><a href="#关闭-only-full-group-by" class="headerlink" title="关闭 only_full_group_by"></a>关闭 only_full_group_by</h2><ol>
+<li>查看 sql_mode</li>
 </ol>
-<p>下面来看示例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.opencv.core.CvType;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Mat;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Scalar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.opencv.core.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestScalar</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建灰色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createGrayImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//选择一个单通道类型 CV_8UC1</span></span><br><span class="line">        <span class="comment">//单通道下 0 为黑，255为白，取中间值 125 ，灰色。</span></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC1, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">125</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/gary-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建蓝色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createBlueImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//蓝色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//蓝色是 RGB 中的 B，其RGB值为 R：0  ,  G：0  ,  B：255</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(255) 的意思为 B 通道值为255 ，G、R 值不传递的话，默认为0</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/blue-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建绿色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createGreenImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//绿色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//绿色是 RGB 中的  G，其RGB值为 R：0  ,  G：255  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,255) 的意思为 B 通道值为0，G通道值为255，R 值不传递的话，默认为0</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/green-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建红色图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createRedImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//红色为彩色图，所以通道类型为3通道，CV_8UC3</span></span><br><span class="line">        <span class="comment">//红色是 RGB 中的 R，其RGB值为 R：255  ,  G：0  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,0,255) 的意思为 B 通道值为 0，G 通道值为 0，R 通道值为 255</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC3, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/red-image.png&quot;</span>,sourceImage);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建透明图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createAlphaImage</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//透明图像为4通道图像，所以通道类型为4通道，CV_8UC4</span></span><br><span class="line">        <span class="comment">//创建一个半透明的红色图像来试试</span></span><br><span class="line">        <span class="comment">//红色是 RGB 中的 R，其RGB值为 R：255  ,  G：0  ,  B：0</span></span><br><span class="line">        <span class="comment">//Scalar 入参顺序为 new Scalar(B,G,R,A)。</span></span><br><span class="line">        <span class="comment">//new Scalar(0,0,255,125) 的意思为 B 通道值为 0，G 通道值为 0，R 通道值为 255，Alpha 通道值为125 （255为不透明，0为全透明会忽略所有的 RGB 颜色）</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Mat</span> <span class="variable">sourceImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mat</span>(<span class="number">100</span>,<span class="number">100</span>, CvType.CV_8UC4, <span class="keyword">new</span> <span class="title class_">Scalar</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>,<span class="number">125</span>));</span><br><span class="line">        Imgcodecs.imwrite(<span class="string">&quot;savePath/alpha-image.png&quot;</span>,sourceImage);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT @@sql_mode;</span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line">ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure>
 
-<p><strong>通过上边的例子，应该已经明白 Scalar 的意思了吧，就是通道的值</strong></p>
-<h2 id="Scalar-参数的数据范围"><a href="#Scalar-参数的数据范围" class="headerlink" title="Scalar 参数的数据范围"></a>Scalar 参数的数据范围</h2><p>处理 Alpha 通道值为 0~255 ，其他通道取值范围根据图像的位数（Bite）来决定。可以查看<a href="https://35liuqi.com/2018/04/11/OpenCV%203.4%20%E8%AF%BB%E6%87%82%20CvType%20%EF%BC%8C%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E8%AF%B4%E6%98%8E%20JAVA/">OpenCV 3.4 读懂 CvType 类型说明</a> 了解什么是图像通道，CvType 的构造，后面后各 Bite 下通道的取值范围。</p>
+<ol start="2">
+<li>去掉ONLY_FULL_GROUP_BY，重新设置值。【新建数据库有效】</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET @@global.sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>上面是改变了全局sql_mode，对于已存在的数据库，则需要在对应的数据下执行</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SET sql_mode =<span class="string">&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>JAVA</category>
+        <category>Common</category>
       </categories>
       <tags>
-        <tag>JAVA</tag>
-        <tag>OpenCV</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
     <title>OpenCV3 图像膨胀 dilate、腐蚀 erode、提取图像中的条形码 JAVA 实现</title>
-    <url>/post/362bdff0.html</url>
+    <url>/post/362bdff0/</url>
     <content><![CDATA[<p>利用近期对 OpenCV 的学习，结合图像的 dilate、erode 用 JAVA 来实现提取图像中的条形码，这样就可以通过识别工具来识别图中的内容。</p>
 <span id="more"></span>
 
@@ -1058,8 +1058,62 @@
       </tags>
   </entry>
   <entry>
+    <title>PlayWright 上传文件非Input框时操作</title>
+    <url>/post/568b603f/</url>
+    <content><![CDATA[<p>比如如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ImageUpload&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload u-marginB10&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__label js-dragdrop-area&quot;</span> <span class="attr">for</span>=<span class="string">&quot;selectFileMultiple&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__hide&quot;</span>&gt;</span>drag and drop or select files<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;js-dragdrop-num&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span>up to<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>NodeJs: <a href="https://playwright.dev/python/docs/api/class-filechooser">https://playwright.dev/python/docs/api/class-filechooser</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">page.on(&quot;filechooser&quot;, (fileChooser: FileChooser) =&gt; &#123;</span><br><span class="line">     fileChooser.setFiles([&quot;/path/to/a/file&quot;]);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Python: <a href="https://playwright.dev/python/docs/api/class-filechooser/">https://playwright.dev/python/docs/api/class-filechooser/</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> page.expect_file_chooser() <span class="keyword">as</span> fc_info:</span><br><span class="line">    page.click(<span class="string">&quot;upload&quot;</span>)</span><br><span class="line">file_chooser = fc_info.value</span><br><span class="line">file_chooser.set_files(<span class="string">&quot;/path/to/a/file&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>Java: <a href="https://playwright.dev/java/docs/api/class-filechooser">https://playwright.dev/java/docs/api/class-filechooser</a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">FileChooser</span> <span class="variable">fileChooser</span> <span class="operator">=</span> page.waitForFileChooser(() -&gt; </span><br><span class="line">page.click(<span class="string">&quot;upload&quot;</span>));</span><br><span class="line">fileChooser.setFiles(Paths.get(<span class="string">&quot;myfile.pdf&quot;</span>));</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Crawler</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PlayWright</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm中OpenCV无提示并且函数为警告色(黄色)的解决方法</title>
+    <url>/post/5e87845c/</url>
+    <content><![CDATA[<p>安装OpenCV-python 后，在Pycharm中所有的函数都没有提示，就算把函数手敲出来，还是警告色。虽然不影响使用，但是看着糟心。而且也不方便。</p>
+<blockquote>
+<p>阅读方法前，我将假设您已经基本掌握Python的环境配置及Pycharm的基本使用。</p>
+</blockquote>
+<h3 id="复制-Opencv-Python-包路径"><a href="#复制-Opencv-Python-包路径" class="headerlink" title="复制 Opencv-Python 包路径"></a>复制 Opencv-Python 包路径</h3><p>此路径在你当前项目的Python环境下的<code>site-packages</code> 下，如果你有多个python环境，或者虚拟环境，请自行前往复制。</p>
+<p>复制路径示例: <code>/Users/xxxx/python/env/img_pos/python3.8/site-packages/cv2</code></p>
+<blockquote>
+<p>Windows 下差不多。 路径仅为参考，不用和您的路径对应</p>
+</blockquote>
+<h3 id="添加-Opencv-Python-路径到解析器"><a href="#添加-Opencv-Python-路径到解析器" class="headerlink" title="添加 Opencv-Python 路径到解析器"></a>添加 Opencv-Python 路径到解析器</h3><ul>
+<li>打开设置 <code>File -&gt; Preferences</code></li>
+<li>找到 <code>Python Interpreter</code></li>
+<li>在 <code>Python Interpreter</code> 下拉中，选择 <code>show all</code></li>
+<li>选择你当前项目的环境点击 <code>show paths for the selected interpreter</code><br>  <img src="https://s2.loli.net/2023/02/15/Cnr9x7f5YMelsqw.jpg"></li>
+<li>将 <code>Opencv-Python</code> 包路径增加上一步 <code>show paths for the selected interpreter</code> 展开的列表中</li>
+</ul>
+<blockquote>
+<p>老版本Pycharm 可能在 <code>Python Interpreter</code> 后面的点击 <code>齿轮</code> 显示 <code>show all</code></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>OpenCV</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 命令行模块 Click</title>
-    <url>/post/3ae1525e.html</url>
+    <url>/post/3ae1525e/</url>
     <content><![CDATA[<p><a href="https://click.palletsprojects.com/">官网</a></p>
 <p>Python 经常需要封装命令行，来达到执行指定函数的目的。常用的有 <code>sys</code>, <a href="https://click.palletsprojects.com/">click</a> , <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>。 sys 是 python 系统自带，使用起来不是很方便。所以一般都是用 <a href="https://click.palletsprojects.com/">click</a> , <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>。<br><a href="https://click.palletsprojects.com/">click</a> 相较于 <a href="https://docs.python.org/3/howto/argparse.html">argparse</a>代码更少，也更加简洁、直观。</p>
 <span id="more"></span>
@@ -1097,62 +1151,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Pycharm中OpenCV无提示并且函数为警告色(黄色)的解决方法</title>
-    <url>/post/5e87845c.html</url>
-    <content><![CDATA[<p>安装OpenCV-python 后，在Pycharm中所有的函数都没有提示，就算把函数手敲出来，还是警告色。虽然不影响使用，但是看着糟心。而且也不方便。</p>
-<blockquote>
-<p>阅读方法前，我将假设您已经基本掌握Python的环境配置及Pycharm的基本使用。</p>
-</blockquote>
-<h3 id="复制-Opencv-Python-包路径"><a href="#复制-Opencv-Python-包路径" class="headerlink" title="复制 Opencv-Python 包路径"></a>复制 Opencv-Python 包路径</h3><p>此路径在你当前项目的Python环境下的<code>site-packages</code> 下，如果你有多个python环境，或者虚拟环境，请自行前往复制。</p>
-<p>复制路径示例: <code>/Users/xxxx/python/env/img_pos/python3.8/site-packages/cv2</code></p>
-<blockquote>
-<p>Windows 下差不多。 路径仅为参考，不用和您的路径对应</p>
-</blockquote>
-<h3 id="添加-Opencv-Python-路径到解析器"><a href="#添加-Opencv-Python-路径到解析器" class="headerlink" title="添加 Opencv-Python 路径到解析器"></a>添加 Opencv-Python 路径到解析器</h3><ul>
-<li>打开设置 <code>File -&gt; Preferences</code></li>
-<li>找到 <code>Python Interpreter</code></li>
-<li>在 <code>Python Interpreter</code> 下拉中，选择 <code>show all</code></li>
-<li>选择你当前项目的环境点击 <code>show paths for the selected interpreter</code><br>  <img src="https://s2.loli.net/2023/02/15/Cnr9x7f5YMelsqw.jpg"></li>
-<li>将 <code>Opencv-Python</code> 包路径增加上一步 <code>show paths for the selected interpreter</code> 展开的列表中</li>
-</ul>
-<blockquote>
-<p>老版本Pycharm 可能在 <code>Python Interpreter</code> 后面的点击 <code>齿轮</code> 显示 <code>show all</code></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>OpenCV</category>
-      </categories>
-      <tags>
-        <tag>技巧</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PlayWright 上传文件非Input框时操作</title>
-    <url>/post/568b603f.html</url>
-    <content><![CDATA[<p>比如如下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ImageUpload&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload u-marginB10&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__label js-dragdrop-area&quot;</span> <span class="attr">for</span>=<span class="string">&quot;selectFileMultiple&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__hide&quot;</span>&gt;</span>drag and drop or select files<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;ImageUpload__text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;js-dragdrop-num&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span>up to<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>NodeJs: <a href="https://playwright.dev/python/docs/api/class-filechooser">https://playwright.dev/python/docs/api/class-filechooser</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">page.on(&quot;filechooser&quot;, (fileChooser: FileChooser) =&gt; &#123;</span><br><span class="line">     fileChooser.setFiles([&quot;/path/to/a/file&quot;]);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>Python: <a href="https://playwright.dev/python/docs/api/class-filechooser/">https://playwright.dev/python/docs/api/class-filechooser/</a></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> page.expect_file_chooser() <span class="keyword">as</span> fc_info:</span><br><span class="line">    page.click(<span class="string">&quot;upload&quot;</span>)</span><br><span class="line">file_chooser = fc_info.value</span><br><span class="line">file_chooser.set_files(<span class="string">&quot;/path/to/a/file&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>Java: <a href="https://playwright.dev/java/docs/api/class-filechooser">https://playwright.dev/java/docs/api/class-filechooser</a></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">FileChooser</span> <span class="variable">fileChooser</span> <span class="operator">=</span> page.waitForFileChooser(() -&gt; </span><br><span class="line">page.click(<span class="string">&quot;upload&quot;</span>));</span><br><span class="line">fileChooser.setFiles(Paths.get(<span class="string">&quot;myfile.pdf&quot;</span>));</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Crawler</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>PlayWright</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 用  lxml 解析 HTML</title>
-    <url>/post/56fee5e3.html</url>
+    <url>/post/56fee5e3/</url>
     <content><![CDATA[<p>python 爬虫中，必然会接触到 HTML 解析。 lxml是一个Python库，使用它可以轻松处理XML和HTML文件，还可以用于web爬取。市面上有很多现成的XML解析器，但是为了获得更好的结果，开发人员有时更愿意编写自己的XML和HTML解析器。这时lxml库就派上用场了。这个库的主要优点是易于使用，在解析大型文档时速度非常快，归档的也非常好，并且提供了简单的转换方法来将数据转换为Python数据类型，从而使文件操作更容易。</p>
 <span id="more"></span>
 
@@ -1215,8 +1215,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Python 项目生成当前项目的 requirements 文件</title>
+    <url>/post/509ba068/</url>
+    <content><![CDATA[<!--categories 类型有: Common Crawler Python JAVA CentOS Docker MacOS-->
+
+<p>当我们需要生成 <code>requirements</code> 文件时，一般就是使用 <code>pip freeze</code> 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 <code>pip freeze</code> 就不那么友好了，它会导出当前环境所有的 lib。</p>
+<span id="more"></span>
+
+<h2 id="使用-pipreqs-导出当前项目的包"><a href="#使用-pipreqs-导出当前项目的包" class="headerlink" title="使用 pipreqs 导出当前项目的包"></a>使用 pipreqs 导出当前项目的包</h2><p>pipreqs 会对当前项目包扫描，找到不属于 python 默认库的包就会添加到 requirements 文件中</p>
+<p>安装工具</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pipreqs</span><br></pre></td></tr></table></figure>
+
+<p>进入工程主目录,执行如下命令将生成 <code>requirements.txt</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pipreqs ./</span><br></pre></td></tr></table></figure>
+
+<p>如果提示“UnicodeDecodeError: ‘gbk’ codec can’t decode ”的错误，需要指定字符集 –encoding=utf8</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --encoding=utf8</span><br></pre></td></tr></table></figure>
+
+<p>如果requirements.txt文件已存在，需要增加–force，最终命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --force</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python3 处理 mp3 ID3 信息</title>
-    <url>/post/809914e1.html</url>
+    <url>/post/809914e1/</url>
     <content><![CDATA[<p>现在听个音乐太难了,各大播放器在版权争夺下搞得一个音乐市场乌烟瘴气。有些歌这个平台可以听有些歌那个平台可以听。想听全就都买 VIP。懒得折腾了,还是回到起点吧”==下载音乐==”。因为主要上下班开车听听歌,发现下载下来的音乐很多都没有 id3 信息，网上找一些编辑 ID3 信息的编辑后，还是乱码。原因是现在基本都是 ID3 V2 信息了，没有写入 ID3 V1 信息。那么一些老款车或者中控都不支持 ID3 V2(比如我的车时 2012 款)，就会显示乱码。就想用 python 随便写一个来用用</p>
 <span id="more"></span>
 
@@ -1267,35 +1294,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 项目生成当前项目的 requirements 文件</title>
-    <url>/post/509ba068.html</url>
-    <content><![CDATA[<!--categories 类型有: Common Crawler Python JAVA CentOS Docker MacOS-->
-
-<p>当我们需要生成 <code>requirements</code> 文件时，一般就是使用 <code>pip freeze</code> 但是如果一个项目一个虚拟目录，这样没问题。但我们大多时候可能会安装功能来区分虚拟环境，比如爬虫的、图像处理的、web 的。  这时候 <code>pip freeze</code> 就不那么友好了，它会导出当前环境所有的 lib。</p>
-<span id="more"></span>
-
-<h2 id="使用-pipreqs-导出当前项目的包"><a href="#使用-pipreqs-导出当前项目的包" class="headerlink" title="使用 pipreqs 导出当前项目的包"></a>使用 pipreqs 导出当前项目的包</h2><p>pipreqs 会对当前项目包扫描，找到不属于 python 默认库的包就会添加到 requirements 文件中</p>
-<p>安装工具</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pipreqs</span><br></pre></td></tr></table></figure>
-
-<p>进入工程主目录,执行如下命令将生成 <code>requirements.txt</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pipreqs ./</span><br></pre></td></tr></table></figure>
-
-<p>如果提示“UnicodeDecodeError: ‘gbk’ codec can’t decode ”的错误，需要指定字符集 –encoding=utf8</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --encoding=utf8</span><br></pre></td></tr></table></figure>
-
-<p>如果requirements.txt文件已存在，需要增加–force，最终命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --force</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Springboot 整合SpringSecurity实现账号密码+手机验证码登陆</title>
-    <url>/post/6e429048.html</url>
+    <url>/post/6e429048/</url>
     <content><![CDATA[<p>SpringSecurity 是 Spring 提供安全管理框架。核心内容包含<strong>认证</strong>、<strong>授权</strong>、<strong>攻击防护</strong>。实际上SpringSecurity 已经发展了多年了，但是在 SSM/SSH 中整合 SpringSecurity 相较于 Shiro 来说显得要麻烦很多，所以在安全管理框架这块一直都是 Shiro 的天下。</p>
 <p>自从有了 SpringBoot ，SpringSecurity 的完美兼容让其价值完整的体现了出来。在 SpringBoot 中基本零配置就可以使用 SpringSecurity了。</p>
 <span id="more"></span>
@@ -1369,7 +1369,7 @@
   </entry>
   <entry>
     <title>Springboot+Flyway 管理项目SQL脚本</title>
-    <url>/post/919b1099.html</url>
+    <url>/post/919b1099/</url>
     <content><![CDATA[<p>Flyway 数据库的版本控制。</p>
 <p>用一种简单、干净的方案，帮助用户完成数据库迁移的工作。使用Flyway，用户可以从任意一个数据库版本迁移到最新版本，简单而且有效。</p>
 <p>支持多个平台：windows、ios、linux、docker、java、android 。本文介绍 Springboot 集成 Flyway，及Sql 脚本命名方式</p>
@@ -1426,7 +1426,7 @@
   </entry>
   <entry>
     <title>Springboot+Nginx 做负载均衡</title>
-    <url>/post/55431d62.html</url>
+    <url>/post/55431d62/</url>
     <content><![CDATA[<p>利用Nginx 做负载均衡，提升服务器的的可靠性、容灾性。教程+示例，一学就会。</p>
 <span id="more"></span>
 
@@ -1502,7 +1502,7 @@
   </entry>
   <entry>
     <title>centos7 安装 postgresql</title>
-    <url>/post/a47edc12.html</url>
+    <url>/post/a47edc12/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装方式一: yum 直接安装</span></span><br><span class="line"><span class="comment"># 建议先用 yum search 查看你的 yum 源下是否是 13</span></span><br><span class="line">yum -y install postgresql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装方式二: 安装官方 yum 源再安装 postgresql</span></span><br><span class="line"></span><br><span class="line">yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum install -y postgresql13-server</span><br></pre></td></tr></table></figure>
 
 
@@ -1542,7 +1542,7 @@
   </entry>
   <entry>
     <title>docker-compose 命令详解</title>
-    <url>/post/efe1c160.html</url>
+    <url>/post/efe1c160/</url>
     <content><![CDATA[<h2 id="docker-compose-命令详解"><a href="#docker-compose-命令详解" class="headerlink" title="docker-compose 命令详解"></a>docker-compose 命令详解</h2><p>docker-compose的使用非常类似于docker命令的使用，但是需要注意的是大部分的compose命令都需要到docker-compose.yml文件所在的目录下才能执行。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 命令聚合每个容器的输出，命令退出时，所有容器都将停止。</span></span><br><span class="line">docker-compose up </span><br><span class="line">		</span><br><span class="line"><span class="comment"># 在后台启动容器并使它们保持运行。</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看该容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker-compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(日志从头打印)。</span></span><br><span class="line">docker logs -f &lt;container_id&gt; 			</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一容器的启动的日志打印(查看最后n条日志打印)。 例：`docker logs -f --tail 50 44b `</span></span><br><span class="line">docker logs -f --<span class="built_in">tail</span> &lt;数量&gt; &lt;container_id&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止compose服务。</span></span><br><span class="line">docker-compose stop 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启compose服务。</span></span><br><span class="line">docker-compose restart 				</span><br><span class="line"></span><br><span class="line"><span class="comment"># kill compose服务。</span></span><br><span class="line">docker-compose <span class="built_in">kill</span> 					</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看compose服务状态。</span></span><br><span class="line">docker-compose ps 						</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除compose服务。	</span></span><br><span class="line">docker-compose <span class="built_in">rm</span> 						</span><br></pre></td></tr></table></figure>
 
@@ -1561,7 +1561,7 @@
   </entry>
   <entry>
     <title>docker-compose使用多个compose文件创建不同镜像</title>
-    <url>/post/1ed713cb.html</url>
+    <url>/post/1ed713cb/</url>
     <content><![CDATA[<p>同一个application下，有多个应用，不同的compose.yaml文件，怎么分开创建</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 我们通常都是1个文件, 默认读取的 docker-compose.yml</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取文件名不是 docker-compose.yml 的文件</span></span><br><span class="line">docker-compose -f docker-compose-demo.yml up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时读取多个文件</span></span><br><span class="line">docker-compose -f docker-compose-demo.yml -f /your/path/dir/docker-compose-other.yml up -d</span><br></pre></td></tr></table></figure>
 
@@ -1575,8 +1575,76 @@
       </tags>
   </entry>
   <entry>
+    <title>Macos 回退系统安装 Mojava</title>
+    <url>/post/aff78914/</url>
+    <content><![CDATA[<p>苹果系统（macOS）虽然稳定，但凡事都有例外，比如换硬盘、对新系统不满意、软件不兼容等问题想重装系统，下面就说说通过制作U盘安装 Mojava 10.14.6 </p>
+<p>U盘进行重装的方法，重装等待的时间短，操作也不复杂。</p>
+<ul>
+<li>准备一个8G以上的U盘 （最好两个，我当时第一个U盘在复制文件时，老是0%，换了个u盘就好了）</li>
+<li>U盘建议USB 3.0以上</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><h4 id="App-Store"><a href="#App-Store" class="headerlink" title="App Store"></a>App Store</h4><p><a href="https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12">https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12</a></p>
+<p>App Store 下载后会保存在 Application 中。<br>App Store 可能会存在与系统不兼容，不让下载。可以尝试通过第三方下载。</p>
+<h4 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h4><ul>
+<li><p>参考: <a href="https://www.pc6.com/mac/582745.html">https://www.pc6.com/mac/582745.html</a></p>
+</li>
+<li><p>参考： <a href="https://sysin.org/blog/macOS-Mojave/">https://sysin.org/blog/macOS-Mojave/</a></p>
+<p>  macOS Mojave 10.14.0 (18A391) - 2018-09-24<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw">https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw</a></p>
+<p>  macOS Mojave 10.14.5 (18F132) - 2019-05-13<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj">https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj</a></p>
+<p>  macOS Mojave 10.14.6 (18G103) - Supplemental Update - 2019-09-26<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g">https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g</a></p>
+</li>
+<li><p>参考： <a href="https://www.imacpc.net/archives/4153">https://www.imacpc.net/archives/4153</a></p>
+</li>
+</ul>
+<h3 id="获取-Install-macOS-Mojava-app"><a href="#获取-Install-macOS-Mojava-app" class="headerlink" title="获取 Install macOS Mojava.app"></a>获取 Install macOS Mojava.app</h3><ul>
+<li>App Store 下载的，默认在 <code>/Application</code> 中。</li>
+<li>第三方下载，如果下载的是 <code>.app</code> 请拖到<code>应用程序</code>中。 也就是 <code>/Application</code>中。</li>
+<li>第三方下载，如果下载的是 <code>.dmg</code> 直接安装，会直接在安装在 <code>/Application</code>中。</li>
+</ul>
+<p>完成后检查 <code>/Application</code> 也就是 <code>应用程序</code>中是否存在 <code>Install macOS Mojava.app</code>,中文系统会翻译为 <code>安装 macOS Mojava.app</code></p>
+<h3 id="制作启动盘"><a href="#制作启动盘" class="headerlink" title="制作启动盘"></a>制作启动盘</h3><h4 id="备份U盘数据"><a href="#备份U盘数据" class="headerlink" title="备份U盘数据"></a>备份U盘数据</h4><p>U盘会被格式化，如果存在重要资料请备份</p>
+<h4 id="格式化U盘"><a href="#格式化U盘" class="headerlink" title="格式化U盘"></a>格式化U盘</h4><p><img src="https://s2.loli.net/2022/11/08/7AlSp3inagCOm8V.jpg"></p>
+<ul>
+<li>打开 <code>磁盘工具</code> ，菜单栏选择 “显示 -&gt; 显示所有设备”</li>
+<li>选择U盘，注意是U盘的上一级</li>
+<li>点击 <code>抹掉</code></li>
+<li>格式化U盘，名称 <code>Mojava</code>, 格式 <code>Mac OS扩展(日志式)</code>, 方案 <code>GUID分区图</code></li>
+</ul>
+<h4 id="制作启动U盘"><a href="#制作启动U盘" class="headerlink" title="制作启动U盘"></a>制作启动U盘</h4><p>制作U盘前，请先备份U盘重要数据.</p>
+<p>执行制作U盘启动命令 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如果名称不一致，规则如下, 注意空格</span></span><br><span class="line"><span class="comment"># sudo &lt;Install macOS Mojava.app 路径&gt;/Contents/Resources/createinstallmedia --volume &lt;U盘路径&gt; &lt;Install macOS Mojava.app 路径&gt; --nointeraction</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下。 执行过程时间不等，视您手上电脑性能、U盘传输速度决定。  正常情况下3-5分钟。如果出现 <code>Copying to disk</code> 一直是 0%, 建议换一块U盘试试。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br><span class="line">Password:</span><br><span class="line">Erasing Disk: 0%... 10%... 20%... 30%... 100%</span><br><span class="line">Copying to disk: 0%... 10%... 20%... 30%... 40%... 50%... 60%... 70%... 80%... 90%... 100%</span><br><span class="line">Making disk bootable...</span><br><span class="line">Copying boot files...</span><br><span class="line">Install media now available at <span class="string">&quot;/Volumes/Install macOS Mojave&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Mojava"><a href="#安装-Mojava" class="headerlink" title="安装 Mojava"></a>安装 Mojava</h3><ul>
+<li>安装前请先备份电脑中所有的重要文件，会格式化整个硬盘</li>
+<li>重启电脑，长按 <code>option</code> 会进入 <code>OSX 实用工具</code>, 选择 <code>Install macOS Mojava</code>。</li>
+<li>选择<code>磁盘工具</code>, 选择电脑<code>系统盘</code> -&gt; <code>抹掉</code>。 格式根据系统决定，10.3以上系统版本请选择<code>APFS</code>磁盘格式，10.3以下系统版本选择<code>Mac OS 扩展</code>磁盘格式。 格式化以后退出<code>磁盘工具</code></li>
+<li>选择<code>安装macOS</code></li>
+</ul>
+<h4 id="安装中出现应用程序副本已损坏，不能用来安装Mac-OS"><a href="#安装中出现应用程序副本已损坏，不能用来安装Mac-OS" class="headerlink" title="安装中出现应用程序副本已损坏，不能用来安装Mac OS"></a>安装中出现应用程序副本已损坏，不能用来安装Mac OS</h4><ul>
+<li>点右上角wifi，关闭wifi，断开网络</li>
+<li>点菜单栏-&gt; 实用工具-&gt; 打开终端</li>
+<li>终端输入：date 032208102015.20</li>
+<li>退出终端，重新选择<code>安装 macOS</code>即可</li>
+</ul>
+<p>此方法适用于 10.8 ~ 10.15 所有版本</p>
+<p>整个操作时间一般半个小时左右，安装的快慢取决于USB读取速度和电脑性能，完成以后电脑会自动重启。等整个进度条走完，再进行简单的用户设置，就和刚买来的一样了。而刚刚重装的U盘也可以留着以后重装系统用。</p>
+]]></content>
+      <categories>
+        <category>MacOS</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+        <tag>Mojava 10.14.6 启动U盘</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>macOS 安装 opencv3.4</title>
-    <url>/post/c9ba1314.html</url>
+    <url>/post/c9ba1314/</url>
     <content><![CDATA[<p>介绍在 MacOs 下安装 OpenCV 3.x</p>
 <span id="more"></span>
 
@@ -1662,76 +1730,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Macos 回退系统安装 Mojava</title>
-    <url>/post/aff78914.html</url>
-    <content><![CDATA[<p>苹果系统（macOS）虽然稳定，但凡事都有例外，比如换硬盘、对新系统不满意、软件不兼容等问题想重装系统，下面就说说通过制作U盘安装 Mojava 10.14.6 </p>
-<p>U盘进行重装的方法，重装等待的时间短，操作也不复杂。</p>
-<ul>
-<li>准备一个8G以上的U盘 （最好两个，我当时第一个U盘在复制文件时，老是0%，换了个u盘就好了）</li>
-<li>U盘建议USB 3.0以上</li>
-</ul>
-<span id="more"></span>
-
-<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><h4 id="App-Store"><a href="#App-Store" class="headerlink" title="App Store"></a>App Store</h4><p><a href="https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12">https://apps.apple.com/us/app/macos-mojave/id1398502828?mt=12</a></p>
-<p>App Store 下载后会保存在 Application 中。<br>App Store 可能会存在与系统不兼容，不让下载。可以尝试通过第三方下载。</p>
-<h4 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h4><ul>
-<li><p>参考: <a href="https://www.pc6.com/mac/582745.html">https://www.pc6.com/mac/582745.html</a></p>
-</li>
-<li><p>参考： <a href="https://sysin.org/blog/macOS-Mojave/">https://sysin.org/blog/macOS-Mojave/</a></p>
-<p>  macOS Mojave 10.14.0 (18A391) - 2018-09-24<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw">https://pan.baidu.com/s/1KShzukqbw1qsXFOfOOw4DA?pwd=iauw</a></p>
-<p>  macOS Mojave 10.14.5 (18F132) - 2019-05-13<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj">https://pan.baidu.com/s/1Vx77Tp1MejzPXPor4MLTMA?pwd=8caj</a></p>
-<p>  macOS Mojave 10.14.6 (18G103) - Supplemental Update - 2019-09-26<br>  百度网盘链接：<a href="https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g">https://pan.baidu.com/s/1XEee7JigYydw1yEgevsdmg?pwd=hv5g</a></p>
-</li>
-<li><p>参考： <a href="https://www.imacpc.net/archives/4153">https://www.imacpc.net/archives/4153</a></p>
-</li>
-</ul>
-<h3 id="获取-Install-macOS-Mojava-app"><a href="#获取-Install-macOS-Mojava-app" class="headerlink" title="获取 Install macOS Mojava.app"></a>获取 Install macOS Mojava.app</h3><ul>
-<li>App Store 下载的，默认在 <code>/Application</code> 中。</li>
-<li>第三方下载，如果下载的是 <code>.app</code> 请拖到<code>应用程序</code>中。 也就是 <code>/Application</code>中。</li>
-<li>第三方下载，如果下载的是 <code>.dmg</code> 直接安装，会直接在安装在 <code>/Application</code>中。</li>
-</ul>
-<p>完成后检查 <code>/Application</code> 也就是 <code>应用程序</code>中是否存在 <code>Install macOS Mojava.app</code>,中文系统会翻译为 <code>安装 macOS Mojava.app</code></p>
-<h3 id="制作启动盘"><a href="#制作启动盘" class="headerlink" title="制作启动盘"></a>制作启动盘</h3><h4 id="备份U盘数据"><a href="#备份U盘数据" class="headerlink" title="备份U盘数据"></a>备份U盘数据</h4><p>U盘会被格式化，如果存在重要资料请备份</p>
-<h4 id="格式化U盘"><a href="#格式化U盘" class="headerlink" title="格式化U盘"></a>格式化U盘</h4><p><img src="https://s2.loli.net/2022/11/08/7AlSp3inagCOm8V.jpg"></p>
-<ul>
-<li>打开 <code>磁盘工具</code> ，菜单栏选择 “显示 -&gt; 显示所有设备”</li>
-<li>选择U盘，注意是U盘的上一级</li>
-<li>点击 <code>抹掉</code></li>
-<li>格式化U盘，名称 <code>Mojava</code>, 格式 <code>Mac OS扩展(日志式)</code>, 方案 <code>GUID分区图</code></li>
-</ul>
-<h4 id="制作启动U盘"><a href="#制作启动U盘" class="headerlink" title="制作启动U盘"></a>制作启动U盘</h4><p>制作U盘前，请先备份U盘重要数据.</p>
-<p>执行制作U盘启动命令 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如果名称不一致，规则如下, 注意空格</span></span><br><span class="line"><span class="comment"># sudo &lt;Install macOS Mojava.app 路径&gt;/Contents/Resources/createinstallmedia --volume &lt;U盘路径&gt; &lt;Install macOS Mojava.app 路径&gt; --nointeraction</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br></pre></td></tr></table></figure>
-
-<p>执行结果如下。 执行过程时间不等，视您手上电脑性能、U盘传输速度决定。  正常情况下3-5分钟。如果出现 <code>Copying to disk</code> 一直是 0%, 建议换一块U盘试试。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app --nointeraction</span><br><span class="line">Password:</span><br><span class="line">Erasing Disk: 0%... 10%... 20%... 30%... 100%</span><br><span class="line">Copying to disk: 0%... 10%... 20%... 30%... 40%... 50%... 60%... 70%... 80%... 90%... 100%</span><br><span class="line">Making disk bootable...</span><br><span class="line">Copying boot files...</span><br><span class="line">Install media now available at <span class="string">&quot;/Volumes/Install macOS Mojave&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Mojava"><a href="#安装-Mojava" class="headerlink" title="安装 Mojava"></a>安装 Mojava</h3><ul>
-<li>安装前请先备份电脑中所有的重要文件，会格式化整个硬盘</li>
-<li>重启电脑，长按 <code>option</code> 会进入 <code>OSX 实用工具</code>, 选择 <code>Install macOS Mojava</code>。</li>
-<li>选择<code>磁盘工具</code>, 选择电脑<code>系统盘</code> -&gt; <code>抹掉</code>。 格式根据系统决定，10.3以上系统版本请选择<code>APFS</code>磁盘格式，10.3以下系统版本选择<code>Mac OS 扩展</code>磁盘格式。 格式化以后退出<code>磁盘工具</code></li>
-<li>选择<code>安装macOS</code></li>
-</ul>
-<h4 id="安装中出现应用程序副本已损坏，不能用来安装Mac-OS"><a href="#安装中出现应用程序副本已损坏，不能用来安装Mac-OS" class="headerlink" title="安装中出现应用程序副本已损坏，不能用来安装Mac OS"></a>安装中出现应用程序副本已损坏，不能用来安装Mac OS</h4><ul>
-<li>点右上角wifi，关闭wifi，断开网络</li>
-<li>点菜单栏-&gt; 实用工具-&gt; 打开终端</li>
-<li>终端输入：date 032208102015.20</li>
-<li>退出终端，重新选择<code>安装 macOS</code>即可</li>
-</ul>
-<p>此方法适用于 10.8 ~ 10.15 所有版本</p>
-<p>整个操作时间一般半个小时左右，安装的快慢取决于USB读取速度和电脑性能，完成以后电脑会自动重启。等整个进度条走完，再进行简单的用户设置，就和刚买来的一样了。而刚刚重装的U盘也可以留着以后重装系统用。</p>
-]]></content>
-      <categories>
-        <category>MacOS</category>
-      </categories>
-      <tags>
-        <tag>技巧</tag>
-        <tag>Mojava 10.14.6 启动U盘</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>springboot+freemarker+pjax 实现单页局部刷新</title>
-    <url>/post/ec3b14f1.html</url>
+    <url>/post/ec3b14f1/</url>
     <content><![CDATA[<p>使用 Springboot + freemarker + pjax 实现单页应用，局部刷新。提升用户体验，降低服务器压力。</p>
 <span id="more"></span>
 
@@ -1789,7 +1789,7 @@
   </entry>
   <entry>
     <title>termius终端中文乱码处理</title>
-    <url>/post/46a9669c.html</url>
+    <url>/post/46a9669c/</url>
     <content><![CDATA[<p><a href="https://termius.com/">termius</a> 是 Mac上非常好用的命令行扩展。 但是对中文支持非常差。下面介绍如何修改支持中文。</p>
 <h3 id="打开配置文件"><a href="#打开配置文件" class="headerlink" title="打开配置文件"></a>打开配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.zshrc </span><br></pre></td></tr></table></figure>
 
@@ -1808,7 +1808,7 @@
   </entry>
   <entry>
     <title>MacOS 使用 SSH 方式连接服务器</title>
-    <url>/post/e8f3c962.html</url>
+    <url>/post/e8f3c962/</url>
     <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>服务器： centos7 64 位<br>客户端： Macos 10.13</p>
 <p>内容主要讲解本地证书创建，拷贝证书，本地别名等</p>
 <h2 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -t 秘钥类型 默认 rsa 可以省略</span></span><br><span class="line"><span class="comment"># -C 注释文字，一般是你的邮箱，可以省略</span></span><br><span class="line"><span class="comment"># -f 是存放文件及名称。不加的话，默认是 id_rsh</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxx@xx.com&quot;</span> -f ~/.ssh/id_rsa_gitee</span><br></pre></td></tr></table></figure>
@@ -1842,7 +1842,7 @@
   </entry>
   <entry>
     <title>内网穿透 FRP 安装配置使用</title>
-    <url>/post/f3ebe7d9.html</url>
+    <url>/post/f3ebe7d9/</url>
     <content><![CDATA[<p>内网没有公网IP，但是又有需要提供内网机器上部署的应用或者服务器给外网访问，这个动作就是内网穿透。ngrok、<a href="https://gofrp.org/">frp</a> 等工具就是用来干这个的。  <a href="https://gofrp.org/">frp</a> 支持tcp、udp、http、https等协议类型，并且支持web服务器根据域名进行路由转发。</p>
 <span id="more"></span>
 
@@ -1931,8 +1931,73 @@
       </tags>
   </entry>
   <entry>
+    <title>基于Docker 安装 MantisBT 及配置</title>
+    <url>/post/137bd650/</url>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/7KYmfpl3IhGjnQE.jpg"></p>
+<p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
+<p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
+<p>本文介绍基于 Docker 安装 MaintisBT 并完成配置。</p>
+<span id="more"></span>
+
+
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
+<li>Centos7</li>
+<li>Docker 19.03.13</li>
+</ul>
+<h2 id="MantisBT-镜像Pull-start"><a href="#MantisBT-镜像Pull-start" class="headerlink" title="MantisBT 镜像Pull/start"></a>MantisBT 镜像Pull/start</h2><p>使用的的 <a href="https://hub.docker.com/r/vimagick/mantisbt">vimagick/mantisbt</a> 镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull vimagick/mantisbt</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动 Mantis 8989 替换成你希望暴露的端口</span></span><br><span class="line">docker run -d -p 8989:80 --name mantisbt vimagick/mantisbt</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化-Mantis"><a href="#初始化-Mantis" class="headerlink" title="初始化 Mantis"></a>初始化 Mantis</h2><ol>
+<li><p>新建数据库。 Mysql/postgresql 都可以。 比如:”bug_mantis”</p>
+</li>
+<li><p>访问: <a href="http://127.0.0.1:8989/">http://127.0.0.1:8989</a></p>
+<ul>
+<li>ip 改为你部署 Mantis 服务器的 ip。 如果是域名访问，自行配置 nginx 或 apache 转发</li>
+<li>port 改为你部署 Mantis 服务暴露的端口。 如果是域名访问，自行 nginx 或 apache 转发</li>
+</ul>
+</li>
+<li><p>在初始化页面配置数据库链接。</p>
+</li>
+</ol>
+<blockquote>
+<p>配置完数据库就可以使用了</p>
+</blockquote>
+<h2 id="挂载配置文件"><a href="#挂载配置文件" class="headerlink" title="挂载配置文件"></a>挂载配置文件</h2><ol>
+<li><p>进入 docker 镜像命令行</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 mantis docker 容器命令行</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container 名称或 <span class="built_in">id</span>&gt; /bin/bash</span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line"><span class="comment"># container 名称或 id 可以通过 docker ps -a 查看。本文在 启动镜像时， 通过 --name 命名为 mantisbt</span></span><br><span class="line">docker <span class="built_in">exec</span> -it mantisbt /bin/bash</span><br></pre></td></tr></table></figure></li>
+<li><p>复制 config_inc.php 内容</p>
+<p> 当你初始化完成后，此配置文件会写入你的数据库配置。为避免 docker 容器被删除，每次都要重新初始化，我们需要将配置文件拷贝出来。并添加我们自己的配置</p>
+<p> 查看 config_inc.php 内容，并复制</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此时你应该在 docker mantisbt 容器里</span></span><br><span class="line"><span class="built_in">cat</span>: /var/www/html/config/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>在主机下新建配置文件</p>
+<p> 位置任意，比如我是在 <code>/usr/data/</code> 下新建 <code>mantis</code> 目录</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 主机新建 config_inc.php 配置文件</span></span><br><span class="line">vi /usr/data/mantis/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开后，将 mantis 的配置复制进去</span></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加配置</p>
+<p> 继续编辑 <code>/usr/data/mantis/config_inc.php</code> 新增邮件配置</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置完成后 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 开启邮箱验证</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_enable_email_notification</span> = ON;</span><br><span class="line"><span class="variable">$g_phpMailer_method</span> = PHPMAILER_METHOD_SMTP;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * smtp 配置</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_smtp_host</span>            = <span class="string">&#x27;smtp.example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_smtp_username</span>        = <span class="string">&#x27;your-mail@example.com&#x27;</span>;    </span><br><span class="line"><span class="variable">$g_smtp_password</span>        = <span class="string">&#x27;******&#x27;</span>;         </span><br><span class="line"><span class="variable">$g_smtp_port</span>            = 465;</span><br><span class="line"><span class="variable">$g_smtp_connection_mode</span> = <span class="string">&#x27;ssl&#x27;</span>;  /* 普通为 25 ，具体设置参考你使用邮箱 smtp 配置 */</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_from_name</span>            = <span class="string">&#x27;Mantis Bug Tracker&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_administrator_email</span>  = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_webmaster_email</span>      = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_return_path_email</span>    = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_from_email</span>           = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 创建用户时可以设置密码,默认是通过邮件邀请，公司内部用可以启用</span><br><span class="line"> */</span><br><span class="line"><span class="variable">$g_send_reset_password</span> = OFF;</span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署容器</p>
+<p> 删除当前容器</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker stop &lt;container 名称或 <span class="built_in">id</span>&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;container 名称或 <span class="built_in">id</span>&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br></pre></td></tr></table></figure>
+<p> 带配置文件的启动</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8989:80 --name mantisbt -v /usr/data/mantis/config_inc.php:/var/www/html/config/config_inc.php vimagick/mantisbt</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Docker</tag>
+        <tag>MantisBT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于 Docker 的 ngrok 内网穿透部署</title>
-    <url>/post/85afc9a0.html</url>
+    <url>/post/85afc9a0/</url>
     <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/YlfmtoQauLvU8qW.jpg"></p>
 <p>ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。</p>
 <span id="more"></span>
@@ -2031,73 +2096,30 @@
       </tags>
   </entry>
   <entry>
-    <title>基于Docker 安装 MantisBT 及配置</title>
-    <url>/post/137bd650.html</url>
-    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/09/7KYmfpl3IhGjnQE.jpg"></p>
-<p>缺陷管理平台Mantis，也做MantisBT，全称Mantis Bug Tracker。</p>
-<p>Mantis是一个基于PHP技术的轻量级的开源缺陷跟踪系统，以Web操作的形式提供项目管理及缺陷跟踪服务。在功能上、实用性上足以满足中小型项目的管理及跟踪。更重要的是其开源，不需要负担任何费用。</p>
-<p>本文介绍基于 Docker 安装 MaintisBT 并完成配置。</p>
+    <title>抛弃七牛云, 好用的图床 sm</title>
+    <url>/post/bd4891b9/</url>
+    <content><![CDATA[<p>markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 <a href="https://sm.ms/">sm.ms</a> 在境外搭建blogger 或业务时，非常的不错。</p>
+<p>如果仅在境内使用，我还是比较推荐七牛云的。</p>
 <span id="more"></span>
 
-
-<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
-<li>Centos7</li>
-<li>Docker 19.03.13</li>
-</ul>
-<h2 id="MantisBT-镜像Pull-start"><a href="#MantisBT-镜像Pull-start" class="headerlink" title="MantisBT 镜像Pull/start"></a>MantisBT 镜像Pull/start</h2><p>使用的的 <a href="https://hub.docker.com/r/vimagick/mantisbt">vimagick/mantisbt</a> 镜像</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull vimagick/mantisbt</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动 Mantis 8989 替换成你希望暴露的端口</span></span><br><span class="line">docker run -d -p 8989:80 --name mantisbt vimagick/mantisbt</span><br></pre></td></tr></table></figure>
-
-<h2 id="初始化-Mantis"><a href="#初始化-Mantis" class="headerlink" title="初始化 Mantis"></a>初始化 Mantis</h2><ol>
-<li><p>新建数据库。 Mysql/postgresql 都可以。 比如:”bug_mantis”</p>
-</li>
-<li><p>访问: <a href="http://127.0.0.1:8989/">http://127.0.0.1:8989</a></p>
-<ul>
-<li>ip 改为你部署 Mantis 服务器的 ip。 如果是域名访问，自行配置 nginx 或 apache 转发</li>
-<li>port 改为你部署 Mantis 服务暴露的端口。 如果是域名访问，自行 nginx 或 apache 转发</li>
-</ul>
-</li>
-<li><p>在初始化页面配置数据库链接。</p>
-</li>
-</ol>
-<blockquote>
-<p>配置完数据库就可以使用了</p>
-</blockquote>
-<h2 id="挂载配置文件"><a href="#挂载配置文件" class="headerlink" title="挂载配置文件"></a>挂载配置文件</h2><ol>
-<li><p>进入 docker 镜像命令行</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 mantis docker 容器命令行</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container 名称或 <span class="built_in">id</span>&gt; /bin/bash</span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line"><span class="comment"># container 名称或 id 可以通过 docker ps -a 查看。本文在 启动镜像时， 通过 --name 命名为 mantisbt</span></span><br><span class="line">docker <span class="built_in">exec</span> -it mantisbt /bin/bash</span><br></pre></td></tr></table></figure></li>
-<li><p>复制 config_inc.php 内容</p>
-<p> 当你初始化完成后，此配置文件会写入你的数据库配置。为避免 docker 容器被删除，每次都要重新初始化，我们需要将配置文件拷贝出来。并添加我们自己的配置</p>
-<p> 查看 config_inc.php 内容，并复制</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此时你应该在 docker mantisbt 容器里</span></span><br><span class="line"><span class="built_in">cat</span>: /var/www/html/config/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
-<li><p>在主机下新建配置文件</p>
-<p> 位置任意，比如我是在 <code>/usr/data/</code> 下新建 <code>mantis</code> 目录</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 主机新建 config_inc.php 配置文件</span></span><br><span class="line">vi /usr/data/mantis/config_inc.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开后，将 mantis 的配置复制进去</span></span><br><span class="line"><span class="comment"># 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>增加配置</p>
-<p> 继续编辑 <code>/usr/data/mantis/config_inc.php</code> 新增邮件配置</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置完成后 内容如下</span></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$g_hostname</span>               = <span class="string">&#x27;192.168.0.197&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_type</span>                = <span class="string">&#x27;pgsql&#x27;</span>;</span><br><span class="line"><span class="variable">$g_database_name</span>          = <span class="string">&#x27;fx_mantisbt&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_username</span>            = <span class="string">&#x27;postgres&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_password</span>            = <span class="string">&#x27;fx123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_db_table_prefix</span>          = <span class="string">&#x27;fx&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_plugin_prefix</span>   = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"><span class="variable">$g_db_table_suffix</span>          = <span class="string">&#x27;mantis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_default_timezone</span>       = <span class="string">&#x27;Asia/Shanghai&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_crypto_master_salt</span>     = <span class="string">&#x27;tQpeV+o+BQ3zdBv6t9Kn0jXBK7AFJJdeko5fIsBH8Hs=&#x27;</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 开启邮箱验证</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_enable_email_notification</span> = ON;</span><br><span class="line"><span class="variable">$g_phpMailer_method</span> = PHPMAILER_METHOD_SMTP;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * smtp 配置</span><br><span class="line"> */ </span><br><span class="line"><span class="variable">$g_smtp_host</span>            = <span class="string">&#x27;smtp.example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_smtp_username</span>        = <span class="string">&#x27;your-mail@example.com&#x27;</span>;    </span><br><span class="line"><span class="variable">$g_smtp_password</span>        = <span class="string">&#x27;******&#x27;</span>;         </span><br><span class="line"><span class="variable">$g_smtp_port</span>            = 465;</span><br><span class="line"><span class="variable">$g_smtp_connection_mode</span> = <span class="string">&#x27;ssl&#x27;</span>;  /* 普通为 25 ，具体设置参考你使用邮箱 smtp 配置 */</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_from_name</span>            = <span class="string">&#x27;Mantis Bug Tracker&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$g_administrator_email</span>  = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_webmaster_email</span>      = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_return_path_email</span>    = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"><span class="variable">$g_from_email</span>           = <span class="string">&#x27;your-mail@example.com&#x27;</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 创建用户时可以设置密码,默认是通过邮件邀请，公司内部用可以启用</span><br><span class="line"> */</span><br><span class="line"><span class="variable">$g_send_reset_password</span> = OFF;</span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署容器</p>
-<p> 删除当前容器</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker stop &lt;container 名称或 <span class="built_in">id</span>&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;container 名称或 <span class="built_in">id</span>&gt;  <span class="comment"># 此处为你的 mantis 名称</span></span><br></pre></td></tr></table></figure>
-<p> 带配置文件的启动</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8989:80 --name mantisbt -v /usr/data/mantis/config_inc.php:/var/www/html/config/config_inc.php vimagick/mantisbt</span><br></pre></td></tr></table></figure></li>
-</ol>
+<h3 id="免费内容有什么"><a href="#免费内容有什么" class="headerlink" title="免费内容有什么"></a>免费内容有什么</h3><p>具体详情可以查看<a href="https://sm.ms/pricing">https://sm.ms/pricing</a></p>
+<p><img src="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>生成自己的api-token</p>
+<p><img src="https://s2.loli.net/2022/02/09/H6bR9kzSfZpCNru.jpg"></p>
+<p>然后就可以在自己的应用中，或者markdown编辑器中添加图床</p>
 ]]></content>
       <categories>
-        <category>Docker</category>
+        <category>Common</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
-        <tag>Docker</tag>
-        <tag>MantisBT</tag>
+        <tag>技巧</tag>
+        <tag>图床</tag>
+        <tag>MarkDown</tag>
       </tags>
   </entry>
   <entry>
     <title>安装Hexo常见问题</title>
-    <url>/post/e4e699fe.html</url>
+    <url>/post/e4e699fe/</url>
     <content><![CDATA[<p>随着WP安装的插件越来越多，自己的 VPS 又配置偏低，导致访问越来越慢。之前就知道 Hexo，但是因为当时忙于项目，懒得搞。最近实在无法忍受了，就考虑迁移到Hexo上。在安装过程中发现一些问题，特地记录下</p>
 <span id="more"></span>
 
@@ -2152,30 +2174,8 @@
       </tags>
   </entry>
   <entry>
-    <title>抛弃七牛云, 好用的图床 sm</title>
-    <url>/post/bd4891b9.html</url>
-    <content><![CDATA[<p>markdown 一直都用七牛云当图床，但是七牛云也有几个问题，比如临时域名有时间限制，需要自己去买域名并实名;图片在博文中莫名无法访问，但是单独打开又是好的。一直想找替代产品。最近找到一个 <a href="https://sm.ms/">sm.ms</a> 在境外搭建blogger 或业务时，非常的不错。</p>
-<p>如果仅在境内使用，我还是比较推荐七牛云的。</p>
-<span id="more"></span>
-
-<h3 id="免费内容有什么"><a href="#免费内容有什么" class="headerlink" title="免费内容有什么"></a>免费内容有什么</h3><p>具体详情可以查看<a href="https://sm.ms/pricing">https://sm.ms/pricing</a></p>
-<p><img src="https://s2.loli.net/2022/02/09/m7dlgeFExOI4S5r.jpg"></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>生成自己的api-token</p>
-<p><img src="https://s2.loli.net/2022/02/09/H6bR9kzSfZpCNru.jpg"></p>
-<p>然后就可以在自己的应用中，或者markdown编辑器中添加图床</p>
-]]></content>
-      <categories>
-        <category>Common</category>
-      </categories>
-      <tags>
-        <tag>技巧</tag>
-        <tag>图床</tag>
-        <tag>MarkDown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>搬瓦工 SWAP 修改、新增SWAP分区的大小的方法</title>
-    <url>/post/a88f1873.html</url>
+    <url>/post/a88f1873/</url>
     <content><![CDATA[<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ul>
 <li>Centos7</li>
 </ul>
@@ -2206,7 +2206,7 @@
   </entry>
   <entry>
     <title>注册台湾 AppleID 教程</title>
-    <url>/post/f1cbcb38.html</url>
+    <url>/post/f1cbcb38/</url>
     <content><![CDATA[<p>12 月 8 日 LOL 手游上架台湾 App Store。 为了下载，注册个台湾的账号。</p>
 <span id="more"></span>
 
