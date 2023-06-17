@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /p/
+Allow: /404/
+Allow: /page/
+Allow: /post/
+Allow: /tags/ 
+Allow: /archives/
+Allow: /categories/
+Allow: /resources/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /lib/
+
+Sitemap: https://35liuqi.com/sitemap.xml
+Sitemap: https://35liuqi.com/baidusitemap.xml
