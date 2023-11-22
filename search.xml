@@ -2261,4 +2261,30 @@
         <tag>账号注册</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MacOs 安装Battle.app</title>
+    <url>/post/b2d0d3d3/</url>
+    <content><![CDATA[<p><a href="https://www.bilibili.com/read/cv23908379/">引用文档</a></p>
+<h2 id="清空缓存"><a href="#清空缓存" class="headerlink" title="清空缓存"></a>清空缓存</h2><p>如果已经下载过安装程序，并卡在更新界面的。先清空缓存。</p>
+<ul>
+<li>打开访达，按 Command + Shift + G 然后输入 /Users/Shared ，回车</li>
+<li>选中 Battle.net 文件夹，按 Command + option + delete ，确认永久删除 </li>
+</ul>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="https://download.battle.net/en-us">https://download.battle.net/en-us</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">open -a ~/Downloads/Battle.net-Setup.app --args --locale=enUS --region=US --session=</span><br></pre></td></tr></table></figure>
+
+<p><code>~/Downloads/Battle.net-Setup.app</code> 为路径，自己修改</p>
+<ul>
+<li>如果不行，尝试改系统语言为英文并重启再试</li>
+<li>还不行可以开代理或加速器</li>
+</ul>
+]]></content>
+      <categories>
+        <category>MacOs</category>
+      </categories>
+      <tags>
+        <tag>MacOs</tag>
+        <tag>Game</tag>
+      </tags>
+  </entry>
 </search>
