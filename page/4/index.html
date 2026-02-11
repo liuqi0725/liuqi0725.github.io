@@ -717,91 +717,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laubs.xyz/post/f1efb8a3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Alexliu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="35Niu Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/f1efb8a3/" class="post-title-link" itemprop="url">Docker 常用命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-13 10:15:44" itemprop="dateCreated datePublished" datetime="2018-05-13T10:15:44+08:00">2018-05-13</time>
-            </span>
-
-      
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker <span class="built_in">rm</span> 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
-
-<h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update --restart=always &lt;容器<span class="built_in">id</span> 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="打开容器命令行"><a href="#打开容器命令行" class="headerlink" title="打开容器命令行"></a>打开容器命令行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行容器内脚本</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash &lt;脚本路径&gt;/xxx.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
-<p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
-<ul>
-<li><strong>image_id</strong> : 镜像 id  可以通过 <code>docker ps -a</code> 查看，可以简写(取 id 前几位)</li>
-<li><strong>target_dir_path</strong> : docker 中目标文件夹路径</li>
-<li><strong>local_dir_path</strong> : 拷贝到本地的路径</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例 </span></span><br><span class="line"><span class="comment"># 查看镜像  `741c99bf26bb` 是镜像id  </span></span><br><span class="line">$ docker ps -a                                                                                </span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                            PORTS               NAMES</span><br><span class="line">741c99bf26bb        vanas/tokenmanager   <span class="string">&quot;/bin/sh -c &#x27;circusd…&quot;</span>   3 minutes ago       Restarting (127) 14 seconds ago                       vanastokenmanager_web1_1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 docker 镜像下 /app  到本地的  /Users/alexliu/app 目录</span></span><br><span class="line">$ docker <span class="built_in">cp</span> 74:/app /Users/alexliu/app</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://laubs.xyz/post/360ec959/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -869,6 +784,91 @@
 <blockquote>
 <p> 注意，修改配置后，一定要用 nginx -s reload 使配置生效。 再重启服务器</p>
 </blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laubs.xyz/post/f1efb8a3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Alexliu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="35Niu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/f1efb8a3/" class="post-title-link" itemprop="url">Docker 常用命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-13 10:15:44" itemprop="dateCreated datePublished" datetime="2018-05-13T10:15:44+08:00">2018-05-13</time>
+            </span>
+
+      
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有容器 ID</span></span><br><span class="line">docker ps -aq  或 docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止所有容器</span></span><br><span class="line">docker stop $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止单个容器</span></span><br><span class="line">docker stop 要停止的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> $(docker ps -aq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除单个容器</span></span><br><span class="line">docker <span class="built_in">rm</span> 要删除的容器名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+
+<h2 id="指定开机启动"><a href="#指定开机启动" class="headerlink" title="指定开机启动"></a>指定开机启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update --restart=always &lt;容器<span class="built_in">id</span> 或 容器别名&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="打开容器命令行"><a href="#打开容器命令行" class="headerlink" title="打开容器命令行"></a>打开容器命令行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行容器内脚本</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器<span class="built_in">id</span> 或 容器别名&gt; /bin/bash &lt;脚本路径&gt;/xxx.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h2><p>不管启动与否都可以拷贝</p>
+<p>命令：<code>docker cp &lt;image_id&gt;:&lt;target_dir_path&gt; &lt;local_dir_path&gt;</code></p>
+<ul>
+<li><strong>image_id</strong> : 镜像 id  可以通过 <code>docker ps -a</code> 查看，可以简写(取 id 前几位)</li>
+<li><strong>target_dir_path</strong> : docker 中目标文件夹路径</li>
+<li><strong>local_dir_path</strong> : 拷贝到本地的路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例 </span></span><br><span class="line"><span class="comment"># 查看镜像  `741c99bf26bb` 是镜像id  </span></span><br><span class="line">$ docker ps -a                                                                                </span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                            PORTS               NAMES</span><br><span class="line">741c99bf26bb        vanas/tokenmanager   <span class="string">&quot;/bin/sh -c &#x27;circusd…&quot;</span>   3 minutes ago       Restarting (127) 14 seconds ago                       vanastokenmanager_web1_1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 docker 镜像下 /app  到本地的  /Users/alexliu/app 目录</span></span><br><span class="line">$ docker <span class="built_in">cp</span> 74:/app /Users/alexliu/app</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
