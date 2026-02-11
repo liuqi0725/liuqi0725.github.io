@@ -31,7 +31,7 @@
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    hostname: new URL('https://35liuqi.com').hostname,
+    hostname: new URL('https://laubs.xyz').hostname,
     root: '/',
     scheme: 'Pisces',
     version: '7.7.0',
@@ -61,7 +61,7 @@
   <meta name="description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于 Docker 的 ngrok 内网穿透部署">
-<meta property="og:url" content="https://35liuqi.com/post/85afc9a0/index.html">
+<meta property="og:url" content="https://laubs.xyz/post/85afc9a0/index.html">
 <meta property="og:site_name" content="35Niu Blog">
 <meta property="og:description" content="ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。ngrok 可捕获和分析所有通道上的流量，便于后期分析和重放。反向代理在计算机网络中是代理服务器的一种。">
 <meta property="og:locale" content="zh_CN">
@@ -74,7 +74,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://s2.loli.net/2022/02/09/YlfmtoQauLvU8qW.jpg">
 
-<link rel="canonical" href="https://35liuqi.com/post/85afc9a0/">
+<link rel="canonical" href="https://laubs.xyz/post/85afc9a0/">
 
 
 <script id="page-configurations">
@@ -254,7 +254,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://35liuqi.com/post/85afc9a0/">
+    <link itemprop="mainEntityOfPage" href="https://laubs.xyz/post/85afc9a0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -362,7 +362,7 @@
 </blockquote>
 <h2 id="docker-部署-ngrok"><a href="#docker-部署-ngrok" class="headerlink" title="docker 部署 ngrok"></a>docker 部署 ngrok</h2><p>本文使用 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/hteen/ngrok?utm_source=ld246.com">hteen/ngrok</a> 镜像。<br>或者你自己选一个 <a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=ngrok&type=image">docker 中 ngrok 镜像搜索</a></p>
 <blockquote>
-<p>docker 的安装不在本文讨论范围。 可以参考 <a href="https://35liuqi.com/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/">CentOS-7 安装 Docker</a></p>
+<p>docker 的安装不在本文讨论范围。 可以参考 <a target="_blank" rel="noopener" href="https://35liuqi.com/2019/06/27/CentOS-7%20%E5%AE%89%E8%A3%85%20Docker/">CentOS-7 安装 Docker</a></p>
 </blockquote>
 <h3 id="拉镜像"><a href="#拉镜像" class="headerlink" title="拉镜像"></a>拉镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉镜像</span></span><br><span class="line">docker pull hteen/ngrok</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后检查 </span></span><br><span class="line">[root@104 ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hteen/ngrok          latest              9f29e9d374e9        4 years ago         260MB</span><br></pre></td></tr></table></figure>
 
@@ -414,7 +414,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://35liuqi.com/post/85afc9a0/" title="基于 Docker 的 ngrok 内网穿透部署">https://35liuqi.com/post/85afc9a0/</a>
+    <a href="https://laubs.xyz/post/85afc9a0/" title="基于 Docker 的 ngrok 内网穿透部署">https://laubs.xyz/post/85afc9a0/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
