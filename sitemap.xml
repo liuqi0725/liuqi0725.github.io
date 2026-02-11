@@ -362,6 +362,15 @@
   </url>
   
   <url>
+    <loc>https://laubs.xyz/post/f1efb8a3/</loc>
+    
+    <lastmod>2018-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://laubs.xyz/post/360ec959/</loc>
     
     <lastmod>2018-05-13</lastmod>
@@ -372,15 +381,6 @@
   
   <url>
     <loc>https://laubs.xyz/post/e8f3c962/</loc>
-    
-    <lastmod>2018-05-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/post/f1efb8a3/</loc>
     
     <lastmod>2018-05-13</lastmod>
     
@@ -486,7 +486,7 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Nginx/</loc>
+    <loc>https://laubs.xyz/tags/Docker/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -507,6 +507,20 @@
   </url>
   
   <url>
+    <loc>https://laubs.xyz/tags/MacOs/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://laubs.xyz/tags/Game/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://laubs.xyz/tags/v2Ray/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -521,7 +535,7 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Docker/</loc>
+    <loc>https://laubs.xyz/tags/Git/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -529,6 +543,20 @@
   
   <url>
     <loc>https://laubs.xyz/tags/%E6%8A%80%E5%B7%A7/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://laubs.xyz/tags/Nginx/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://laubs.xyz/tags/Hexo/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -549,14 +577,14 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Hexo/</loc>
+    <loc>https://laubs.xyz/tags/Homebrew/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Git/</loc>
+    <loc>https://laubs.xyz/tags/Redis/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -577,21 +605,21 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/OCR/</loc>
+    <loc>https://laubs.xyz/tags/database/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Homebrew/</loc>
+    <loc>https://laubs.xyz/tags/PostgreSql/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/Redis/</loc>
+    <loc>https://laubs.xyz/tags/Mysql/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -613,27 +641,6 @@
   
   <url>
     <loc>https://laubs.xyz/tags/%E8%BD%AC%E8%BD%BD/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/tags/Mysql/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/tags/database/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/tags/PostgreSql/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -675,14 +682,14 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/flyway/</loc>
+    <loc>https://laubs.xyz/tags/postgresql/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/postgresql/</loc>
+    <loc>https://laubs.xyz/tags/flyway/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -703,6 +710,20 @@
   </url>
   
   <url>
+    <loc>https://laubs.xyz/tags/freemarker/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://laubs.xyz/tags/pjax/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://laubs.xyz/tags/Mojava-10-14-6-%E5%90%AF%E5%8A%A8U%E7%9B%98/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -710,14 +731,14 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/SSH/</loc>
+    <loc>https://laubs.xyz/tags/frp/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/frp/</loc>
+    <loc>https://laubs.xyz/tags/SSH/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -745,20 +766,6 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/MacOs/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/tags/Game/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://laubs.xyz/tags/%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -766,14 +773,7 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/tags/freemarker/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/tags/pjax/</loc>
+    <loc>https://laubs.xyz/tags/OCR/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -782,7 +782,7 @@
 
   
   <url>
-    <loc>https://laubs.xyz/categories/CentOS7/</loc>
+    <loc>https://laubs.xyz/categories/Docker/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -796,7 +796,14 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/categories/Docker/</loc>
+    <loc>https://laubs.xyz/categories/MacOs/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://laubs.xyz/categories/CentOS7/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -810,6 +817,13 @@
   </url>
   
   <url>
+    <loc>https://laubs.xyz/categories/MacOS/</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://laubs.xyz/categories/JAVA/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -817,7 +831,7 @@
   </url>
   
   <url>
-    <loc>https://laubs.xyz/categories/MacOS/</loc>
+    <loc>https://laubs.xyz/categories/Crawler/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -832,20 +846,6 @@
   
   <url>
     <loc>https://laubs.xyz/categories/Python/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/categories/Crawler/</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://laubs.xyz/categories/MacOs/</loc>
     <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
